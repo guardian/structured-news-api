@@ -50,13 +50,13 @@ const morningBriefingSSML = (
   const ssml = `<speak>
   <par>
     <media xml:id='earcon' begin='0.0s' soundLevel='-5dB' fadeOutDur='0.0s'>
-      <audio src='https://storage.googleapis.com/audio-prototyping/cheery%20earcon1b%20comp%20fade%20lmt.mp3'>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/cheery_earcon1b_comp_fade_lmt.ogg'>
             <desc>news intro</desc>
         INTRO
       </audio>
     </media>
       <media xml:id='intro' begin='earcon.end+0.5s' soundLevel='0dB' fadeOutDur='0.0s'>
-      <audio src='https://storage.googleapis.com/audio-prototyping/SusieIntrov2.mp3'>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_Intro_-3db.ogg'>
             <desc>news intro</desc>
         INTRO
       </audio>
@@ -74,7 +74,7 @@ const morningBriefingSSML = (
 const generateTopStories = (stories: TopStories) => {
   const ssml = `
     <media xml:id='headline1' begin='intro.end-0.0s' soundLevel='0dB' fadeOutDur='0.0s'>
-      <audio src='https://storage.googleapis.com/audio-prototyping/Headline1v2.mp3'>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_HL1_-3db.ogg'>
         <desc>headline 1</desc>
         headline 1
       </audio>
@@ -88,7 +88,7 @@ const generateTopStories = (stories: TopStories) => {
     </media>
 
     <media xml:id='headline2' begin='wordsHD1.end-0.5s' soundLevel='0dB'>
-      <audio src='https://storage.googleapis.com/audio-prototyping/Susie%20Headline%202%20master.mp3'>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_HL2_-3db.ogg'>
         <desc>news intro</desc>
         INTRO
       </audio>
@@ -102,7 +102,7 @@ const generateTopStories = (stories: TopStories) => {
     </media>
 
     <media xml:id='headline3' begin='wordsHD2.end-0.0s' soundLevel='0dB'>
-      <audio src='https://storage.googleapis.com/audio-prototyping/Susie%20Headline%203%20master.mp3'>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_HL3_-3db.ogg'>
       <desc>news intro</desc>
         INTRO
       </audio>
@@ -120,7 +120,7 @@ const generateTopStories = (stories: TopStories) => {
 const generateTodayInFocus = (article: Article, previous: string) => {
   const ssml = `
     <media xml:id='TIFpush' begin='${previous}.end-0.0s' soundLevel='0dB' fadeOutDur='0.0s'>
-      <audio src='https://storage.googleapis.com/audio-prototyping/Susie%20TiF%20master.mp3' clipBegin='0.0s' clipEnd='6.0s'>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_TiF_-3db.ogg' clipBegin='0.0s'>
         <desc>team cheer</desc>
         CHEER!
       </audio>
@@ -137,7 +137,7 @@ const generateTodayInFocus = (article: Article, previous: string) => {
 
 const generateReadingMaterial = (article: Article, previous: string) => {
   const ssml = `<media xml:id = 'longread' begin = '${previous}.end-1.6s' soundLevel = '0dB' fadeOutDur = '0.0s' >
-    <audio src='https://storage.googleapis.com/audio-prototyping/Susie%20Long%20Read%20master.mp3' clipBegin = '0.0s' clipEnd = '6.0s' >
+    <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_Reading_-3db.ogg' clipBegin = '0.0s' >
       <desc>team cheer </desc>
   CHEER!
     </audio>
@@ -154,34 +154,32 @@ const generateReadingMaterial = (article: Article, previous: string) => {
 
 const generateOutro = (previous: string) => {
   const ssml = `<media xml:id='OUTRO' begin='${previous}.end+0.0s' soundLevel='0dB' fadeOutDur='0.0s'>
-      <audio src='https://storage.googleapis.com/audio-prototyping/Susie%20Bye%20master.mp3' clipBegin='0.0s' clipEnd='6.0s'>
-        <desc>team cheer</desc>
-        CHEER!
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_Outro_-3db.ogg' clipBegin='0.0s'>
       </audio>
     </media>
 
-    <media xml:id='music1' soundLevel='-3.0dB' fadeInDur='0.0s' fadeOutDur='0.0s' begin='earcon.end+0.0s'>
-      <audio src='https://storage.googleapis.com/audio-prototyping/Firebird%20Intro%20short.mp3'/>
+    <media xml:id='music1' soundLevel='-3.0dB' fadeInDur='0.0s' fadeOutDur='0.0s' begin='earcon.end-1.0s'>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Firebird_Intro_short.ogg'/>
     </media>
 
     <media xml:id='music2' soundLevel='-12.0dB' fadeInDur='0.0s' fadeOutDur='0.0s' begin='music1.end+0.0s'>
-      <audio src='https://storage.googleapis.com/audio-prototyping/Firebird%201.mp3'/>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Firebird_1.ogg'/>
     </media>
 
     <media xml:id='music2b' soundLevel='-12.0dB' repeatCount='20' fadeInDur='0.0s' fadeOutDur='3.0s' begin='music1.end+0.0s' end='wordsHD3.end+1.0s'>
-      <audio src='https://storage.googleapis.com/audio-prototyping/Firebird%20mute%20Drum%20Loop%202.mp3'/>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Firebird_mute_Drum_Loop_2.ogg'/>
     </media>
 
     <media xml:id='musicTIF' soundLevel='-25.0dB' fadeInDur='1.5s' fadeOutDur='2.0s' begin='music2b.end-0.0s' end='wordsTIF.end+2.0s'>
-      <audio src='https://storage.googleapis.com/audio-prototyping/TIF%20trim.mp3'/>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/TIF_trim.ogg'/>
     </media>
 
     <media xml:id='music3' soundLevel='-12.0dB' repeatCount='10' fadeInDur='3.0s' fadeOutDur='2.0s' begin='musicTIF.end-0.0s' end='OUTRO.end-3.0s'>
-      <audio src='https://storage.googleapis.com/audio-prototyping/Firebird%20Synth%20Drum%20Loop%202.mp3'/>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Firebird_Synth_Drum_Loop_2.ogg'/>
     </media>
 
     <media xml:id='music3out' soundLevel='-8.0dB' fadeInDur='0.0s' fadeOutDur='3.0s' begin='music3.end0.0s' end='OUTRO.end+4.0s'>
-      <audio src='https://storage.googleapis.com/audio-prototyping/Firebird%20Intro.mp3'>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Firebird_Intro.ogg'>
       </audio>
     </media>`;
   return ssml;
