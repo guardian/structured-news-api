@@ -68,7 +68,7 @@ const morningBriefingSSML = (
     ${outro}
   </par>
 </speak>`;
-  return ssml.replace(/\n|\r/g, '');
+  return ssml.replace('&', '&amp;').replace(/\n|\r/g, '');
 };
 
 const generateTopStories = (stories: TopStories) => {
