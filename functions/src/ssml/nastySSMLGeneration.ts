@@ -170,8 +170,8 @@ const generateOutro = (previous: string) => {
       <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Firebird_mute_Drum_Loop_2.ogg'/>
     </media>
 
-    <media xml:id='musicTIF' soundLevel='-25.0dB' fadeInDur='1.5s' fadeOutDur='2.0s' begin='music2b.end-0.0s' end='wordsTIF.end+2.0s'>
-      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/TIF_trim.ogg'/>
+    <media xml:id='musicTIF' soundLevel='-25.0dB' repeatCount='20' fadeInDur='1.5s' fadeOutDur='2.0s' begin='music2b.end-0.0s' end='wordsTIF.end+2.0s'>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/TIF_loop.ogg'/>
     </media>
 
     <media xml:id='music3' soundLevel='-12.0dB' repeatCount='10' fadeInDur='3.0s' fadeOutDur='2.0s' begin='musicTIF.end-0.0s' end='OUTRO.end-3.0s'>
