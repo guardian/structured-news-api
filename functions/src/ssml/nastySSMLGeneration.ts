@@ -66,9 +66,9 @@ const morningBriefingSSML = (
     ${todayInFocusSSML}
     ${readingMaterialSSML}
     ${outro}
-  </par>
+  </par> 
 </speak>`;
-  return ssml.replace('&', '&amp;').replace(/\n|\r/g, '');
+  return ssml.replace('&', '&amp;').replace(/\s\s+/g, '');
 };
 
 const generateTopStories = (stories: TopStories) => {
