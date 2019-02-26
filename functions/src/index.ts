@@ -9,13 +9,15 @@ import { config, region } from 'firebase-functions';
 
 import { CapiResults } from './models/capiModels';
 import fetch from 'node-fetch';
-import { generateSSML } from './ssml/nastySSMLGeneration';
+import { generateSSML } from './generators/nastySSMLGeneration';
 import { getDateFromString } from './utils';
 import { getReadingMaterial } from './contentExtractors/morningBriefingReadingMaterial';
 import { getTodayInFocus } from './contentExtractors/todayInFocus';
 import { getTopStories } from './contentExtractors/morningBriefingTopStories';
+import { getMP3 } from './generators/mp3Generation';
 
 const capiKey = config().guardian.capikey;
+const googleTextToSpeechKey = config().googletexttospeech.key;
 
 const getDailyUpdate = (isTest: boolean) => {
   const pageSize = isTest ? 50 : 1;
@@ -31,12 +33,14 @@ const getDailyUpdate = (isTest: boolean) => {
         const articleDate = getDateFromString(result.webPublicationDate);
         return getTodayInFocus(articleDate, capiKey).then(todayInFocus => {
           return getReadingMaterial(result, capiKey).then(readingMaterial => {
-            return buildResponse(
+            const r = buildResponse(
               articleDate,
               getTopStories(result),
               todayInFocus,
               readingMaterial
             );
+            getMP3(r.ssml, googleTextToSpeechKey);
+            return r;
           });
         });
       });
