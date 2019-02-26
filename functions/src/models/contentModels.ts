@@ -28,12 +28,14 @@ class ContentError extends OptionContent {
   }
 }
 
-class APIResponse {
+class APIResponse extends OptionContent {
   constructor(
     public date: string,
     public morningBriefing: MorningBriefing,
     public ssml: string
-  ) {}
+  ) {
+    super();
+  }
 }
 
 class MorningBriefing {
