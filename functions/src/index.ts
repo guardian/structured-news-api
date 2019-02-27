@@ -15,7 +15,7 @@ import { getReadingMaterial } from './contentExtractors/morningBriefingReadingMa
 import { getTodayInFocus } from './contentExtractors/todayInFocus';
 import { getTopStories } from './contentExtractors/morningBriefingTopStories';
 
-const capiKey = config().structurednewsapi.capikey;
+const capiKey = config().guardian.capikey;
 
 const getDailyUpdate = (isTest: boolean) => {
   const pageSize = isTest ? 50 : 1;
