@@ -33,8 +33,9 @@ const findIndexOfLunchTimeReadHeader = (textBlocks: string[]): OptionIndex => {
     }
     i += 1;
   }
-
-  return foundReadingMaterial ? new Index(i) : new OutOfBounds();
+  // i - 1 to account for the +1 from the while loop
+  const indexOfTheLunchTimeRead = new Index(i - 1);
+  return foundReadingMaterial ? indexOfTheLunchTimeRead : new OutOfBounds();
 };
 
 const extractLunchTimeReadURLFromMorningBriefing = (
