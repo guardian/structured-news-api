@@ -15,7 +15,7 @@ import { getDateFromString } from './utils';
 import { getReadingMaterial } from './contentExtractors/morningBriefingReadingMaterial';
 import { getTodayInFocus } from './contentExtractors/todayInFocus';
 import { getTopStories } from './contentExtractors/morningBriefingTopStories';
-import { getMP3 } from './generators/mp3Generation';
+import { generateAudioFile } from './generators/audioFileGeneration';
 
 const capiKey = config().guardian.capikey;
 const googleTextToSpeechKey = config().googletexttospeech.key;
@@ -24,7 +24,7 @@ const getMorningBriefingUrl = (pageSize: number) => {
   return `https://content.guardianapis.com/world/series/guardian-morning-briefing?api-key=${capiKey}&page-size=${pageSize}&show-fields=headline,standfirst,body&order-by=newest&show-blocks=all`;
 };
 
-const buildTestData = () => {
+const buildTestData = (): Promise<APIResponse[]> => {
   const pageSize = 50;
   const morningBriefing = getMorningBriefingUrl(pageSize);
 
@@ -38,10 +38,6 @@ const buildTestData = () => {
         return processResult(result);
       });
       return Promise.all(response);
-    })
-    .catch(e => {
-      console.error(`Could not get daily update. Error: ${e}`);
-      return new ContentError('Could not get daily update');
     });
 };
 
@@ -82,16 +78,16 @@ const buildResponse = (
   topStories: OptionContent,
   todayInFocus: OptionContent,
   readingMaterial: OptionContent
-): APIResponse => {
+): Promise<APIResponse> => {
   const morningBriefing = buildMorningBriefing(
     topStories,
     todayInFocus,
     readingMaterial
   );
   const ssml = generateSSML(morningBriefing);
-  const response = new APIResponse(articleDate, morningBriefing, ssml);
-
-  return response;
+  return generateAudioFile(ssml, googleTextToSpeechKey).then(url => {
+    return new APIResponse(articleDate, morningBriefing, ssml, url);
+  });
 };
 
 const buildMorningBriefing = (
@@ -115,27 +111,27 @@ const buildMorningBriefing = (
 exports.structuredNewsApi = region('europe-west1').https.onRequest(
   (request, response) => {
     const isTest: boolean = request.query.isTest;
-    const generateMP3: boolean = request.query.generateMP3;
     if (isTest) {
       buildTestData()
         .then(testData => {
           response.send(testData);
         })
         .catch(e => {
-          console.error(`Failed to get daily update. Error: ${e}`);
+          console.error(`Failed to get daily update test data. Error: ${e}`);
           response.status(500).send('500: Could not get test data');
         });
     } else {
       getDailyUpdate()
         .then(dailyUpdate => {
           if (dailyUpdate instanceof APIResponse) {
-            if (generateMP3) {
-              getMP3(dailyUpdate.ssml, googleTextToSpeechKey);
-            }
             response.send(dailyUpdate);
           } else {
-            console.error(`Failed to get daily update. Error: ${dailyUpdate}`);
-            response.status(500).send('500: Could not get daily update');
+            console.error(
+              `No content available in response from Guardian Content API. Error: ${dailyUpdate}`
+            );
+            response
+              .status(500)
+              .send('500: Could not get daily update. No content available');
           }
         })
         .catch(e => {

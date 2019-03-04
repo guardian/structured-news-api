@@ -32,7 +32,8 @@ class APIResponse extends OptionContent {
   constructor(
     public date: string,
     public morningBriefing: MorningBriefing,
-    public ssml: string
+    public ssml: string,
+    public audioFileLocation: string
   ) {
     super();
   }
