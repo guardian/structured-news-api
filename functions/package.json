@@ -26,9 +26,11 @@
     "@types/cheerio": "^0.22.10",
     "@types/fs-extra": "^5.0.5",
     "@types/jest": "^23.3.12",
+    "@types/nock": "^9.3.1",
     "@types/node-fetch": "^2.1.4",
     "@types/sanitize-html": "^1.18.2",
     "jest": "^23.6.0",
+    "nock": "^10.0.6",
     "prettier": "^1.15.3",
     "ts-jest": "^23.10.5",
     "tslint": "~5.8.0",
@@ -43,7 +45,8 @@
     "moduleFileExtensions": [
       "ts",
       "tsx",
-      "js"
+      "js",
+      "json"
     ],
     "transform": {
       "^.+\\.(ts|tsx)$": "ts-jest"

@@ -8,34 +8,32 @@ const bucketName = 'gu-briefing-audio';
 const defaultFilename = 'briefing.ogg';
 const writeDirectory = `/tmp/`;
 
-const generateAudioFile = (
+const generateAudioFile = async (
   ssml: string,
   apiKey: string,
   filename: string = defaultFilename
 ): Promise<string> => {
-  return fetch(getGoogleTextToSpeechUrl(apiKey), {
+  const res = await fetch(getGoogleTextToSpeechUrl(apiKey), {
     method: 'POST',
     body: JSON.stringify(getTextToSpeechBodyRequest(ssml)),
   })
-    .then<GoogleTextToSpeechResponse>(res => {
-      if (res.status >= 400) {
-        throw new Error(`${res.status} from Text To Speech API`);
-      } else {
-        return res.json();
-      }
-    })
-    .then(textToSpeechResponse => {
-      return writeStreamToFileAndUploadToGoogleCloudStorage(
-        textToSpeechResponse,
-        filename
-      );
-    })
-    .catch(e => {
-      console.error(
-        `Failed to get data from Google Text To Speech service. Error: ${e}`
-      );
-      throw e;
-    });
+    
+  if (res.status >= 400) {
+    throw new Error(`${res.status} from Text To Speech API`);
+  }
+
+  const textToSpeechResponse: GoogleTextToSpeechResponse = await res.json();
+  try {
+    return writeStreamToFileAndUploadToGoogleCloudStorage(
+      textToSpeechResponse,
+      filename
+    );
+  } catch(e) {
+    console.error(
+      `Failed to get data from Google Text To Speech service. Error: ${e}`
+    );
+    throw e;
+  }
 };
 
 const writeStreamToFileAndUploadToGoogleCloudStorage = (
