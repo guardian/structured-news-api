@@ -14,6 +14,7 @@ const generateAudioFile = (
   filename: string = defaultFilename
 ): Promise<string> => {
   return fetch(getGoogleTextToSpeechUrl(apiKey), {
+    headers: { 'Content-Type': 'application/json' },
     method: 'POST',
     body: JSON.stringify(getTextToSpeechBodyRequest(ssml)),
   })

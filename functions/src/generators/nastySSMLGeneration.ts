@@ -50,16 +50,10 @@ const morningBriefingSSML = (
   const ssml = `<speak>
   <par>
     <media xml:id='earcon' begin='0.0s' soundLevel='-5dB' fadeOutDur='0.0s'>
-      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/cheery_earcon1b_comp_fade_lmt.ogg'>
-            <desc>news intro</desc>
-        INTRO
-      </audio>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/cheery_earcon1b_comp_fade_lmt.ogg'/>
     </media>
       <media xml:id='intro' begin='earcon.end+0.5s' soundLevel='0dB' fadeOutDur='0.0s'>
-      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_Intro_-3db.ogg'>
-            <desc>news intro</desc>
-        INTRO
-      </audio>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_Intro_-3db.ogg'/>
     </media>
     
     ${topStoriesSSML}
@@ -74,10 +68,7 @@ const morningBriefingSSML = (
 const generateTopStories = (stories: TopStories) => {
   const ssml = `
     <media xml:id='headline1' begin='intro.end-0.0s' soundLevel='0dB' fadeOutDur='0.0s'>
-      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_HL1_-3db.ogg'>
-        <desc>headline 1</desc>
-        headline 1
-      </audio>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_HL1_-3db.ogg'/>
     </media>
 
     <media xml:id='wordsHD1' begin='headline1.end-0.0s'>
@@ -88,10 +79,7 @@ const generateTopStories = (stories: TopStories) => {
     </media>
 
     <media xml:id='headline2' begin='wordsHD1.end-0.5s' soundLevel='0dB'>
-      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_HL2_-3db.ogg'>
-        <desc>news intro</desc>
-        INTRO
-      </audio>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_HL2_-3db.ogg'/>
     </media>
 
     <media xml:id='wordsHD2' begin='headline2.end-0.0s'>
@@ -102,10 +90,7 @@ const generateTopStories = (stories: TopStories) => {
     </media>
 
     <media xml:id='headline3' begin='wordsHD2.end-0.0s' soundLevel='0dB'>
-      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_HL3_-3db.ogg'>
-      <desc>news intro</desc>
-        INTRO
-      </audio>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_HL3_-3db.ogg'/>
     </media>
 
     <media xml:id='wordsHD3' begin='headline3.end-0.0s'>
@@ -120,10 +105,7 @@ const generateTopStories = (stories: TopStories) => {
 const generateTodayInFocus = (article: Article, previous: string) => {
   const ssml = `
     <media xml:id='TIFpush' begin='${previous}.end-0.0s' soundLevel='0dB' fadeOutDur='0.0s'>
-      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_TiF_-3db.ogg' clipBegin='0.0s'>
-        <desc>team cheer</desc>
-        CHEER!
-      </audio>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_TiF_-3db.ogg' clipBegin='0.0s'/>
     </media>
 
     <media xml:id='wordsTIF' begin='TIFpush.end+0.5s'>
@@ -137,10 +119,7 @@ const generateTodayInFocus = (article: Article, previous: string) => {
 
 const generateReadingMaterial = (article: Article, previous: string) => {
   const ssml = `<media xml:id = 'longread' begin = '${previous}.end-1.6s' soundLevel = '0dB' fadeOutDur = '0.0s' >
-    <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_Reading_-3db.ogg' clipBegin = '0.0s' >
-      <desc>team cheer </desc>
-  CHEER!
-    </audio>
+    <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_Reading_-3db.ogg' clipBegin = '0.0s'/>
     </media>
 
     <media xml:id = 'wordslongread' begin = 'longread.end+0.0s' soundLevel = '0dB' fadeOutDur = '0.0s' >
@@ -154,8 +133,7 @@ const generateReadingMaterial = (article: Article, previous: string) => {
 
 const generateOutro = (previous: string) => {
   const ssml = `<media xml:id='OUTRO' begin='${previous}.end+0.0s' soundLevel='0dB' fadeOutDur='0.0s'>
-      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_Outro_-3db.ogg' clipBegin='0.0s'>
-      </audio>
+      <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_Outro_-3db.ogg' clipBegin='0.0s'/>
     </media>
 
     <media xml:id='music1' soundLevel='-3.0dB' fadeInDur='0.0s' fadeOutDur='0.0s' begin='earcon.end-1.0s'>
