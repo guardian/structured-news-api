@@ -1,5 +1,9 @@
 import { Article, ContentError, TopStories } from '../models/contentModels';
-import { getTextBlocksFromArticle, stripHTMLTags } from '../utils';
+import {
+  getTextBlocksFromArticle,
+  stripHTMLTags,
+  getFirstSentence,
+} from '../utils';
 
 import { Result } from '../models/capiModels';
 import { load } from 'cheerio';
@@ -77,10 +81,6 @@ const getStoriesFromMorningBriefing = (
     i += 1;
   }
   return stories;
-};
-
-const getFirstSentence = (text: string): string => {
-  return `${text.split('.')[0]}.`;
 };
 
 const convertFirstSentenceToArticle = (

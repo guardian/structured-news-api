@@ -67,9 +67,14 @@ const getCapiArticle = (
     });
 };
 
+const getFirstSentence = (text: string): string => {
+  return `${text.split('. ')[0]}.`;
+};
+
 export {
   getDateFromString,
   stripHTMLTags,
   getTextBlocksFromArticle,
   getCapiArticle,
+  getFirstSentence,
 };

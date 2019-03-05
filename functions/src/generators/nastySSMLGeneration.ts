@@ -7,35 +7,35 @@ Very hacky generation of SSML.
 const generateSSML = (morningBriefing: MorningBriefing) => {
   const topStories = morningBriefing.topStories;
   const todayInFocus = morningBriefing.todayInFocus;
-  const readingMaterial = morningBriefing.readingMaterial;
+  const trendingArticle = morningBriefing.trendingArticle;
   if (
     topStories instanceof TopStories &&
     todayInFocus instanceof Article &&
-    readingMaterial instanceof Article
+    trendingArticle instanceof Article
   ) {
     const topStoriesSSML = generateTopStories(topStories);
     const todayInFocusSSML = generateTodayInFocus(todayInFocus, 'wordsHD3');
-    const readingMaterialSSML = generateReadingMaterial(
-      readingMaterial,
+    const trendingArticleSSML = generateTrendingArticle(
+      trendingArticle,
       'musicTIF'
     );
     const outro = generateOutro('wordslongread');
     return morningBriefingSSML(
       topStoriesSSML,
       todayInFocusSSML,
-      readingMaterialSSML,
+      trendingArticleSSML,
       outro
     );
   }
   // Take into account missing Today in Focus
-  if (topStories instanceof TopStories && readingMaterial instanceof Article) {
+  if (topStories instanceof TopStories && trendingArticle instanceof Article) {
     const topStoriesSSML = generateTopStories(topStories);
-    const readingMaterialSSML = generateReadingMaterial(
-      readingMaterial,
+    const trendingArticleSSML = generateTrendingArticle(
+      trendingArticle,
       'wordsHD3'
     );
     const outro = generateOutro('wordslongread');
-    return morningBriefingSSML(topStoriesSSML, '', readingMaterialSSML, outro);
+    return morningBriefingSSML(topStoriesSSML, '', trendingArticleSSML, outro);
   } else {
     return 'SSML generation failed';
   }
@@ -44,7 +44,7 @@ const generateSSML = (morningBriefing: MorningBriefing) => {
 const morningBriefingSSML = (
   topStoriesSSML: string,
   todayInFocusSSML: string,
-  readingMaterialSSML: string,
+  trendingArticleSSML: string,
   outro: string
 ) => {
   const ssml = `<speak>
@@ -58,7 +58,7 @@ const morningBriefingSSML = (
     
     ${topStoriesSSML}
     ${todayInFocusSSML}
-    ${readingMaterialSSML}
+    ${trendingArticleSSML}
     ${outro}
   </par> 
 </speak>`;
@@ -117,14 +117,13 @@ const generateTodayInFocus = (article: Article, previous: string) => {
   return ssml;
 };
 
-const generateReadingMaterial = (article: Article, previous: string) => {
+const generateTrendingArticle = (article: Article, previous: string) => {
   const ssml = `<media xml:id = 'longread' begin = '${previous}.end-1.6s' soundLevel = '0dB' fadeOutDur = '0.0s' >
-    <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_Reading_-3db.ogg' clipBegin = '0.0s'/>
+    <audio src='https://storage.googleapis.com/guardian-briefing-audio-assets/Leah_v2_Trendingv2.ogg' clipBegin = '0.0s'/>
     </media>
 
     <media xml:id = 'wordslongread' begin = 'longread.end+0.0s' soundLevel = '0dB' fadeOutDur = '0.0s' >
       <speak>
-      ${article.headline} <break strength='strong' />
       ${article.standfirst}
       </speak>
     </media>`;

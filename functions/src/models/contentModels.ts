@@ -43,7 +43,7 @@ class MorningBriefing {
   constructor(
     public topStories?: TopStories,
     public todayInFocus?: Article,
-    public readingMaterial?: Article
+    public trendingArticle?: Article
   ) {}
 }
 
