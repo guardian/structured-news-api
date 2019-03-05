@@ -78,14 +78,14 @@ const getTextToSpeechBodyRequest = (ssml: string) => {
     audioConfig: {
       audioEncoding: 'OGG_OPUS',
       pitch: '0.00',
-      speakingRate: '1.00',
+      speakingRate: '0.92',
     },
     input: {
       ssml,
     },
     voice: {
       languageCode: 'en-GB',
-      name: 'en-GB-Wavenet-A',
+      name: 'en-GB-Wavenet-B',
     },
   };
 };

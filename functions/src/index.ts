@@ -12,10 +12,10 @@ import { CapiResults, Result } from './models/capiModels';
 import fetch from 'node-fetch';
 import { generateSSML } from './generators/nastySSMLGeneration';
 import { getDateFromString } from './utils';
-import { getReadingMaterial } from './contentExtractors/morningBriefingReadingMaterial';
 import { getTodayInFocus } from './contentExtractors/todayInFocus';
 import { getTopStories } from './contentExtractors/morningBriefingTopStories';
 import { generateAudioFile } from './generators/audioFileGeneration';
+import { getTrendingArticle } from './contentExtractors/trendingArticles';
 
 const capiKey = config().guardian.capikey;
 const googleTextToSpeechKey = config().googletexttospeech.key;
@@ -44,12 +44,12 @@ const buildTestData = (): Promise<APIResponse[]> => {
 const processResult = (result: Result): Promise<APIResponse> => {
   const articleDate = getDateFromString(result.webPublicationDate);
   return getTodayInFocus(articleDate, capiKey).then(todayInFocus => {
-    return getReadingMaterial(result, capiKey).then(readingMaterial => {
+    return getTrendingArticle(capiKey).then(trendingArticle => {
       return buildResponse(
         articleDate,
         getTopStories(result),
         todayInFocus,
-        readingMaterial
+        trendingArticle
       );
     });
   });
@@ -77,12 +77,12 @@ const buildResponse = (
   articleDate: string,
   topStories: OptionContent,
   todayInFocus: OptionContent,
-  readingMaterial: OptionContent
+  trendingArticle: OptionContent
 ): Promise<APIResponse> => {
   const morningBriefing = buildMorningBriefing(
     topStories,
     todayInFocus,
-    readingMaterial
+    trendingArticle
   );
   const ssml = generateSSML(morningBriefing);
   return generateAudioFile(ssml, googleTextToSpeechKey).then(url => {
@@ -93,7 +93,7 @@ const buildResponse = (
 const buildMorningBriefing = (
   topStories: OptionContent,
   todayInFocus: OptionContent,
-  readingMaterial: OptionContent
+  trendingArticle: OptionContent
 ) => {
   const response = new MorningBriefing();
   if (topStories instanceof TopStories) {
@@ -102,8 +102,8 @@ const buildMorningBriefing = (
   if (todayInFocus instanceof Article) {
     response.todayInFocus = todayInFocus;
   }
-  if (readingMaterial instanceof Article) {
-    response.readingMaterial = readingMaterial;
+  if (trendingArticle instanceof Article) {
+    response.trendingArticle = trendingArticle;
   }
   return response;
 };

@@ -1,3 +1,11 @@
+interface CapiTrending {
+  response: CapiMostViewed;
+}
+
+interface CapiMostViewed {
+  mostViewed: Result[];
+}
+
 interface CapiResult {
   response: CapiResponse;
 }
@@ -15,6 +23,9 @@ interface Results {
 }
 
 interface Result {
+  type: string;
+  sectionId: string;
+  pillarId: string;
   webPublicationDate: string;
   fields: Fields;
   blocks: Blocks;
@@ -24,6 +35,7 @@ interface Fields {
   standfirst: string;
   headline: string;
   body: string;
+  bodyText: string;
 }
 
 interface Blocks {
@@ -43,4 +55,12 @@ interface Data {
   html: string;
 }
 
-export { Result, Element, CapiResults, CapiResult, Data };
+export {
+  Result,
+  Element,
+  CapiResults,
+  CapiResult,
+  Data,
+  CapiMostViewed,
+  CapiTrending,
+};
