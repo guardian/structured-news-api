@@ -43,7 +43,8 @@ const processTrendingArticles = (
       const currentArticle = articles[i];
       if (
         currentArticle.type !== 'liveblog' &&
-        currentArticle.pillarId === 'pillar/news'
+        currentArticle.pillarId === 'pillar/news' &&
+        !currentArticle.fields.headline.toLowerCase().includes('briefing')
       ) {
         const fields = articles[i].fields;
         article = new Article(
