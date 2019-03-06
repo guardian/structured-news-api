@@ -35,10 +35,14 @@ describe('Extract reading material URL from the Morning Briefing', () => {
   test('If the lunchtime read header cannot be found return ContentError object', () => {
     const input: Result = {
       webPublicationDate: '',
+      type: '',
+      sectionId: '',
+      pillarId: '',
       fields: {
         headline: '',
         standfirst: '',
         body: '',
+        bodyText: '',
       },
       blocks: {
         body: [
@@ -56,10 +60,14 @@ describe('Extract reading material URL from the Morning Briefing', () => {
   test('If a URL for the lunchtime read cannot be found return a ContentError object', () => {
     const input: Result = {
       webPublicationDate: '',
+      type: '',
+      sectionId: '',
+      pillarId: '',
       fields: {
         headline: '',
         standfirst: '',
         body: '',
+        bodyText: '',
       },
       blocks: {
         body: [
@@ -85,10 +93,14 @@ describe('Extract reading material URL from the Morning Briefing', () => {
   test('If the url of the lunchtime read can be found return a URL object.', () => {
     const input: Result = {
       webPublicationDate: '',
+      type: '',
+      sectionId: '',
+      pillarId: '',
       fields: {
         headline: '',
         standfirst: '',
         body: '',
+        bodyText: '',
       },
       blocks: {
         body: [

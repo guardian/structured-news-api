@@ -29,10 +29,14 @@ describe('Extract text elements from article', () => {
   test('All non text elements should be removed', () => {
     const input: Result = {
       webPublicationDate: '2019-02-13T06:29:06Z',
+      type: '',
+      pillarId: '',
+      sectionId: '',
       fields: {
         headline: '',
         standfirst: '',
         body: '',
+        bodyText: '',
       },
       blocks: {
         body: [
