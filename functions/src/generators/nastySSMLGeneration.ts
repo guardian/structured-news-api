@@ -62,7 +62,23 @@ const morningBriefingSSML = (
     ${outro}
   </par> 
 </speak>`;
-  return ssml.replace('&', '&amp;').replace(/\s\s+/g, '');
+  return formatSSML(ssml);
+};
+
+const formatSSML = (ssml: string) => {
+  const ssmlWithoutExcessWhitespace = ssml.replace(/\s\s+/g, '');
+  const controlCharacters: { [name: string]: string } = {
+    '&': '&amp;',
+    '"': '&quot;',
+    "'": '&apos;',
+    '<': '&lt;',
+    '>': '&gt;',
+  };
+  const xmlEncodedSSML = ssmlWithoutExcessWhitespace.replace(
+    /[&|"|'|<|>]/g,
+    char => controlCharacters[char] || ''
+  );
+  return xmlEncodedSSML;
 };
 
 const generateTopStories = (stories: TopStories) => {
@@ -162,4 +178,4 @@ const generateOutro = (previous: string) => {
   return ssml;
 };
 
-export { generateSSML };
+export { generateSSML, formatSSML };
