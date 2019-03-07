@@ -62,23 +62,7 @@ const morningBriefingSSML = (
     ${outro}
   </par> 
 </speak>`;
-  return formatSSML(ssml);
-};
-
-const formatSSML = (ssml: string) => {
-  const ssmlWithoutExcessWhitespace = ssml.replace(/\s\s+/g, '');
-  const controlCharacters: { [name: string]: string } = {
-    '&': '&amp;',
-    '"': '&quot;',
-    "'": '&apos;',
-    '<': '&lt;',
-    '>': '&gt;',
-  };
-  const xmlEncodedSSML = ssmlWithoutExcessWhitespace.replace(
-    /[&|"|'|<|>]/g,
-    char => controlCharacters[char] || ''
-  );
-  return xmlEncodedSSML;
+  return stripExcessWhitespace(ssml);
 };
 
 const generateTopStories = (stories: TopStories) => {
@@ -89,8 +73,10 @@ const generateTopStories = (stories: TopStories) => {
 
     <media xml:id='wordsHD1' begin='headline1.end-0.0s'>
       <speak>
-        ${stories.story1.headline}.<break strength='strong'/>
-        ${stories.story1.standfirst}
+        ${encodeStringForSSML(
+          stories.story1.headline
+        )}.<break strength='strong'/>
+        ${encodeStringForSSML(stories.story1.standfirst)}
       </speak>
     </media>
 
@@ -100,8 +86,10 @@ const generateTopStories = (stories: TopStories) => {
 
     <media xml:id='wordsHD2' begin='headline2.end-0.0s'>
       <speak>
-        ${stories.story2.headline}<break strength='strong'/>
-        ${stories.story2.standfirst}
+        ${encodeStringForSSML(
+          stories.story2.headline
+        )}<break strength='strong'/>
+        ${encodeStringForSSML(stories.story2.standfirst)}
       </speak>
     </media>
 
@@ -111,8 +99,10 @@ const generateTopStories = (stories: TopStories) => {
 
     <media xml:id='wordsHD3' begin='headline3.end-0.0s'>
       <speak>
-        ${stories.story3.headline}<break strength='strong'/>
-        ${stories.story3.standfirst}
+        ${encodeStringForSSML(
+          stories.story3.headline
+        )}<break strength='strong'/>
+        ${encodeStringForSSML(stories.story3.standfirst)}
       </speak>
     </media>`;
   return ssml;
@@ -125,9 +115,9 @@ const generateTodayInFocus = (article: Article, previous: string) => {
     </media>
 
     <media xml:id='wordsTIF' begin='TIFpush.end+0.5s'>
-      <speak>${article.headline}.
+      <speak>${encodeStringForSSML(article.headline)}.
         <break strength='strong'/>
-        ${article.standfirst}
+        ${encodeStringForSSML(article.standfirst)}
       </speak>
     </media>`;
   return ssml;
@@ -140,7 +130,7 @@ const generateTrendingArticle = (article: Article, previous: string) => {
 
     <media xml:id = 'wordslongread' begin = 'longread.end+0.0s' soundLevel = '0dB' fadeOutDur = '0.0s' >
       <speak>
-      ${article.standfirst}
+      ${encodeStringForSSML(article.standfirst)}
       </speak>
     </media>`;
   return ssml;
@@ -178,4 +168,23 @@ const generateOutro = (previous: string) => {
   return ssml;
 };
 
-export { generateSSML, formatSSML };
+const encodeStringForSSML = (s: string) => {
+  const controlCharacters: { [name: string]: string } = {
+    '&': '&amp;',
+    '"': '&quot;',
+    "'": '&apos;',
+    '<': '&lt;',
+    '>': '&gt;',
+  };
+  const xmlEncodedSSML = s.replace(
+    /[&|"|'|<|>]/g,
+    char => controlCharacters[char] || ''
+  );
+  return xmlEncodedSSML;
+};
+
+const stripExcessWhitespace = (ssml: string) => {
+  return ssml.replace(/\s\s+/g, '');
+};
+
+export { generateSSML, stripExcessWhitespace, encodeStringForSSML };
