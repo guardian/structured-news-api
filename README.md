@@ -6,7 +6,7 @@ Voice Lab Project. This takes the Morning Briefing and extracts structured data 
 
 - Three Top Stories - These are the first three stories in the morning briefing. For each story take the first sentence about it in the morning briefing
 - Today in Focus - For the Today in Focus article for the day get the headline and first 2 sentences of the standfirst
-- Reading Material - The article recommended as Lunchtime Reading. Get the headline and standfirst from the article itself
+- Trending Article - The first article when querying `http://content.guardianapis.com/uk` by most-viewed. The article must have the pillar id 'pillar/news'. The article must not be a live blog or have the morning briefing tag on it.
 
 # Set Up
 

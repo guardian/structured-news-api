@@ -30,6 +30,7 @@ interface Result {
   webUrl: string;
   fields: Fields;
   blocks: Blocks;
+  tags: Tag[];
 }
 
 interface Fields {
@@ -37,6 +38,10 @@ interface Fields {
   headline: string;
   body: string;
   bodyText: string;
+}
+
+interface Tag {
+  id: string;
 }
 
 interface Blocks {

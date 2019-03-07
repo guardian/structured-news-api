@@ -1,6 +1,6 @@
 import { Article, ContentError } from '../models/contentModels';
 
-import { CapiTrending } from '../models/capiModels';
+import { CapiTrending, Result } from '../models/capiModels';
 import fetch from 'node-fetch';
 import { getFirstSentence } from '../utils';
 
@@ -8,13 +8,13 @@ import { getFirstSentence } from '../utils';
 Current rules for trendingArticles:
 The top story from /UK most viewed according to CAPI
 First sentence of top story
-Story must have the pillarId pillar/news and not be a live blog
+Story must have the pillarId pillar/news and not be a live blog or have the morning briefing tag.
 */
 
 const getTrendingArticle = (
   capiKey: string
 ): Promise<Article | ContentError> => {
-  const trendingArticles = `http://content.guardianapis.com/uk?api-key=${capiKey}&page-size=10&show-most-viewed=true&show-fields=headline,standfirst,body,bodyText`;
+  const trendingArticles = `http://content.guardianapis.com/uk?api-key=${capiKey}&page-size=10&show-most-viewed=true&show-fields=headline,standfirst,body,bodyText&show-tags=series`;
   return fetch(trendingArticles)
     .then<CapiTrending>(res => {
       return res.json();
@@ -26,6 +26,15 @@ const getTrendingArticle = (
       console.error(`Unable to get Trending Articles. Error: ${e}`);
       return new ContentError('Could not get Trending Articles');
     });
+};
+
+const isMorningBriefing = (result: Result) => {
+  // Check if result has the morning briefing tag
+  return (
+    result.tags.filter(
+      tag => tag.id === 'world/series/guardian-morning-briefing'
+    ).length > 0
+  );
 };
 
 const processTrendingArticles = (
@@ -44,7 +53,7 @@ const processTrendingArticles = (
       if (
         currentArticle.type !== 'liveblog' &&
         currentArticle.pillarId === 'pillar/news' &&
-        !currentArticle.fields.headline.toLowerCase().includes('briefing')
+        !isMorningBriefing(currentArticle)
       ) {
         const fields = articles[i].fields;
         article = new Article(
@@ -65,4 +74,4 @@ const processTrendingArticles = (
   }
 };
 
-export { getTrendingArticle };
+export { getTrendingArticle, processTrendingArticles, isMorningBriefing };

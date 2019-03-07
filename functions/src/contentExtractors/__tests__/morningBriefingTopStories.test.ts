@@ -7,6 +7,7 @@ describe('Extract top stories from the Morning Briefing', () => {
   test("If the top story in the Morning Briefing can't be extracted return a ContentError object", () => {
     const input: Result = {
       webPublicationDate: '',
+      webUrl: '',
       sectionId: '',
       pillarId: '',
       type: '',
@@ -16,6 +17,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         body: '',
         bodyText: '',
       },
+      tags: [],
       blocks: {
         body: [
           {
@@ -35,6 +37,7 @@ describe('Extract top stories from the Morning Briefing', () => {
   test('If three stories cannot be extracted from the Morning Briefing return a ContentError object', () => {
     const input: Result = {
       webPublicationDate: '',
+      webUrl: '',
       sectionId: '',
       pillarId: '',
       type: '',
@@ -44,6 +47,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         body: '',
         bodyText: '',
       },
+      tags: [],
       blocks: {
         body: [
           {
@@ -66,11 +70,13 @@ describe('Extract top stories from the Morning Briefing', () => {
         headline: '‘Long extension if they don’t vote for deal’.',
         standfirst:
           'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50.',
+        source: '',
       },
       {
         headline: '‘It was hell’.',
         standfirst:
           'Thursday will mark one year since 17 people were shot and killed at the Marjory Stoneman Douglas high school in Parkland, Florida.',
+        source: '',
       },
     ];
 
@@ -84,6 +90,7 @@ describe('Extract top stories from the Morning Briefing', () => {
   test('If only the top story can be extracted from the Morning Briefing return a ContentError object', () => {
     const input: Result = {
       webPublicationDate: '',
+      webUrl: '',
       sectionId: '',
       pillarId: '',
       type: '',
@@ -93,6 +100,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         body: '',
         bodyText: '',
       },
+      tags: [],
       blocks: {
         body: [
           {
@@ -115,6 +123,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         headline: '‘Long extension if they don’t vote for deal’.',
         standfirst:
           'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50.',
+        source: '',
       },
     ];
 
@@ -128,6 +137,7 @@ describe('Extract top stories from the Morning Briefing', () => {
   test('Midweek catch-up in Morning Briefing should be ignored', () => {
     const input: Result = {
       webPublicationDate: '',
+      webUrl: '',
       sectionId: '',
       pillarId: '',
       type: '',
@@ -137,6 +147,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         body: '',
         bodyText: '',
       },
+      tags: [],
       blocks: {
         body: [
           {
@@ -163,15 +174,18 @@ describe('Extract top stories from the Morning Briefing', () => {
     const expectedOutput = new TopStories(
       new Article(
         '‘Long extension if they don’t vote for deal’.',
-        'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50.'
+        'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50.',
+        ''
       ),
       new Article(
         '‘It was hell’.',
-        'Thursday will mark one year since 17 people were shot and killed at the Marjory Stoneman Douglas high school in Parkland, Florida.'
+        'Thursday will mark one year since 17 people were shot and killed at the Marjory Stoneman Douglas high school in Parkland, Florida.',
+        ''
       ),
       new Article(
         'Trouble for Trudeau.',
-        'A minister in Justin Trudeau’s Canadian government has resigned amid allegations the prime minister’s office pressured her to avoid prosecuting a major engineering firm.'
+        'A minister in Justin Trudeau’s Canadian government has resigned amid allegations the prime minister’s office pressured her to avoid prosecuting a major engineering firm.',
+        ''
       )
     );
     expect(getTopStories(input)).toEqual(expectedOutput);
@@ -180,6 +194,7 @@ describe('Extract top stories from the Morning Briefing', () => {
   test('If stories can be extracted return TopStories object', () => {
     const input: Result = {
       webPublicationDate: '',
+      webUrl: '',
       sectionId: '',
       pillarId: '',
       type: '',
@@ -189,6 +204,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         body: '',
         bodyText: '',
       },
+      tags: [],
       blocks: {
         body: [
           {
@@ -229,15 +245,18 @@ describe('Extract top stories from the Morning Briefing', () => {
     const expectedOutput = new TopStories(
       new Article(
         '‘Long extension if they don’t vote for deal’.',
-        'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50.'
+        'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50.',
+        ''
       ),
       new Article(
         '‘It was hell’.',
-        'Thursday will mark one year since 17 people were shot and killed at the Marjory Stoneman Douglas high school in Parkland, Florida.'
+        'Thursday will mark one year since 17 people were shot and killed at the Marjory Stoneman Douglas high school in Parkland, Florida.',
+        ''
       ),
       new Article(
         'Trouble for Trudeau.',
-        'A minister in Justin Trudeau’s Canadian government has resigned amid allegations the prime minister’s office pressured her to avoid prosecuting a major engineering firm.'
+        'A minister in Justin Trudeau’s Canadian government has resigned amid allegations the prime minister’s office pressured her to avoid prosecuting a major engineering firm.',
+        ''
       )
     );
     expect(getTopStories(input)).toEqual(expectedOutput);

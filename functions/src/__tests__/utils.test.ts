@@ -39,6 +39,7 @@ describe('Extract text elements from article', () => {
         body: '',
         bodyText: '',
       },
+      tags: [],
       blocks: {
         body: [
           {
