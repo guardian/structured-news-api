@@ -109,7 +109,7 @@ const generateTodayInFocus = (article: Article, previous: string) => {
     </media>
 
     <media xml:id='wordsTIF' begin='TIFpush.end+0.5s'>
-      <speak>${article.headline}
+      <speak>${article.headline}.
         <break strength='strong'/>
         ${article.standfirst}
       </speak>
