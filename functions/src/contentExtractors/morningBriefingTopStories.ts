@@ -17,20 +17,30 @@ Ignore the midweek catchup
 
 const numberOfStoriesNeeded = 3;
 
-const extractArticles = (articleParagraphs: string[]): Article[] => {
+const extractArticles = (
+  articleParagraphs: string[],
+  articleSource: string
+): Article[] => {
   // Populate with top story from morning briefing
-  const topStory = getTopStory(articleParagraphs);
+  const topStory = getTopStory(articleParagraphs, articleSource);
   if (topStory instanceof Article) {
     const stories: Article[] = [topStory];
     // Ignore the top story paragraphs
     const remainingParagraphs = articleParagraphs.slice(3);
-    return getStoriesFromMorningBriefing(stories, remainingParagraphs);
+    return getStoriesFromMorningBriefing(
+      stories,
+      remainingParagraphs,
+      articleSource
+    );
   } else {
     return [];
   }
 };
 
-const getTopStory = (articleParagraphs: string[]): Article | ContentError => {
+const getTopStory = (
+  articleParagraphs: string[],
+  articleSource: string
+): Article | ContentError => {
   if (articleParagraphs.length > 3) {
     const headline = stripHTMLTags(articleParagraphs[0])
       .replace('Top story: ', '')
@@ -38,7 +48,7 @@ const getTopStory = (articleParagraphs: string[]): Article | ContentError => {
     // Skip over the paragraph that introduces the morning briefing writer
     const openingParagraph = stripHTMLTags(articleParagraphs[2]);
     const openingSentence = getFirstSentence(openingParagraph);
-    return new Article(`${headline}.`, openingSentence);
+    return new Article(`${headline}.`, openingSentence, articleSource);
   } else {
     console.error(
       `Could not get Top story from article paragraphs. Input: ${JSON.stringify(
@@ -51,7 +61,8 @@ const getTopStory = (articleParagraphs: string[]): Article | ContentError => {
 
 const getStoriesFromMorningBriefing = (
   stories: Article[],
-  articleParagraphs: string[]
+  articleParagraphs: string[],
+  articleSource: string
 ): Article[] => {
   let i = 0;
   while (
@@ -72,7 +83,10 @@ const getStoriesFromMorningBriefing = (
 
       // Mid week catch up does not count as a news story
       if (!firstSentence.toLowerCase().includes('midweek catch-up')) {
-        const optionArticle = convertFirstSentenceToArticle(firstSentence);
+        const optionArticle = convertFirstSentenceToArticle(
+          firstSentence,
+          articleSource
+        );
         if (optionArticle instanceof Article) {
           stories.push(optionArticle);
         }
@@ -84,11 +98,16 @@ const getStoriesFromMorningBriefing = (
 };
 
 const convertFirstSentenceToArticle = (
-  sentence: string
+  sentence: string,
+  articleSource: string
 ): Article | ContentError => {
   const sentenceComponents = sentence.split(' – ');
   if (sentenceComponents.length === 2) {
-    return new Article(`${sentenceComponents[0]}.`, sentenceComponents[1]);
+    return new Article(
+      `${sentenceComponents[0]}.`,
+      sentenceComponents[1],
+      articleSource
+    );
   } else {
     console.error(
       `Could not extract article components from sentence ${sentence}`
@@ -100,8 +119,9 @@ const convertFirstSentenceToArticle = (
 };
 
 const getTopStories = (result: Result): TopStories | ContentError => {
+  const articleSource = result.webUrl;
   const articleParagraphs = getTextBlocksFromArticle(result);
-  const articles = extractArticles(articleParagraphs);
+  const articles = extractArticles(articleParagraphs, articleSource);
   if (articles.length === numberOfStoriesNeeded) {
     return new TopStories(articles[0], articles[1], articles[2]);
   } else {

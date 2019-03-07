@@ -38,7 +38,7 @@ const processTrendingArticles = (
     const articles = results.response.mostViewed;
     let foundArticle = false;
     let i = 0;
-    let article = new Article('', '');
+    let article = new Article('', '', '');
     while (!foundArticle && i < articles.length) {
       const currentArticle = articles[i];
       if (
@@ -49,7 +49,8 @@ const processTrendingArticles = (
         const fields = articles[i].fields;
         article = new Article(
           fields.headline,
-          getFirstSentence(fields.bodyText)
+          getFirstSentence(fields.bodyText),
+          currentArticle.webUrl
         );
         foundArticle = true;
       }

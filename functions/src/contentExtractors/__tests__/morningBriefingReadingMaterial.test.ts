@@ -38,6 +38,7 @@ describe('Extract reading material URL from the Morning Briefing', () => {
       type: '',
       sectionId: '',
       pillarId: '',
+      webUrl: '',
       fields: {
         headline: '',
         standfirst: '',
@@ -63,6 +64,7 @@ describe('Extract reading material URL from the Morning Briefing', () => {
       type: '',
       sectionId: '',
       pillarId: '',
+      webUrl: '',
       fields: {
         headline: '',
         standfirst: '',
@@ -96,6 +98,7 @@ describe('Extract reading material URL from the Morning Briefing', () => {
       type: '',
       sectionId: '',
       pillarId: '',
+      webUrl: '',
       fields: {
         headline: '',
         standfirst: '',

@@ -54,8 +54,12 @@ const getCapiArticle = (
       return res.json();
     })
     .then(capiResponse => {
-      const fields = capiResponse.response.content.fields;
-      return new Article(fields.headline, stripHTMLTags(fields.standfirst));
+      const article = capiResponse.response.content;
+      return new Article(
+        article.fields.headline,
+        stripHTMLTags(article.fields.standfirst),
+        article.webUrl
+      );
     })
     .catch(e => {
       console.error(

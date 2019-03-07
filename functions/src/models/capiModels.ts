@@ -27,6 +27,7 @@ interface Result {
   sectionId: string;
   pillarId: string;
   webPublicationDate: string;
+  webUrl: string;
   fields: Fields;
   blocks: Blocks;
 }
