@@ -22,6 +22,7 @@ describe('Process the results of Today in Focus query', () => {
               body: '',
               bodyText: '',
             },
+            tags: [],
             blocks: {
               body: [],
             },
