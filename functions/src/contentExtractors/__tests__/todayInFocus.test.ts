@@ -13,6 +13,7 @@ describe('Process the results of Today in Focus query', () => {
             sectionId: '',
             pillarId: '',
             type: '',
+            webUrl: 'www.theguardian.com',
             fields: {
               headline:
                 "Why are homeless people still dying in one of Britain's richest cities?",
@@ -30,7 +31,8 @@ describe('Process the results of Today in Focus query', () => {
     };
     const expectedOutput = new Article(
       "Why are homeless people still dying in one of Britain's richest cities?",
-      'After a spike in deaths among homeless people in the affluent city of Oxford, Robert Booth went to investigate. In a growing community of rough sleepers, there is little support for people with mental health problems and addiction.'
+      'After a spike in deaths among homeless people in the affluent city of Oxford, Robert Booth went to investigate. In a growing community of rough sleepers, there is little support for people with mental health problems and addiction.',
+      'www.theguardian.com'
     );
     expect(processTodayInFocus(input)).toEqual(expectedOutput);
   });

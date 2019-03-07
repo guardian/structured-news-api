@@ -34,10 +34,11 @@ const processTodayInFocus = (results: CapiResults): Article | ContentError => {
     console.error('No matches for Today in Focus query');
     return new ContentError('No matches found for Today in Focus Query');
   } else {
-    const fields = results.response.results[0].fields;
+    const article = results.response.results[0];
     return new Article(
-      fields.headline,
-      getTodayInFocusStandfirst(stripHTMLTags(fields.standfirst))
+      article.fields.headline,
+      getTodayInFocusStandfirst(stripHTMLTags(article.fields.standfirst)),
+      article.webUrl
     );
   }
 };

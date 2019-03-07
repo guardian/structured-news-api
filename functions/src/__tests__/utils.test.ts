@@ -32,6 +32,7 @@ describe('Extract text elements from article', () => {
       type: '',
       pillarId: '',
       sectionId: '',
+      webUrl: '',
       fields: {
         headline: '',
         standfirst: '',

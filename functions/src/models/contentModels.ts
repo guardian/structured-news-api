@@ -1,7 +1,11 @@
 class OptionContent {}
 
 class Article extends OptionContent {
-  constructor(public headline: string, public standfirst: string) {
+  constructor(
+    public headline: string,
+    public standfirst: string,
+    public source: string
+  ) {
     super();
   }
 }
