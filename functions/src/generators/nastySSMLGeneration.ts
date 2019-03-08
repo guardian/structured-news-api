@@ -17,9 +17,9 @@ const generateSSML = (morningBriefing: MorningBriefing) => {
     const todayInFocusSSML = generateTodayInFocus(todayInFocus, 'wordsHD3');
     const trendingArticleSSML = generateTrendingArticle(
       trendingArticle,
-      'musicTIF'
+      'wordsTIF'
     );
-    const outro = generateOutro('wordslongread');
+    const outro = generateOutro('wordsTrending');
     return morningBriefingSSML(
       topStoriesSSML,
       todayInFocusSSML,
@@ -34,7 +34,7 @@ const generateSSML = (morningBriefing: MorningBriefing) => {
       trendingArticle,
       'wordsHD3'
     );
-    const outro = generateOutro('wordslongread');
+    const outro = generateOutro('wordsTrending');
     return morningBriefingSSML(topStoriesSSML, '', trendingArticleSSML, outro);
   } else {
     return 'SSML generation failed';
@@ -47,44 +47,48 @@ const morningBriefingSSML = (
   trendingArticleSSML: string,
   outro: string
 ) => {
-  const ssml = `<speak>
-  <par>
-    <media xml:id='earcon' begin='0.0s' soundLevel='-5dB' fadeOutDur='0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/cheery_earcon1b_comp_fade_lmt.ogg'/>
-    </media>
-      <media xml:id='intro' begin='earcon.end+0.5s' soundLevel='0dB' fadeOutDur='0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Leah_v2_Intro_-3db.ogg'/>
-    </media>
-    
-    ${topStoriesSSML}
-    ${todayInFocusSSML}
-    ${trendingArticleSSML}
-    ${outro}
-  </par> 
-</speak>`;
+  const ssml = `
+  <speak>
+    <par>
+      <media xml:id='earcon' soundLevel='-3dB'>
+        <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Earcon.ogg'/>
+      </media>
+      <media xml:id='advert' begin='earcon.end-0.8s' soundLevel='-2dB'>
+        <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Advert.ogg'/>
+      </media>
+      <media xml:id='intro' begin='advert.end+1.4s'>
+        <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Intro.ogg'/>
+      </media>
+
+      ${topStoriesSSML}
+      ${todayInFocusSSML}
+      ${trendingArticleSSML}
+      ${outro}
+    </par> 
+  </speak>`;
   return stripExcessWhitespace(ssml);
 };
 
 const generateTopStories = (stories: TopStories) => {
   const ssml = `
-    <media xml:id='headline1' begin='intro.end-0.0s' soundLevel='0dB' fadeOutDur='0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Leah_v2_HL1_-3db.ogg'/>
+    <media xml:id='HL1' begin='intro.end-0.0s'>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/HL1.ogg'/>
     </media>
 
-    <media xml:id='wordsHD1' begin='headline1.end-0.0s'>
+    <media xml:id='wordsHL1' begin='HL1.end-0.0s' soundLevel='-1dB'>
       <speak>
         ${encodeStringForSSML(
           stories.story1.headline
-        )}.<break strength='strong'/>
+        )}<break strength='strong'/>
         ${encodeStringForSSML(stories.story1.standfirst)}
       </speak>
     </media>
 
-    <media xml:id='headline2' begin='wordsHD1.end-0.5s' soundLevel='0dB'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Leah_v2_HL2_-3db.ogg'/>
+    <media xml:id='HL2' begin='wordsHL1.end-0.5s'>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/HL2.ogg'/>
     </media>
 
-    <media xml:id='wordsHD2' begin='headline2.end-0.0s'>
+    <media xml:id='wordsHL2' begin='HL2.end-0.0s' soundLevel='-1dB'>
       <speak>
         ${encodeStringForSSML(
           stories.story2.headline
@@ -93,11 +97,11 @@ const generateTopStories = (stories: TopStories) => {
       </speak>
     </media>
 
-    <media xml:id='headline3' begin='wordsHD2.end-0.0s' soundLevel='0dB'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Leah_v2_HL3_-3db.ogg'/>
+    <media xml:id='HL3' begin='wordsHL2.end-0.0s'>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/HL3.ogg'/>
     </media>
 
-    <media xml:id='wordsHD3' begin='headline3.end-0.0s'>
+    <media xml:id='wordsHD3' begin='HL3.end-0.0s' soundLevel='-1dB'>
       <speak>
         ${encodeStringForSSML(
           stories.story3.headline
@@ -110,11 +114,11 @@ const generateTopStories = (stories: TopStories) => {
 
 const generateTodayInFocus = (article: Article, previous: string) => {
   const ssml = `
-    <media xml:id='TIFpush' begin='${previous}.end-0.0s' soundLevel='0dB' fadeOutDur='0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Leah_v2_TiF_-3db.ogg' clipBegin='0.0s'/>
+    <media xml:id='TIF' begin='${previous}.end+0.8s'>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/TIF.ogg'/>
     </media>
 
-    <media xml:id='wordsTIF' begin='TIFpush.end+0.5s'>
+    <media xml:id='wordsTIF' begin='TIF.end+0.0s' soundLevel='-1dB'>
       <speak>${encodeStringForSSML(article.headline)}.
         <break strength='strong'/>
         ${encodeStringForSSML(article.standfirst)}
@@ -124,11 +128,12 @@ const generateTodayInFocus = (article: Article, previous: string) => {
 };
 
 const generateTrendingArticle = (article: Article, previous: string) => {
-  const ssml = `<media xml:id = 'longread' begin = '${previous}.end-1.6s' soundLevel = '0dB' fadeOutDur = '0.0s' >
-    <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Leah_v2_Trendingv2.ogg' clipBegin = '0.0s'/>
+  const ssml = `
+    <media xml:id='trending' begin='${previous}.end+0.4s'>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Trend.ogg'/>
     </media>
 
-    <media xml:id = 'wordslongread' begin = 'longread.end+0.0s' soundLevel = '0dB' fadeOutDur = '0.0s' >
+    <media xml:id='wordsTrending' begin='trending.end+0.0s' soundLevel='-1dB'>
       <speak>
       ${encodeStringForSSML(article.standfirst)}
       </speak>
@@ -137,33 +142,29 @@ const generateTrendingArticle = (article: Article, previous: string) => {
 };
 
 const generateOutro = (previous: string) => {
-  const ssml = `<media xml:id='OUTRO' begin='${previous}.end+0.0s' soundLevel='0dB' fadeOutDur='0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Leah_v2_Outro_-3db.ogg' clipBegin='0.0s'/>
+  const ssml = `
+    <media xml:id='outro' begin='${previous}.end+0.0s'>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Outro.ogg'/>
     </media>
 
-    <media xml:id='music1' soundLevel='-3.0dB' fadeInDur='0.0s' fadeOutDur='0.0s' begin='earcon.end-1.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Firebird_Intro_short.ogg'/>
+    <media xml:id='music1' begin='advert.end-0.3s' soundLevel='-1.0dB'>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fbird_Intro_s.ogg'/>
     </media>
 
-    <media xml:id='music2' soundLevel='-12.0dB' fadeInDur='0.0s' fadeOutDur='0.0s' begin='music1.end+0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Firebird_1.ogg'/>
+    <media xml:id='music2' begin='music1.end+0.0s' end='wordsHD3.end+1.0s' soundLevel='-10.0dB' fadeOutDur='3.0s' repeatCount='20'>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fbird_1l.ogg'/>
     </media>
 
-    <media xml:id='music2b' soundLevel='-12.0dB' repeatCount='20' fadeInDur='0.0s' fadeOutDur='3.0s' begin='music1.end+0.0s' end='wordsHD3.end+1.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Firebird_mute_Drum_Loop_2.ogg'/>
+    <media xml:id='musicTIF' begin='music2.end-1.0s' end='wordsTIF.end+3.0s' soundLevel='-23.0dB' fadeOutDur='3.0s' repeatCount='20'>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/TIF_m.ogg'/>
     </media>
 
-    <media xml:id='musicTIF' soundLevel='-25.0dB' repeatCount='20' fadeInDur='1.5s' fadeOutDur='2.0s' begin='music2b.end-0.0s' end='wordsTIF.end+2.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/TIF_loop.ogg'/>
+    <media xml:id='music3' begin='musicTIF.end-2.0s' end='outro.end-5.0s' soundLevel='-10.0dB' fadeInDur='2.5s' fadeOutDur='2.5s' repeatCount='10'>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fbird_2l.ogg'/>
     </media>
 
-    <media xml:id='music3' soundLevel='-12.0dB' repeatCount='10' fadeInDur='3.0s' fadeOutDur='2.0s' begin='musicTIF.end-0.0s' end='OUTRO.end-3.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Firebird_Synth_Drum_Loop_2.ogg'/>
-    </media>
-
-    <media xml:id='music3out' soundLevel='-8.0dB' fadeInDur='0.0s' fadeOutDur='3.0s' begin='music3.end0.0s' end='OUTRO.end+4.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Firebird_Intro.ogg'>
-      </audio>
+    <media xml:id='music4' begin='music3.end-1.9s' end='outro.end+4.0s' soundLevel='-4.0dB' fadeInDur='1.0s' fadeOutDur='3.0s'>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fbird_i.ogg'/>
     </media>`;
   return ssml;
 };
