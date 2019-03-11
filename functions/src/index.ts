@@ -33,19 +33,24 @@ const buildTestData = (): Promise<APIResponse[]> => {
       return res.json();
     })
     .then(capiResponse => {
+      const noAudio = true;
       const results = capiResponse.response.results;
       const response = results.map(result => {
-        return processResult(result);
+        return processResult(result, noAudio);
       });
       return Promise.all(response);
     });
 };
 
-const processResult = (result: Result): Promise<APIResponse> => {
+const processResult = (
+  result: Result,
+  noAudio: boolean
+): Promise<APIResponse> => {
   const articleDate = getDateFromString(result.webPublicationDate);
   return getTodayInFocus(articleDate, capiKey).then(todayInFocus => {
     return getTrendingArticle(capiKey).then(trendingArticle => {
       return buildResponse(
+        noAudio,
         articleDate,
         getTopStories(result),
         todayInFocus,
@@ -55,7 +60,7 @@ const processResult = (result: Result): Promise<APIResponse> => {
   });
 };
 
-const getDailyUpdate = () => {
+const getDailyUpdate = (noAudio: boolean) => {
   const pageSize = 1;
   const morningBriefing = getMorningBriefingUrl(pageSize);
 
@@ -66,7 +71,7 @@ const getDailyUpdate = () => {
     .then<OptionContent>(capiResponse => {
       const results = capiResponse.response.results;
       if (results.length > 0) {
-        return processResult(results[0]);
+        return processResult(results[0], noAudio);
       } else {
         return new ContentError('Could not get daily update');
       }
@@ -74,6 +79,7 @@ const getDailyUpdate = () => {
 };
 
 const buildResponse = (
+  noAudio: boolean,
   articleDate: string,
   topStories: OptionContent,
   todayInFocus: OptionContent,
@@ -85,9 +91,15 @@ const buildResponse = (
     trendingArticle
   );
   const ssml = generateSSML(morningBriefing);
-  return generateAudioFile(ssml, googleTextToSpeechKey).then(url => {
-    return new APIResponse(articleDate, morningBriefing, ssml, url);
-  });
+  if (noAudio) {
+    return Promise.resolve(
+      new APIResponse(articleDate, morningBriefing, ssml, '')
+    );
+  } else {
+    return generateAudioFile(ssml, googleTextToSpeechKey).then(url => {
+      return new APIResponse(articleDate, morningBriefing, ssml, url);
+    });
+  }
 };
 
 const buildMorningBriefing = (
@@ -108,9 +120,18 @@ const buildMorningBriefing = (
   return response;
 };
 
+const getBooleanParam = (param: any): boolean => {
+  if (typeof param === 'string') {
+    return param.toLowerCase() === 'true' ? true : false;
+  } else {
+    return false;
+  }
+};
+
 exports.structuredNewsApi = region('europe-west1').https.onRequest(
   (request, response) => {
-    const isTest: boolean = request.query.isTest;
+    const isTest: boolean = getBooleanParam(request.query.isTest);
+    const noAudio: boolean = getBooleanParam(request.query.noAudio);
     if (isTest) {
       buildTestData()
         .then(testData => {
@@ -121,7 +142,7 @@ exports.structuredNewsApi = region('europe-west1').https.onRequest(
           response.status(500).send('500: Could not get test data');
         });
     } else {
-      getDailyUpdate()
+      getDailyUpdate(noAudio)
         .then(dailyUpdate => {
           if (dailyUpdate instanceof APIResponse) {
             response.send(dailyUpdate);
