@@ -34,12 +34,12 @@ exports.structuredNewsApi = region('europe-west1').https.onRequest(
           );
           response
             .status(500)
-            .send('500: Could not get daily update. No content available');
+            .send('500: Could not get data. No content available');
         }
       })
       .catch(e => {
-        console.error(`Failed to get daily update. Error: ${e}`);
-        response.status(500).send('500: Could not get daily update');
+        console.error(`Failed to get data. Error: ${e}`);
+        response.status(500).send('500: Could not get data');
       });
   }
 );
