@@ -8,6 +8,13 @@ import {
 import fetch from 'node-fetch';
 import { isMorningBriefing, getFirstSentence } from './extractorUtils';
 
+/*
+Current rules for uk Top Stories:
+Top stories from CAPI based on showing only editors picks
+First sentence each story
+Story must have the pillarId pillar/news and not be a live blog or have the morning briefing tag.
+*/
+
 const numberOfStoriesNeeded = 4;
 
 const getUkTopStories = (capiKey: string): Promise<OptionContent> => {

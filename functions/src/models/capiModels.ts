@@ -14,20 +14,20 @@ interface EditorsPicks {
   editorsPicks: Result[];
 }
 
-interface CapiResult {
-  response: CapiResponse;
-}
-
-interface CapiResponse {
-  content: Result;
-}
-
 interface CapiResults {
   response: Results;
 }
 
 interface Results {
   results: Result[];
+}
+
+interface CapiResult {
+  response: CapiResponse;
+}
+
+interface CapiResponse {
+  content: Result;
 }
 
 interface Result {
