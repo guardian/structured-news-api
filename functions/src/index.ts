@@ -1,9 +1,21 @@
-import { APIResponse, OptionContent } from './models/contentModels';
+import {
+  APIResponse,
+  OptionContent,
+  ContentError,
+} from './models/contentModels';
 import { region } from 'firebase-functions';
 import { getWeekdayAMBriefing } from './contentResponseBuilders/weekdayAMBriefing';
+import { isWeekdayAM } from './briefingSlotCheckers';
+import * as moment from 'moment';
 
 const getLatestUpdate = (noAudio: boolean): Promise<OptionContent> => {
-  return getWeekdayAMBriefing(noAudio);
+  if (isWeekdayAM(moment().utc())) {
+    return getWeekdayAMBriefing(noAudio);
+  } else {
+    return Promise.resolve(
+      new ContentError('Outside of the morning briefing scope')
+    );
+  }
 };
 
 const getBooleanParam = (param: any): boolean => {
