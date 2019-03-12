@@ -6,10 +6,7 @@ import {
   OutOfBounds,
   URL,
 } from '../models/contentModels';
-import {
-  getCapiArticle,
-  getTextBlocksFromArticle,
-} from '../generators/generatorUtils';
+import { getCapiArticle, getTextBlocksFromArticle } from './extractorUtils';
 
 import { Result } from '../models/capiModels';
 import { load } from 'cheerio';

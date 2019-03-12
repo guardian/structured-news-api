@@ -2,10 +2,10 @@ import fetch from 'node-fetch';
 import {
   OptionContent,
   ContentError,
-  APIResponse,
   MorningBriefing,
   TopStories,
   Article,
+  WeekdayAMResponse,
 } from '../models/contentModels';
 import { CapiResults, Result } from '../models/capiModels';
 import { getDateFromString } from './builderUtils';
@@ -44,7 +44,7 @@ const getMorningBriefingUrl = (pageSize: number) => {
 const processResult = (
   result: Result,
   noAudio: boolean
-): Promise<APIResponse> => {
+): Promise<WeekdayAMResponse> => {
   const articleDate = getDateFromString(result.webPublicationDate);
   return getTodayInFocus(articleDate, capiKey).then(todayInFocus => {
     return getTrendingArticle(capiKey).then(trendingArticle => {
@@ -65,7 +65,7 @@ const buildResponse = (
   topStories: OptionContent,
   todayInFocus: OptionContent,
   trendingArticle: OptionContent
-): Promise<APIResponse> => {
+): Promise<WeekdayAMResponse> => {
   const morningBriefing = buildMorningBriefing(
     topStories,
     todayInFocus,
@@ -74,11 +74,11 @@ const buildResponse = (
   const ssml = generateSSML(morningBriefing);
   if (noAudio) {
     return Promise.resolve(
-      new APIResponse(articleDate, morningBriefing, ssml, '')
+      new WeekdayAMResponse(articleDate, morningBriefing, ssml, '')
     );
   } else {
     return generateAudioFile(ssml, googleTextToSpeechKey).then(url => {
-      return new APIResponse(articleDate, morningBriefing, ssml, url);
+      return new WeekdayAMResponse(articleDate, morningBriefing, ssml, url);
     });
   }
 };

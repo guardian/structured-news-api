@@ -1,20 +1,15 @@
-import {
-  APIResponse,
-  OptionContent,
-  ContentError,
-} from './models/contentModels';
+import { APIResponse, OptionContent } from './models/contentModels';
 import { region } from 'firebase-functions';
 import { getWeekdayAMBriefing } from './contentResponseBuilders/weekdayAMBriefing';
 import { isWeekdayAM } from './briefingSlotCheckers';
 import * as moment from 'moment';
+import { getFallbackBriefing } from './contentResponseBuilders/fallbackBriefing';
 
 const getLatestUpdate = (noAudio: boolean): Promise<OptionContent> => {
   if (isWeekdayAM(moment().utc())) {
     return getWeekdayAMBriefing(noAudio);
   } else {
-    return Promise.resolve(
-      new ContentError('Outside of the morning briefing scope')
-    );
+    return getFallbackBriefing(noAudio);
   }
 };
 
@@ -47,5 +42,4 @@ exports.structuredNewsApi = region('europe-west1').https.onRequest(
         response.status(500).send('500: Could not get daily update');
       });
   }
-  // }
 );

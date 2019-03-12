@@ -32,12 +32,40 @@ class ContentError extends OptionContent {
   }
 }
 
-class APIResponse extends OptionContent {
+abstract class APIResponse extends OptionContent {
+  constructor(public ssml: string, public audioFileLocation: string) {
+    super();
+  }
+}
+
+class WeekdayAMResponse extends APIResponse {
   constructor(
     public date: string,
     public morningBriefing: MorningBriefing,
     public ssml: string,
     public audioFileLocation: string
+  ) {
+    super(ssml, audioFileLocation);
+  }
+}
+
+class FallbackResponse extends APIResponse {
+  constructor(
+    public topStories: FallbackTopStories,
+    public trendingArticle: Article,
+    public ssml: string,
+    public audioFileLocation: string
+  ) {
+    super(ssml, audioFileLocation);
+  }
+}
+
+class FallbackTopStories extends OptionContent {
+  constructor(
+    public story1: Article,
+    public story2: Article,
+    public story3: Article,
+    public story4: Article
   ) {
     super();
   }
@@ -76,4 +104,7 @@ export {
   Index,
   OutOfBounds,
   MorningBriefing,
+  WeekdayAMResponse,
+  FallbackResponse,
+  FallbackTopStories,
 };
