@@ -7,7 +7,7 @@ import {
   FallbackTopStories,
   ContentError,
 } from '../models/contentModels';
-import { FallbackResponse } from '../models/responseModels';
+import { FallbackResponse, FallbackBriefing } from '../models/responseModels';
 const capiKey = config().guardian.capikey;
 
 const getFallbackBriefing = (noAudio: boolean): Promise<OptionContent> => {
@@ -27,7 +27,11 @@ const buildResponse = (
     topStories instanceof FallbackTopStories &&
     trendingArticle instanceof Article
   ) {
-    return new FallbackResponse(topStories, trendingArticle, '', '');
+    return new FallbackResponse(
+      new FallbackBriefing(topStories, trendingArticle),
+      '',
+      ''
+    );
   } else {
     return new ContentError('Could not get content for fallback.');
   }

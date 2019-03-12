@@ -22,10 +22,16 @@ class WeekdayAMResponse extends APIResponse {
   }
 }
 
-class FallbackResponse extends APIResponse {
+class FallbackBriefing {
   constructor(
     public topStories: FallbackTopStories,
-    public trendingArticle: Article,
+    public trendingArticle: Article
+  ) {}
+}
+
+class FallbackResponse extends APIResponse {
+  constructor(
+    public fallbackBriefing: FallbackBriefing,
     public ssml: string,
     public audioFileLocation: string
   ) {
@@ -33,4 +39,10 @@ class FallbackResponse extends APIResponse {
   }
 }
 
-export { WeekdayAMResponse, FallbackResponse, WeekdayAMBriefing, APIResponse };
+export {
+  WeekdayAMResponse,
+  FallbackResponse,
+  WeekdayAMBriefing,
+  APIResponse,
+  FallbackBriefing,
+};
