@@ -2,7 +2,7 @@ import { Article, ContentError } from '../models/contentModels';
 
 import { CapiTrending, Result } from '../models/capiModels';
 import fetch from 'node-fetch';
-import { getFirstSentence } from '../utils';
+import { getFirstSentence } from '../generators/generatorUtils';
 
 /*
 Current rules for trendingArticles:

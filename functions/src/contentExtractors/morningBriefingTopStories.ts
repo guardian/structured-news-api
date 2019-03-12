@@ -3,7 +3,7 @@ import {
   getTextBlocksFromArticle,
   stripHTMLTags,
   getFirstSentence,
-} from '../utils';
+} from '../generators/generatorUtils';
 
 import { Result } from '../models/capiModels';
 import { load } from 'cheerio';
