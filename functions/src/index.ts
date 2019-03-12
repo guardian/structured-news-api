@@ -1,4 +1,4 @@
-import { OptionContent } from './models/contentModels';
+import { OptionContent, ContentError } from './models/contentModels';
 import { region } from 'firebase-functions';
 import { getWeekdayAMBriefing } from './contentResponseBuilders/weekdayAMBriefing';
 import { isWeekdayAM } from './briefingSlotCheckers';
@@ -8,7 +8,12 @@ import { APIResponse } from './models/responseModels';
 
 const getLatestUpdate = (noAudio: boolean): Promise<OptionContent> => {
   if (isWeekdayAM(moment().utc())) {
-    return getWeekdayAMBriefing(noAudio);
+    const amBriefing = getWeekdayAMBriefing(noAudio);
+    if (amBriefing instanceof ContentError) {
+      return getFallbackBriefing(noAudio);
+    } else {
+      return amBriefing;
+    }
   } else {
     return getFallbackBriefing(noAudio);
   }
