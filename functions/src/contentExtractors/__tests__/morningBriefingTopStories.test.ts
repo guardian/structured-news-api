@@ -1,7 +1,7 @@
 import { Article, ContentError, TopStories } from '../../models/contentModels';
 
 import { Result } from '../../models/capiModels';
-import { getTopStories } from '../morningBriefingTopStories';
+import { getTopStoriesFromMorningBriefing } from '../morningBriefingTopStories';
 
 describe('Extract top stories from the Morning Briefing', () => {
   test("If the top story in the Morning Briefing can't be extracted return a ContentError object", () => {
@@ -31,7 +31,7 @@ describe('Extract top stories from the Morning Briefing', () => {
       'Could not build TopStories object for []'
     );
 
-    expect(getTopStories(input)).toEqual(expectedOutput);
+    expect(getTopStoriesFromMorningBriefing(input)).toEqual(expectedOutput);
   });
 
   test('If three stories cannot be extracted from the Morning Briefing return a ContentError object', () => {
@@ -84,7 +84,7 @@ describe('Extract top stories from the Morning Briefing', () => {
       `Could not build TopStories object for ${JSON.stringify(articlesJson)}`
     );
 
-    expect(getTopStories(input)).toEqual(expectedOutput);
+    expect(getTopStoriesFromMorningBriefing(input)).toEqual(expectedOutput);
   });
 
   test('If only the top story can be extracted from the Morning Briefing return a ContentError object', () => {
@@ -131,7 +131,7 @@ describe('Extract top stories from the Morning Briefing', () => {
       `Could not build TopStories object for ${JSON.stringify(articlesJson)}`
     );
 
-    expect(getTopStories(input)).toEqual(expectedOutput);
+    expect(getTopStoriesFromMorningBriefing(input)).toEqual(expectedOutput);
   });
 
   test('Midweek catch-up in Morning Briefing should be ignored', () => {
@@ -188,7 +188,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         ''
       )
     );
-    expect(getTopStories(input)).toEqual(expectedOutput);
+    expect(getTopStoriesFromMorningBriefing(input)).toEqual(expectedOutput);
   });
 
   test('If stories can be extracted return TopStories object', () => {
@@ -259,6 +259,6 @@ describe('Extract top stories from the Morning Briefing', () => {
         ''
       )
     );
-    expect(getTopStories(input)).toEqual(expectedOutput);
+    expect(getTopStoriesFromMorningBriefing(input)).toEqual(expectedOutput);
   });
 });

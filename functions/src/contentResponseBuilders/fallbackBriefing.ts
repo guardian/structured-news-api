@@ -4,16 +4,14 @@ import { getTrendingArticle } from '../contentExtractors/trendingArticle';
 import {
   Article,
   OptionContent,
-  FallbackResponse,
   FallbackTopStories,
   ContentError,
 } from '../models/contentModels';
+import { FallbackResponse } from '../models/responseModels';
 const capiKey = config().guardian.capikey;
 
 const getFallbackBriefing = (noAudio: boolean): Promise<OptionContent> => {
-  console.log('here');
   return getUkTopStories(capiKey).then(topStories => {
-    console.log(topStories + 'top');
     return getTrendingArticle(capiKey).then(trendingArticle => {
       return buildResponse(noAudio, topStories, trendingArticle);
     });

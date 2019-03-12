@@ -118,7 +118,9 @@ const convertFirstSentenceToArticle = (
   }
 };
 
-const getTopStories = (result: Result): TopStories | ContentError => {
+const getTopStoriesFromMorningBriefing = (
+  result: Result
+): TopStories | ContentError => {
   const articleSource = result.webUrl;
   const articleParagraphs = getTextBlocksFromArticle(result);
   const articles = extractArticles(articleParagraphs, articleSource);
@@ -134,4 +136,4 @@ const getTopStories = (result: Result): TopStories | ContentError => {
   }
 };
 
-export { getTopStories };
+export { getTopStoriesFromMorningBriefing };

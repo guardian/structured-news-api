@@ -1,47 +1,30 @@
-import { Article, MorningBriefing, TopStories } from '../models/contentModels';
+import { Article, TopStories } from '../models/contentModels';
+import { WeekdayAMBriefing } from '../models/responseModels';
 
 /*
 Very hacky generation of SSML.
 */
 
-const generateSSML = (morningBriefing: MorningBriefing) => {
-  const topStories = morningBriefing.topStories;
-  const todayInFocus = morningBriefing.todayInFocus;
-  const trendingArticle = morningBriefing.trendingArticle;
-  if (
-    topStories instanceof TopStories &&
-    todayInFocus instanceof Article &&
-    trendingArticle instanceof Article
-  ) {
-    const topStoriesSSML = generateTopStories(topStories);
-    const todayInFocusSSML = generateTodayInFocus(todayInFocus, 'wordsHD3');
-    const trendingArticleSSML = generateTrendingArticle(
-      trendingArticle,
-      'wordsTIF'
-    );
-    const outro = generateOutro('wordsTrending');
-    return morningBriefingSSML(
-      topStoriesSSML,
-      todayInFocusSSML,
-      trendingArticleSSML,
-      outro
-    );
-  }
-  // Take into account missing Today in Focus
-  if (topStories instanceof TopStories && trendingArticle instanceof Article) {
-    const topStoriesSSML = generateTopStories(topStories);
-    const trendingArticleSSML = generateTrendingArticle(
-      trendingArticle,
-      'wordsHD3'
-    );
-    const outro = generateOutro('wordsTrending');
-    return morningBriefingSSML(topStoriesSSML, '', trendingArticleSSML, outro);
-  } else {
-    return 'SSML generation failed';
-  }
+const generateWeekdayAMSSML = (weekdayAMBriefing: WeekdayAMBriefing) => {
+  const topStoriesSSML = generateTopStories(weekdayAMBriefing.topStories);
+  const todayInFocusSSML = generateTodayInFocus(
+    weekdayAMBriefing.todayInFocus,
+    'wordsHD3'
+  );
+  const trendingArticleSSML = generateTrendingArticle(
+    weekdayAMBriefing.trendingArticle,
+    'wordsTIF'
+  );
+  const outro = generateOutro('wordsTrending');
+  return weekdayAMBriefingSSML(
+    topStoriesSSML,
+    todayInFocusSSML,
+    trendingArticleSSML,
+    outro
+  );
 };
 
-const morningBriefingSSML = (
+const weekdayAMBriefingSSML = (
   topStoriesSSML: string,
   todayInFocusSSML: string,
   trendingArticleSSML: string,
@@ -188,4 +171,4 @@ const stripExcessWhitespace = (ssml: string) => {
   return ssml.replace(/\s\s+/g, '');
 };
 
-export { generateSSML, stripExcessWhitespace, encodeStringForSSML };
+export { generateWeekdayAMSSML, stripExcessWhitespace, encodeStringForSSML };

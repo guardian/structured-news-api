@@ -1,9 +1,10 @@
-import { APIResponse, OptionContent } from './models/contentModels';
+import { OptionContent } from './models/contentModels';
 import { region } from 'firebase-functions';
 import { getWeekdayAMBriefing } from './contentResponseBuilders/weekdayAMBriefing';
 import { isWeekdayAM } from './briefingSlotCheckers';
 import * as moment from 'moment';
 import { getFallbackBriefing } from './contentResponseBuilders/fallbackBriefing';
+import { APIResponse } from './models/responseModels';
 
 const getLatestUpdate = (noAudio: boolean): Promise<OptionContent> => {
   if (isWeekdayAM(moment().utc())) {
