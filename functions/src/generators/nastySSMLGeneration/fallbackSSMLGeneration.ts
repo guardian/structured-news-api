@@ -1,33 +1,36 @@
-import { Article, TopStories } from '../models/contentModels';
-import { WeekdayAMBriefing } from '../models/responseModels';
+import { Article } from '../../models/contentModels';
+import { FallbackBriefing } from '../../models/responseModels';
+import { stripExcessWhitespace, encodeStringForSSML } from './SSMLUtils';
 
 /*
 Very hacky generation of SSML.
 */
 
-const generateWeekdayAMSSML = (weekdayAMBriefing: WeekdayAMBriefing) => {
-  const topStoriesSSML = generateTopStories(weekdayAMBriefing.topStories);
-  const todayInFocusSSML = generateTodayInFocus(
-    weekdayAMBriefing.todayInFocus,
-    'wordsHD3'
+const generateFallbackSSML = (fallbackBriefing: FallbackBriefing) => {
+  const topStories = fallbackBriefing.topStories;
+  const topStoriesSSML = generateTopStories(
+    topStories.story1,
+    topStories.story2,
+    topStories.story3
   );
   const trendingArticleSSML = generateTrendingArticle(
-    weekdayAMBriefing.trendingArticle,
-    'wordsTIF'
+    fallbackBriefing.trendingArticle,
+    'wordsHD3'
   );
+  const finalStorySSML = generateFinalStory(topStories.story4, 'wordsTIF');
   const outro = generateOutro('wordsTrending');
-  return weekdayAMBriefingSSML(
+  return fallbackBriefingSSML(
     topStoriesSSML,
-    todayInFocusSSML,
     trendingArticleSSML,
+    finalStorySSML,
     outro
   );
 };
 
-const weekdayAMBriefingSSML = (
+const fallbackBriefingSSML = (
   topStoriesSSML: string,
-  todayInFocusSSML: string,
   trendingArticleSSML: string,
+  finalStorySSML: string,
   outro: string
 ) => {
   const ssml = `
@@ -40,65 +43,60 @@ const weekdayAMBriefingSSML = (
         <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Advert.ogg'/>
       </media>
       <media xml:id='intro' begin='advert.end+1.4s'>
-        <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Intro.ogg'/>
+        <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_intro_m-3.ogg'/>
       </media>
 
       ${topStoriesSSML}
-      ${todayInFocusSSML}
       ${trendingArticleSSML}
+      ${finalStorySSML}
       ${outro}
     </par> 
   </speak>`;
   return stripExcessWhitespace(ssml);
 };
 
-const generateTopStories = (stories: TopStories) => {
+const generateTopStories = (
+  story1: Article,
+  story2: Article,
+  story3: Article
+) => {
   const ssml = `
     <media xml:id='HL1' begin='intro.end-0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/HL1.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_HL1_m-3.ogg'/>
     </media>
 
     <media xml:id='wordsHL1' begin='HL1.end-0.0s' soundLevel='-1dB'>
       <speak>
-        ${encodeStringForSSML(
-          stories.story1.headline
-        )}<break strength='strong'/>
-        ${encodeStringForSSML(stories.story1.standfirst)}
+        ${encodeStringForSSML(story1.standfirst)}
       </speak>
     </media>
 
     <media xml:id='HL2' begin='wordsHL1.end-0.5s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/HL2.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_HL2_m-3.ogg'/>
     </media>
 
     <media xml:id='wordsHL2' begin='HL2.end-0.0s' soundLevel='-1dB'>
       <speak>
-        ${encodeStringForSSML(
-          stories.story2.headline
-        )}<break strength='strong'/>
-        ${encodeStringForSSML(stories.story2.standfirst)}
+        ${encodeStringForSSML(story2.standfirst)}
       </speak>
     </media>
 
     <media xml:id='HL3' begin='wordsHL2.end-0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/HL3.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_HL3_m-3.ogg'/>
     </media>
 
     <media xml:id='wordsHD3' begin='HL3.end-0.0s' soundLevel='-1dB'>
       <speak>
-        ${encodeStringForSSML(
-          stories.story3.headline
-        )}<break strength='strong'/>
-        ${encodeStringForSSML(stories.story3.standfirst)}
+        ${encodeStringForSSML(story3.standfirst)}
       </speak>
     </media>`;
   return ssml;
 };
 
-const generateTodayInFocus = (article: Article, previous: string) => {
+const generateTrendingArticle = (article: Article, previous: string) => {
   const ssml = `
     <media xml:id='TIF' begin='${previous}.end+0.8s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/TIF.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_Trending_m-3.ogg'/>
     </media>
 
     <media xml:id='wordsTIF' begin='TIF.end+0.0s' soundLevel='-1dB'>
@@ -110,10 +108,10 @@ const generateTodayInFocus = (article: Article, previous: string) => {
   return ssml;
 };
 
-const generateTrendingArticle = (article: Article, previous: string) => {
+const generateFinalStory = (article: Article, previous: string) => {
   const ssml = `
     <media xml:id='trending' begin='${previous}.end+0.4s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Trend.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_HL4_m-3.ogg'/>
     </media>
 
     <media xml:id='wordsTrending' begin='trending.end+0.0s' soundLevel='-1dB'>
@@ -127,7 +125,7 @@ const generateTrendingArticle = (article: Article, previous: string) => {
 const generateOutro = (previous: string) => {
   const ssml = `
     <media xml:id='outro' begin='${previous}.end+0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Outro.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_Outro_m-3.ogg'/>
     </media>
 
     <media xml:id='music1' begin='advert.end-0.3s' soundLevel='-1.0dB'>
@@ -139,7 +137,7 @@ const generateOutro = (previous: string) => {
     </media>
 
     <media xml:id='musicTIF' begin='music2.end-1.0s' end='wordsTIF.end+3.0s' soundLevel='-23.0dB' fadeOutDur='3.0s' repeatCount='20'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/TIF_m.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Chop_up_first_Magnified_loop_4_hook_long.ogg'/>
     </media>
 
     <media xml:id='music3' begin='musicTIF.end-2.0s' end='outro.end-5.0s' soundLevel='-10.0dB' fadeInDur='2.5s' fadeOutDur='2.5s' repeatCount='10'>
@@ -152,23 +150,4 @@ const generateOutro = (previous: string) => {
   return ssml;
 };
 
-const encodeStringForSSML = (s: string) => {
-  const controlCharacters: { [name: string]: string } = {
-    '&': '&amp;',
-    '"': '&quot;',
-    "'": '&apos;',
-    '<': '&lt;',
-    '>': '&gt;',
-  };
-  const xmlEncodedSSML = s.replace(
-    /[&|"|'|<|>]/g,
-    char => controlCharacters[char] || ''
-  );
-  return xmlEncodedSSML;
-};
-
-const stripExcessWhitespace = (ssml: string) => {
-  return ssml.replace(/\s\s+/g, '');
-};
-
-export { generateWeekdayAMSSML, stripExcessWhitespace, encodeStringForSSML };
+export { generateFallbackSSML };

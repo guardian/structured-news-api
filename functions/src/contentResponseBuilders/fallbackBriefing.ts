@@ -8,9 +8,13 @@ import {
   ContentError,
 } from '../models/contentModels';
 import { FallbackResponse, FallbackBriefing } from '../models/responseModels';
-const capiKey = config().guardian.capikey;
+import { generateFallbackSSML } from '../generators/nastySSMLGeneration/fallbackSSMLGeneration';
+import { generateAudioFile } from '../generators/audioFileGeneration';
 
-const getFallbackBriefing = (noAudio: boolean): Promise<OptionContent> => {
+const capiKey = config().guardian.capikey;
+const googleTextToSpeechKey = config().googletexttospeech.key;
+
+const getFallbackBriefing = (noAudio: boolean) => {
   return getUkTopStories(capiKey).then(topStories => {
     return getTrendingArticle(capiKey).then(trendingArticle => {
       return buildResponse(noAudio, topStories, trendingArticle);
@@ -22,18 +26,24 @@ const buildResponse = (
   noAudio: boolean,
   topStories: OptionContent,
   trendingArticle: OptionContent
-): OptionContent => {
+): Promise<OptionContent> => {
   if (
     topStories instanceof FallbackTopStories &&
     trendingArticle instanceof Article
   ) {
-    return new FallbackResponse(
-      new FallbackBriefing(topStories, trendingArticle),
-      '',
-      ''
-    );
+    const fallbackBriefing = new FallbackBriefing(topStories, trendingArticle);
+    const ssml = generateFallbackSSML(fallbackBriefing);
+    if (noAudio) {
+      return Promise.resolve(new FallbackResponse(fallbackBriefing, ssml, ''));
+    } else {
+      return generateAudioFile(ssml, googleTextToSpeechKey).then(url => {
+        return new FallbackResponse(fallbackBriefing, ssml, url);
+      });
+    }
   } else {
-    return new ContentError('Could not get content for fallback.');
+    return Promise.resolve(
+      new ContentError('Could not get content for fallback.')
+    );
   }
 };
 

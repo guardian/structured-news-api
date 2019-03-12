@@ -10,17 +10,19 @@ import { getDateFromString } from './builderUtils';
 import { getTodayInFocus } from '../contentExtractors/todayInFocus';
 import { getTrendingArticle } from '../contentExtractors/trendingArticle';
 import { getTopStoriesFromMorningBriefing } from '../contentExtractors/morningBriefingTopStories';
-import { generateWeekdayAMSSML } from '../generators/nastySSMLGeneration';
+import { generateWeekdayAMSSML } from '../generators/nastySSMLGeneration/weekdayAMSSMLGeneration';
 import { generateAudioFile } from '../generators/audioFileGeneration';
 import { config } from 'firebase-functions';
 import { WeekdayAMBriefing, WeekdayAMResponse } from '../models/responseModels';
+import * as moment from 'moment';
 
 const capiKey = config().guardian.capikey;
 const googleTextToSpeechKey = config().googletexttospeech.key;
 
 const getWeekdayAMBriefing = (noAudio: boolean) => {
-  const morningBriefingURL = `https://content.guardianapis.com/world/series/guardian-morning-briefing?api-key=${capiKey}&page-size=1&show-fields=headline,standfirst,body&order-by=newest&show-blocks=all`;
-
+  const dateToday = moment.utc().format('YYYY-MM-DD');
+  const morningBriefingURL = `https://content.guardianapis.com/world/series/guardian-morning-briefing?api-key=${capiKey}&from-date=${dateToday}&to-date=${dateToday}&page-size=1&show-fields=headline,standfirst,body&order-by=newest&show-blocks=all`;
+  console.log(morningBriefingURL);
   return fetch(morningBriefingURL)
     .then<CapiResults>(res => {
       return res.json();
