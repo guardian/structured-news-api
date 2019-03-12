@@ -1,9 +1,6 @@
 import { CapiTrending } from '../../models/capiModels';
 import { Article } from '../../models/contentModels';
-import {
-  processTrendingArticles,
-  isMorningBriefing,
-} from '../trendingArticles';
+import { processTrendingArticles, isMorningBriefing } from '../trendingArticle';
 
 describe('processTrendingArticles', () => {
   test('should transform a CapiTrending object into an Article', () => {
