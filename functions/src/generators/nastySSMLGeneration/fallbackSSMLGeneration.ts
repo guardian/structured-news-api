@@ -43,7 +43,7 @@ const fallbackBriefingSSML = (
         <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Advert.ogg'/>
       </media>
       <media xml:id='intro' begin='advert.end+1.4s'>
-        <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_intro_m-3.ogg'/>
+        <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback%2B6_Intro.ogg'/>
       </media>
 
       ${topStoriesSSML}
@@ -62,7 +62,7 @@ const generateTopStories = (
 ) => {
   const ssml = `
     <media xml:id='HL1' begin='intro.end-0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_HL1_m-3.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback%2B6_HL1.ogg'/>
     </media>
 
     <media xml:id='wordsHL1' begin='HL1.end-0.0s' soundLevel='-1dB'>
@@ -72,7 +72,7 @@ const generateTopStories = (
     </media>
 
     <media xml:id='HL2' begin='wordsHL1.end-0.5s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_HL2_m-3.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback%2B6_HL2.ogg'/>
     </media>
 
     <media xml:id='wordsHL2' begin='HL2.end-0.0s' soundLevel='-1dB'>
@@ -82,7 +82,7 @@ const generateTopStories = (
     </media>
 
     <media xml:id='HL3' begin='wordsHL2.end-0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_HL3_m-3.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback%2B6_HL3.ogg'/>
     </media>
 
     <media xml:id='wordsHD3' begin='HL3.end-0.0s' soundLevel='-1dB'>
@@ -96,7 +96,7 @@ const generateTopStories = (
 const generateTrendingArticle = (article: Article, previous: string) => {
   const ssml = `
     <media xml:id='TIF' begin='${previous}.end+0.8s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_Trending_m-3.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback%2B6_Trending.ogg'/>
     </media>
 
     <media xml:id='wordsTIF' begin='TIF.end+0.0s' soundLevel='-1dB'>
@@ -111,7 +111,7 @@ const generateTrendingArticle = (article: Article, previous: string) => {
 const generateFinalStory = (article: Article, previous: string) => {
   const ssml = `
     <media xml:id='trending' begin='${previous}.end+0.4s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_HL4_m-3.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback%2B6_HL4.ogg'/>
     </media>
 
     <media xml:id='wordsTrending' begin='trending.end+0.0s' soundLevel='-1dB'>
@@ -125,7 +125,7 @@ const generateFinalStory = (article: Article, previous: string) => {
 const generateOutro = (previous: string) => {
   const ssml = `
     <media xml:id='outro' begin='${previous}.end+0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_Outro_m-3.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback%2B6_Outro.ogg'/>
     </media>
 
     <media xml:id='music1' begin='advert.end-0.3s' soundLevel='-1.0dB'>
