@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 
 // The weekday AM briefing slot is between 6:30am and 10:30am Monday - Friday
-const isWeekdayAM = (time: moment.Moment) => {
+const isWeekdayAM = (time: moment.Moment): boolean => {
   const hour = time.hour();
   const minute = time.minute();
   const dayOfWeek = time.day();
@@ -13,4 +13,9 @@ const isWeekdayAM = (time: moment.Moment) => {
   return isWeekday && isAfter630AM && !isAfter1030AM;
 };
 
-export { isWeekdayAM };
+const isSaturday = (time: moment.Moment): boolean => {
+  const dayOfWeek = time.day();
+  return dayOfWeek === 6;
+};
+
+export { isWeekdayAM, isSaturday };
