@@ -100,8 +100,7 @@ const generateTrendingArticle = (article: Article, previous: string) => {
     </media>
 
     <media xml:id='wordsTrending' begin='Trending.end+0.0s' soundLevel='-1dB'>
-      <speak>${encodeStringForSSML(article.headline)}.
-        <break strength='strong'/>
+      <speak>
         ${encodeStringForSSML(article.standfirst)}
       </speak>
     </media>`;
