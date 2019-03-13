@@ -46,6 +46,7 @@ interface Fields {
   headline: string;
   body: string;
   bodyText: string;
+  trailText: string;
 }
 
 interface Tag {

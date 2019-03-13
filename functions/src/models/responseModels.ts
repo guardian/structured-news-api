@@ -29,6 +29,14 @@ class FallbackBriefing {
   ) {}
 }
 
+class SaturdayBriefing {
+  constructor(
+    public topStories: FallbackTopStories,
+    public audioLongRead: Article,
+    public trendingArticle: Article
+  ) {}
+}
+
 class FallbackResponse extends APIResponse {
   constructor(
     public fallbackBriefing: FallbackBriefing,
@@ -45,4 +53,5 @@ export {
   WeekdayAMBriefing,
   APIResponse,
   FallbackBriefing,
+  SaturdayBriefing,
 };
