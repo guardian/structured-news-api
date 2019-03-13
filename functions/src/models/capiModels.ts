@@ -6,12 +6,12 @@ interface CapiMostViewed {
   mostViewed: Result[];
 }
 
-interface CapiResult {
-  response: CapiResponse;
+interface CapiEditorsPicks {
+  response: EditorsPicks;
 }
 
-interface CapiResponse {
-  content: Result;
+interface EditorsPicks {
+  editorsPicks: Result[];
 }
 
 interface CapiResults {
@@ -20,6 +20,14 @@ interface CapiResults {
 
 interface Results {
   results: Result[];
+}
+
+interface CapiResult {
+  response: CapiResponse;
+}
+
+interface CapiResponse {
+  content: Result;
 }
 
 interface Result {
@@ -69,4 +77,5 @@ export {
   Data,
   CapiMostViewed,
   CapiTrending,
+  CapiEditorsPicks,
 };

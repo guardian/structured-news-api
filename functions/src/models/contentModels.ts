@@ -32,23 +32,15 @@ class ContentError extends OptionContent {
   }
 }
 
-class APIResponse extends OptionContent {
+class FallbackTopStories extends OptionContent {
   constructor(
-    public date: string,
-    public morningBriefing: MorningBriefing,
-    public ssml: string,
-    public audioFileLocation: string
+    public story1: Article,
+    public story2: Article,
+    public story3: Article,
+    public story4: Article
   ) {
     super();
   }
-}
-
-class MorningBriefing {
-  constructor(
-    public topStories?: TopStories,
-    public todayInFocus?: Article,
-    public trendingArticle?: Article
-  ) {}
 }
 
 class OptionIndex {}
@@ -71,9 +63,8 @@ export {
   TopStories,
   Article,
   URL,
-  APIResponse,
   OptionIndex,
   Index,
   OutOfBounds,
-  MorningBriefing,
+  FallbackTopStories,
 };

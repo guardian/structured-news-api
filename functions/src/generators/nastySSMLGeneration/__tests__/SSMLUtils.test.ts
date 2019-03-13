@@ -1,7 +1,4 @@
-import {
-  encodeStringForSSML,
-  stripExcessWhitespace,
-} from '../nastySSMLGeneration';
+import { encodeStringForSSML, stripExcessWhitespace } from '../SSMLUtils';
 
 describe('encodeStringForSSML', () => {
   test('should replace & with XML excape string', () => {

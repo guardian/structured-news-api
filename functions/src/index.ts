@@ -1,123 +1,22 @@
-import {
-  APIResponse,
-  Article,
-  MorningBriefing,
-  OptionContent,
-  TopStories,
-  ContentError,
-} from './models/contentModels';
-import { config, region } from 'firebase-functions';
+import { OptionContent, ContentError } from './models/contentModels';
+import { region } from 'firebase-functions';
+import { getWeekdayAMBriefing } from './contentResponseBuilders/weekdayAMBriefing';
+import { isWeekdayAM } from './briefingSlotCheckers';
+import * as moment from 'moment';
+import { getFallbackBriefing } from './contentResponseBuilders/fallbackBriefing';
+import { APIResponse } from './models/responseModels';
 
-import { CapiResults, Result } from './models/capiModels';
-import fetch from 'node-fetch';
-import { generateSSML } from './generators/nastySSMLGeneration';
-import { getDateFromString } from './utils';
-import { getTodayInFocus } from './contentExtractors/todayInFocus';
-import { getTopStories } from './contentExtractors/morningBriefingTopStories';
-import { generateAudioFile } from './generators/audioFileGeneration';
-import { getTrendingArticle } from './contentExtractors/trendingArticles';
-
-const capiKey = config().guardian.capikey;
-const googleTextToSpeechKey = config().googletexttospeech.key;
-
-const getMorningBriefingUrl = (pageSize: number) => {
-  return `https://content.guardianapis.com/world/series/guardian-morning-briefing?api-key=${capiKey}&page-size=${pageSize}&show-fields=headline,standfirst,body&order-by=newest&show-blocks=all`;
-};
-
-const buildTestData = (): Promise<APIResponse[]> => {
-  const pageSize = 50;
-  const morningBriefing = getMorningBriefingUrl(pageSize);
-
-  return fetch(morningBriefing)
-    .then<CapiResults>(res => {
-      return res.json();
-    })
-    .then(capiResponse => {
-      const noAudio = true;
-      const results = capiResponse.response.results;
-      const response = results.map(result => {
-        return processResult(result, noAudio);
-      });
-      return Promise.all(response);
-    });
-};
-
-const processResult = (
-  result: Result,
-  noAudio: boolean
-): Promise<APIResponse> => {
-  const articleDate = getDateFromString(result.webPublicationDate);
-  return getTodayInFocus(articleDate, capiKey).then(todayInFocus => {
-    return getTrendingArticle(capiKey).then(trendingArticle => {
-      return buildResponse(
-        noAudio,
-        articleDate,
-        getTopStories(result),
-        todayInFocus,
-        trendingArticle
-      );
-    });
-  });
-};
-
-const getDailyUpdate = (noAudio: boolean) => {
-  const pageSize = 1;
-  const morningBriefing = getMorningBriefingUrl(pageSize);
-
-  return fetch(morningBriefing)
-    .then<CapiResults>(res => {
-      return res.json();
-    })
-    .then<OptionContent>(capiResponse => {
-      const results = capiResponse.response.results;
-      if (results.length > 0) {
-        return processResult(results[0], noAudio);
-      } else {
-        return new ContentError('Could not get daily update');
-      }
-    });
-};
-
-const buildResponse = (
-  noAudio: boolean,
-  articleDate: string,
-  topStories: OptionContent,
-  todayInFocus: OptionContent,
-  trendingArticle: OptionContent
-): Promise<APIResponse> => {
-  const morningBriefing = buildMorningBriefing(
-    topStories,
-    todayInFocus,
-    trendingArticle
-  );
-  const ssml = generateSSML(morningBriefing);
-  if (noAudio) {
-    return Promise.resolve(
-      new APIResponse(articleDate, morningBriefing, ssml, '')
-    );
+const getLatestUpdate = (noAudio: boolean): Promise<OptionContent> => {
+  if (isWeekdayAM(moment().utc())) {
+    const amBriefing = getWeekdayAMBriefing(noAudio);
+    if (amBriefing instanceof ContentError) {
+      return getFallbackBriefing(noAudio);
+    } else {
+      return amBriefing;
+    }
   } else {
-    return generateAudioFile(ssml, googleTextToSpeechKey).then(url => {
-      return new APIResponse(articleDate, morningBriefing, ssml, url);
-    });
+    return getFallbackBriefing(noAudio);
   }
-};
-
-const buildMorningBriefing = (
-  topStories: OptionContent,
-  todayInFocus: OptionContent,
-  trendingArticle: OptionContent
-) => {
-  const response = new MorningBriefing();
-  if (topStories instanceof TopStories) {
-    response.topStories = topStories;
-  }
-  if (todayInFocus instanceof Article) {
-    response.todayInFocus = todayInFocus;
-  }
-  if (trendingArticle instanceof Article) {
-    response.trendingArticle = trendingArticle;
-  }
-  return response;
 };
 
 const getBooleanParam = (param: any): boolean => {
@@ -130,35 +29,23 @@ const getBooleanParam = (param: any): boolean => {
 
 exports.structuredNewsApi = region('europe-west1').https.onRequest(
   (request, response) => {
-    const isTest: boolean = getBooleanParam(request.query.isTest);
     const noAudio: boolean = getBooleanParam(request.query.noAudio);
-    if (isTest) {
-      buildTestData()
-        .then(testData => {
-          response.send(testData);
-        })
-        .catch(e => {
-          console.error(`Failed to get daily update test data. Error: ${e}`);
-          response.status(500).send('500: Could not get test data');
-        });
-    } else {
-      getDailyUpdate(noAudio)
-        .then(dailyUpdate => {
-          if (dailyUpdate instanceof APIResponse) {
-            response.send(dailyUpdate);
-          } else {
-            console.error(
-              `No content available in response from Guardian Content API. Error: ${dailyUpdate}`
-            );
-            response
-              .status(500)
-              .send('500: Could not get daily update. No content available');
-          }
-        })
-        .catch(e => {
-          console.error(`Failed to get daily update. Error: ${e}`);
-          response.status(500).send('500: Could not get daily update');
-        });
-    }
+    getLatestUpdate(noAudio)
+      .then(latestUpdate => {
+        if (latestUpdate instanceof APIResponse) {
+          response.send(latestUpdate);
+        } else {
+          console.error(
+            `No content available in response from Guardian Content API. Error: ${latestUpdate}`
+          );
+          response
+            .status(500)
+            .send('500: Could not get data. No content available');
+        }
+      })
+      .catch(e => {
+        console.error(`Failed to get data. Error: ${e}`);
+        response.status(500).send('500: Could not get data');
+      });
   }
 );

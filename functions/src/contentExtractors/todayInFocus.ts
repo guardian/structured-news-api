@@ -2,7 +2,7 @@ import { Article, ContentError } from '../models/contentModels';
 
 import { CapiResults } from '../models/capiModels';
 import fetch from 'node-fetch';
-import { stripHTMLTags } from '../utils';
+import { stripHTMLTags } from './extractorUtils';
 
 /*
 Current Today in Focus rules:

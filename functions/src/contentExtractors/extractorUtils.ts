@@ -1,20 +1,9 @@
-import * as moment from 'moment';
 import * as sanitizeHtml from 'sanitize-html';
 
-import { Article, ContentError } from './models/contentModels';
-import { CapiResult, Element, Result } from './models/capiModels';
+import { Article, ContentError } from '../models/contentModels';
+import { CapiResult, Element, Result } from '../models/capiModels';
 
 import fetch from 'node-fetch';
-
-// If date is invalid return today's date
-const getDateFromString = (date?: string): string => {
-  let d = moment();
-  if (date !== undefined && moment(date, 'YYYY-MM-DD').isValid()) {
-    d = moment(date, 'YYYY-MM-DD');
-  }
-  // Adding 1 to account that months go from 0 to 11
-  return `${d.year()}-${d.month() + 1}-${d.date()}`;
-};
 
 const stripHTMLTags = (html: string): string => {
   return sanitizeHtml(html, {
@@ -75,10 +64,19 @@ const getFirstSentence = (text: string): string => {
   return `${text.split('. ')[0]}.`;
 };
 
+const isMorningBriefing = (result: Result) => {
+  // Check if result has the morning briefing tag
+  return (
+    result.tags.filter(
+      tag => tag.id === 'world/series/guardian-morning-briefing'
+    ).length > 0
+  );
+};
+
 export {
-  getDateFromString,
   stripHTMLTags,
   getTextBlocksFromArticle,
   getCapiArticle,
   getFirstSentence,
+  isMorningBriefing,
 };
