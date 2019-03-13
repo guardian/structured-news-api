@@ -18,8 +18,8 @@ Story must have the pillarId pillar/news and not be a live blog or have the morn
 const numberOfStoriesNeeded = 4;
 
 const getUkTopStories = (capiKey: string): Promise<OptionContent> => {
-  const trendingArticles = `http://content.guardianapis.com/uk?api-key=${capiKey}&page-size=10&show-editors-picks=true&only-editors-picks=true&show-most-viewed=false&edition=uk&show-fields=headline,standfirst,body,bodyText&show-tags=series`;
-  return fetch(trendingArticles)
+  const topStories = `http://content.guardianapis.com/uk?api-key=${capiKey}&page-size=10&show-editors-picks=true&only-editors-picks=true&show-most-viewed=false&edition=uk&show-fields=headline,standfirst,body,bodyText&show-tags=series`;
+  return fetch(topStories)
     .then<CapiEditorsPicks>(res => {
       return res.json();
     })
@@ -27,8 +27,8 @@ const getUkTopStories = (capiKey: string): Promise<OptionContent> => {
       return processUKTopStories(capiResponse);
     })
     .catch(e => {
-      console.error(`Unable to get Trending Articles. Error: ${e}`);
-      return new ContentError('Could not get Trending Articles');
+      console.error(`Unable to get UK Top Stories. Error: ${e}`);
+      return new ContentError('Could not get UK Top Stories');
     });
 };
 

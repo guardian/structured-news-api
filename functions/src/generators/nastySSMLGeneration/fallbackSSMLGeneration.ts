@@ -17,8 +17,8 @@ const generateFallbackSSML = (fallbackBriefing: FallbackBriefing) => {
     fallbackBriefing.trendingArticle,
     'wordsHD3'
   );
-  const finalStorySSML = generateFinalStory(topStories.story4, 'wordsTIF');
-  const outro = generateOutro('wordsTrending');
+  const finalStorySSML = generateFinalStory(topStories.story4, 'wordsTrending');
+  const outro = generateOutro('wordsFinalStory');
   return fallbackBriefingSSML(
     topStoriesSSML,
     trendingArticleSSML,
@@ -95,11 +95,11 @@ const generateTopStories = (
 
 const generateTrendingArticle = (article: Article, previous: string) => {
   const ssml = `
-    <media xml:id='TIF' begin='${previous}.end+0.8s'>
+    <media xml:id='Trending' begin='${previous}.end+0.8s'>
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback%2B6_Trending.ogg'/>
     </media>
 
-    <media xml:id='wordsTIF' begin='TIF.end+0.0s' soundLevel='-1dB'>
+    <media xml:id='wordsTrending' begin='Trending.end+0.0s' soundLevel='-1dB'>
       <speak>${encodeStringForSSML(article.headline)}.
         <break strength='strong'/>
         ${encodeStringForSSML(article.standfirst)}
@@ -110,11 +110,11 @@ const generateTrendingArticle = (article: Article, previous: string) => {
 
 const generateFinalStory = (article: Article, previous: string) => {
   const ssml = `
-    <media xml:id='trending' begin='${previous}.end+0.4s'>
+    <media xml:id='FinalStory' begin='${previous}.end+0.4s'>
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback%2B6_HL4.ogg'/>
     </media>
 
-    <media xml:id='wordsTrending' begin='trending.end+0.0s' soundLevel='-1dB'>
+    <media xml:id='wordsFinalStory' begin='FinalStory.end+0.0s' soundLevel='-1dB'>
       <speak>
       ${encodeStringForSSML(article.standfirst)}
       </speak>
@@ -136,11 +136,11 @@ const generateOutro = (previous: string) => {
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fbird_1l.ogg'/>
     </media>
 
-    <media xml:id='musicTIF' begin='music2.end-1.0s' end='wordsTIF.end+3.0s' soundLevel='-23.0dB' fadeOutDur='3.0s' repeatCount='20'>
+    <media xml:id='musicTrending' begin='music2.end-1.0s' end='wordsTrending.end+3.0s' soundLevel='-23.0dB' fadeOutDur='3.0s' repeatCount='20'>
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Chop_up_first_Magnified_loop_4_hook_long.ogg'/>
     </media>
 
-    <media xml:id='music3' begin='musicTIF.end-2.0s' end='outro.end-5.0s' soundLevel='-10.0dB' fadeInDur='2.5s' fadeOutDur='2.5s' repeatCount='10'>
+    <media xml:id='music3' begin='musicTrending.end-2.0s' end='outro.end-5.0s' soundLevel='-10.0dB' fadeInDur='2.5s' fadeOutDur='2.5s' repeatCount='10'>
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fbird_2l.ogg'/>
     </media>
 
