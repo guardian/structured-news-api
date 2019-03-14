@@ -5,10 +5,15 @@ import {
   Article,
   OptionContent,
   FallbackTopStories,
-  ContentError,
   AudioLongReads,
+  WeekendBriefing,
 } from '../models/contentModels';
-import { FallbackResponse, WeekendBriefing } from '../models/responseModels';
+import {
+  SuccessAPIResponse,
+  FailAPIResponse,
+  APIResponse,
+  BriefingContent,
+} from '../models/responseModels';
 import { generateAudioFile } from '../generators/audioFileGeneration';
 import { getAudioLongReads } from '../contentExtractors/audioLongReads';
 import { generateSaturdaySSML } from '../generators/nastySSMLGeneration/saturdaySSMLGeneration';
@@ -17,7 +22,10 @@ import { generateSundaySSML } from '../generators/nastySSMLGeneration/sundaySSML
 const capiKey = config().guardian.capikey;
 const googleTextToSpeechKey = config().googletexttospeech.key;
 
-const getWeekendBriefing = (noAudio: boolean, isSaturday: boolean) => {
+const getWeekendBriefing = (
+  noAudio: boolean,
+  isSaturday: boolean
+): Promise<APIResponse> => {
   return getUkTopStories(capiKey).then(topStories => {
     return getAudioLongReads(capiKey).then(longReads => {
       return getTrendingArticle(capiKey).then(trendingArticle => {
@@ -39,7 +47,7 @@ const buildResponse = (
   topStories: OptionContent,
   audioLongReads: OptionContent,
   trendingArticle: OptionContent
-): Promise<OptionContent> => {
+): Promise<APIResponse> => {
   if (
     topStories instanceof FallbackTopStories &&
     audioLongReads instanceof AudioLongReads &&
@@ -57,16 +65,27 @@ const buildResponse = (
     const ssml = isSaturday
       ? generateSaturdaySSML(weekendBriefing)
       : generateSundaySSML(weekendBriefing);
+    const briefingContent = new BriefingContent(
+      weekendBriefing.topStories.story1,
+      weekendBriefing.topStories.story2,
+      weekendBriefing.topStories.story3,
+      weekendBriefing.audioLongRead,
+      weekendBriefing.trendingArticle
+    );
     if (noAudio) {
-      return Promise.resolve(new FallbackResponse(weekendBriefing, ssml, ''));
+      return Promise.resolve(new SuccessAPIResponse(briefingContent, ssml, ''));
     } else {
       return generateAudioFile(ssml, googleTextToSpeechKey).then(url => {
-        return new FallbackResponse(weekendBriefing, ssml, url);
+        return new SuccessAPIResponse(briefingContent, ssml, url);
       });
     }
   } else {
     return Promise.resolve(
-      new ContentError('Could not get content for Saturday Briefing.')
+      new FailAPIResponse(
+        `Could not get content for ${
+          isSaturday ? 'Saturday' : 'Sunday'
+        } Briefing.`
+      )
     );
   }
 };

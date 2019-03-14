@@ -1,57 +1,27 @@
-import { FallbackTopStories, Article, TopStories } from './contentModels';
+import { Article } from './contentModels';
 
-abstract class APIResponse {
-  constructor(public ssml: string, public audioFileLocation: string) {}
-}
+class APIResponse {}
 
-class WeekdayAMBriefing {
+class SuccessAPIResponse implements APIResponse {
   constructor(
-    public topStories: TopStories,
-    public todayInFocus: Article,
-    public trendingArticle: Article
-  ) {}
-}
-
-class WeekdayAMResponse extends APIResponse {
-  constructor(
-    public weekdayAMBriefing: WeekdayAMBriefing,
+    public content: BriefingContent,
     public ssml: string,
     public audioFileLocation: string
-  ) {
-    super(ssml, audioFileLocation);
-  }
-}
-
-class FallbackBriefing {
-  constructor(
-    public topStories: FallbackTopStories,
-    public trendingArticle: Article
   ) {}
 }
 
-class WeekendBriefing {
+class FailAPIResponse implements APIResponse {
+  constructor(public error: string) {}
+}
+
+class BriefingContent {
   constructor(
-    public topStories: FallbackTopStories,
-    public audioLongRead: Article,
-    public trendingArticle: Article
+    public item1: Article,
+    public item2: Article,
+    public item3: Article,
+    public item4: Article,
+    public item5: Article
   ) {}
 }
 
-class FallbackResponse extends APIResponse {
-  constructor(
-    public fallbackBriefing: FallbackBriefing,
-    public ssml: string,
-    public audioFileLocation: string
-  ) {
-    super(ssml, audioFileLocation);
-  }
-}
-
-export {
-  WeekdayAMResponse,
-  FallbackResponse,
-  WeekdayAMBriefing,
-  APIResponse,
-  FallbackBriefing,
-  WeekendBriefing,
-};
+export { APIResponse, BriefingContent, SuccessAPIResponse, FailAPIResponse };

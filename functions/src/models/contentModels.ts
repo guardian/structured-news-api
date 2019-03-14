@@ -49,6 +49,29 @@ class FallbackTopStories extends OptionContent {
   }
 }
 
+class WeekdayAMBriefing {
+  constructor(
+    public topStories: TopStories,
+    public todayInFocus: Article,
+    public trendingArticle: Article
+  ) {}
+}
+
+class FallbackBriefing {
+  constructor(
+    public topStories: FallbackTopStories,
+    public trendingArticle: Article
+  ) {}
+}
+
+class WeekendBriefing {
+  constructor(
+    public topStories: FallbackTopStories,
+    public audioLongRead: Article,
+    public trendingArticle: Article
+  ) {}
+}
+
 class OptionIndex {}
 
 class Index extends OptionIndex {
@@ -74,4 +97,7 @@ export {
   OutOfBounds,
   FallbackTopStories,
   AudioLongReads,
+  FallbackBriefing,
+  WeekendBriefing,
+  WeekdayAMBriefing,
 };

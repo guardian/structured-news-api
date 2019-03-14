@@ -1,5 +1,8 @@
-import { Article, TopStories } from '../../models/contentModels';
-import { WeekdayAMBriefing } from '../../models/responseModels';
+import {
+  Article,
+  TopStories,
+  WeekdayAMBriefing,
+} from '../../models/contentModels';
 import { stripExcessWhitespace, encodeStringForSSML } from './SSMLUtils';
 
 /*

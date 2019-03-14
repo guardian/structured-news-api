@@ -1,5 +1,4 @@
-import { Article } from '../../models/contentModels';
-import { FallbackBriefing } from '../../models/responseModels';
+import { Article, FallbackBriefing } from '../../models/contentModels';
 import { stripExcessWhitespace, encodeStringForSSML } from './SSMLUtils';
 
 /*
