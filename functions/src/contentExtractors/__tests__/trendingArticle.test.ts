@@ -17,7 +17,7 @@ describe('processTrendingArticles', () => {
               headline: 'First Article',
               standfirst: '',
               body: '',
-              bodyText: '',
+              bodyText: 'Article',
             },
             tags: [],
             blocks: {
@@ -30,7 +30,7 @@ describe('processTrendingArticles', () => {
 
     const expectedResult = new Article(
       'First Article',
-      '.',
+      'Article.',
       'www.theguardian.com'
     );
     expect(processTrendingArticles(input)).toEqual(expectedResult);
@@ -50,7 +50,7 @@ describe('processTrendingArticles', () => {
               headline: 'First Article',
               standfirst: '',
               body: '',
-              bodyText: '',
+              bodyText: 'Article',
             },
             tags: [],
             blocks: {
@@ -67,7 +67,7 @@ describe('processTrendingArticles', () => {
               headline: 'Second Article',
               standfirst: '',
               body: '',
-              bodyText: '',
+              bodyText: 'Article',
             },
             tags: [],
             blocks: {
@@ -80,7 +80,7 @@ describe('processTrendingArticles', () => {
 
     const expectedResult = new Article(
       'Second Article',
-      '.',
+      'Article.',
       'www.theguardian.com'
     );
     expect(processTrendingArticles(input)).toEqual(expectedResult);
@@ -99,7 +99,7 @@ describe('processTrendingArticles', () => {
               headline: 'First Article',
               standfirst: '',
               body: '',
-              bodyText: '',
+              bodyText: 'Article',
             },
             tags: [],
             blocks: {
@@ -116,7 +116,7 @@ describe('processTrendingArticles', () => {
               headline: 'Second Article',
               standfirst: '',
               body: '',
-              bodyText: '',
+              bodyText: 'Article',
             },
             tags: [],
             blocks: {
@@ -129,7 +129,7 @@ describe('processTrendingArticles', () => {
 
     const expectedResult = new Article(
       'Second Article',
-      '.',
+      'Article.',
       'www.theguardian.com'
     );
     expect(processTrendingArticles(input)).toEqual(expectedResult);
@@ -149,7 +149,7 @@ describe('processTrendingArticles', () => {
               headline: 'First Article',
               standfirst: '',
               body: '',
-              bodyText: '',
+              bodyText: 'Article',
             },
             tags: [
               {
@@ -170,7 +170,7 @@ describe('processTrendingArticles', () => {
               headline: 'Second Article',
               standfirst: '',
               body: '',
-              bodyText: '',
+              bodyText: 'Article',
             },
             tags: [],
             blocks: {
@@ -183,7 +183,57 @@ describe('processTrendingArticles', () => {
 
     const expectedResult = new Article(
       'Second Article',
-      '.',
+      'Article.',
+      'www.theguardian.com'
+    );
+    expect(processTrendingArticles(input)).toEqual(expectedResult);
+  });
+
+  test('should ignore articles with no bodyText', () => {
+    const input: CapiTrending = {
+      response: {
+        mostViewed: [
+          {
+            webPublicationDate: '2019-02-11T03:00:06Z',
+            sectionId: '',
+            pillarId: 'pillar/opinion',
+            type: '',
+            webUrl: 'www.theguardian.com',
+            fields: {
+              headline: 'First Article',
+              standfirst: '',
+              body: '',
+              bodyText: '',
+            },
+            tags: [],
+            blocks: {
+              body: [],
+            },
+          },
+          {
+            webPublicationDate: '2019-02-11T03:00:06Z',
+            sectionId: '',
+            pillarId: 'pillar/news',
+            type: '',
+            webUrl: 'www.theguardian.com',
+            fields: {
+              headline: 'Second Article',
+              standfirst: '',
+              body: '',
+              bodyText: 'Article',
+            },
+            tags: [],
+            blocks: {
+              body: [],
+            },
+          },
+        ],
+      },
+    };
+
+    const expectedResult = new Article(
+      'Second Article',
+      'Article.',
       'www.theguardian.com'
     );
     expect(processTrendingArticles(input)).toEqual(expectedResult);

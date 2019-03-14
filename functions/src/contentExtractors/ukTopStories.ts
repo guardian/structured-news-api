@@ -6,7 +6,11 @@ import {
   OptionContent,
 } from '../models/contentModels';
 import fetch from 'node-fetch';
-import { isMorningBriefing, getFirstSentence } from './extractorUtils';
+import {
+  isMorningBriefing,
+  getFirstSentence,
+  hasBodyText,
+} from './extractorUtils';
 
 /*
 Current rules for uk Top Stories:
@@ -41,7 +45,8 @@ const processUKTopStories = (capiResponse: CapiEditorsPicks): OptionContent => {
     if (
       article.type !== 'liveblog' &&
       article.pillarId === 'pillar/news' &&
-      !isMorningBriefing(article)
+      !isMorningBriefing(article) &&
+      hasBodyText(article)
     ) {
       topStories.push(
         new Article(
@@ -65,4 +70,4 @@ const processUKTopStories = (capiResponse: CapiEditorsPicks): OptionContent => {
   }
 };
 
-export { getUkTopStories };
+export { getUkTopStories, processUKTopStories };
