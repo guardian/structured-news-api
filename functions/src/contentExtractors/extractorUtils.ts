@@ -73,10 +73,15 @@ const isMorningBriefing = (result: Result) => {
   );
 };
 
+const hasBodyText = (result: Result): boolean => {
+  return result.fields.bodyText.length > 0;
+};
+
 export {
   stripHTMLTags,
   getTextBlocksFromArticle,
   getCapiArticle,
   getFirstSentence,
   isMorningBriefing,
+  hasBodyText,
 };

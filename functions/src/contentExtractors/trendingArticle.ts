@@ -2,7 +2,11 @@ import { Article, ContentError } from '../models/contentModels';
 
 import { CapiTrending } from '../models/capiModels';
 import fetch from 'node-fetch';
-import { getFirstSentence, isMorningBriefing } from './extractorUtils';
+import {
+  getFirstSentence,
+  isMorningBriefing,
+  hasBodyText,
+} from './extractorUtils';
 
 /*
 Current rules for trendingArticles:
@@ -44,7 +48,8 @@ const processTrendingArticles = (
       if (
         currentArticle.type !== 'liveblog' &&
         currentArticle.pillarId === 'pillar/news' &&
-        !isMorningBriefing(currentArticle)
+        !isMorningBriefing(currentArticle) &&
+        hasBodyText(currentArticle)
       ) {
         const fields = articles[i].fields;
         article = new Article(
