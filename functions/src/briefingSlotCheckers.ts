@@ -18,4 +18,9 @@ const isSaturday = (time: moment.Moment): boolean => {
   return dayOfWeek === 6;
 };
 
-export { isWeekdayAM, isSaturday };
+const isSunday = (time: moment.Moment): boolean => {
+  const dayOfWeek = time.day();
+  return dayOfWeek === 0;
+};
+
+export { isWeekdayAM, isSaturday, isSunday };

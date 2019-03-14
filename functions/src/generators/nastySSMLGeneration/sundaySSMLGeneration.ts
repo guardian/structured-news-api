@@ -6,24 +6,24 @@ import { stripExcessWhitespace, encodeStringForSSML } from './SSMLUtils';
 Very hacky generation of SSML.
 */
 
-const generateSaturdaySSML = (saturdayBriefing: WeekendBriefing) => {
-  const topStories = saturdayBriefing.topStories;
+const generateSundaySSML = (sundayBriefing: WeekendBriefing) => {
+  const topStories = sundayBriefing.topStories;
   const topStoriesSSML = generateTopStories(
     topStories.story1,
     topStories.story2,
     topStories.story3
   );
   const audioLongReadSSML = generateAudioLongRead(
-    saturdayBriefing.audioLongRead,
+    sundayBriefing.audioLongRead,
     'wordsHD3'
   );
   const trendingArticleSSML = generateTrendingArticle(
-    saturdayBriefing.trendingArticle,
+    sundayBriefing.trendingArticle,
     'wordsLongRead'
   );
 
   const outro = generateOutro('wordsTrending');
-  return saturdayBriefingSSML(
+  return sundayBriefingSSML(
     topStoriesSSML,
     audioLongReadSSML,
     trendingArticleSSML,
@@ -31,7 +31,7 @@ const generateSaturdaySSML = (saturdayBriefing: WeekendBriefing) => {
   );
 };
 
-const saturdayBriefingSSML = (
+const sundayBriefingSSML = (
   topStoriesSSML: string,
   audioLongReadSSML: string,
   trendingArticleSSML: string,
@@ -47,7 +47,7 @@ const saturdayBriefingSSML = (
         <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Advert.ogg'/>
       </media>
       <media xml:id='intro' begin='advert.end+1.4s'>
-        <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Saturday_Intro%2B6.ogg'/>
+        <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Sunday_Intro%2B6.ogg'/>
       </media>
 
       ${topStoriesSSML}
@@ -66,7 +66,7 @@ const generateTopStories = (
 ) => {
   const ssml = `
     <media xml:id='HL1' begin='intro.end-0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Saturday_HL1%2B6.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Sunday_HL1%2B6.ogg'/>
     </media>
 
     <media xml:id='wordsHL1' begin='HL1.end-0.0s' soundLevel='-1dB'>
@@ -76,7 +76,7 @@ const generateTopStories = (
     </media>
 
     <media xml:id='HL2' begin='wordsHL1.end-0.5s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Saturday_HL2%2B6.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Sunday_HL2%2B6.ogg'/>
     </media>
 
     <media xml:id='wordsHL2' begin='HL2.end-0.0s' soundLevel='-1dB'>
@@ -86,7 +86,7 @@ const generateTopStories = (
     </media>
 
     <media xml:id='HL3' begin='wordsHL2.end-0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Saturday_HL3%2B6.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Sunday_HL3%2B6.ogg'/>
     </media>
 
     <media xml:id='wordsHD3' begin='HL3.end-0.0s' soundLevel='-1dB'>
@@ -100,7 +100,7 @@ const generateTopStories = (
 const generateAudioLongRead = (article: Article, previous: string) => {
   const ssml = `
       <media xml:id='LongRead' begin='${previous}.end+0.4s'>
-        <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Saturday_ALR%2B6.ogg'/>
+        <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Sunday_ALR%2B6.ogg'/>
       </media>
   
       <media xml:id='wordsLongRead' begin='LongRead.end+0.0s' soundLevel='-1dB'>
@@ -114,7 +114,7 @@ const generateAudioLongRead = (article: Article, previous: string) => {
 const generateTrendingArticle = (article: Article, previous: string) => {
   const ssml = `
     <media xml:id='Trending' begin='${previous}.end+0.8s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Saturday_Trending%2B6_v3.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Sunday_Trending%2B6.ogg'/>
     </media>
 
     <media xml:id='wordsTrending' begin='Trending.end+0.0s' soundLevel='-1dB'>
@@ -128,7 +128,7 @@ const generateTrendingArticle = (article: Article, previous: string) => {
 const generateOutro = (previous: string) => {
   const ssml = `
     <media xml:id='outro' begin='${previous}.end+0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Saturday_Outro%2B6.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Sunday_Outro%2B6.ogg'/>
     </media>
 
     <media xml:id='music1' begin='advert.end-0.3s' soundLevel='-1.0dB'>
@@ -153,4 +153,4 @@ const generateOutro = (previous: string) => {
   return ssml;
 };
 
-export { generateSaturdaySSML };
+export { generateSundaySSML };

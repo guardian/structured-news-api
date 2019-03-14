@@ -1,14 +1,13 @@
 import { OptionContent, ContentError } from './models/contentModels';
 import { region } from 'firebase-functions';
 import { getWeekdayAMBriefing } from './contentResponseBuilders/weekdayAMBriefing';
-import { isWeekdayAM, isSaturday } from './briefingSlotCheckers';
+import { isWeekdayAM, isSaturday, isSunday } from './briefingSlotCheckers';
 import * as moment from 'moment';
 import { getFallbackBriefing } from './contentResponseBuilders/fallbackBriefing';
 import { APIResponse } from './models/responseModels';
-import { getSaturdayBriefing } from './contentResponseBuilders/saturdayBriefing';
+import { getWeekendBriefing } from './contentResponseBuilders/weekendBriefing';
 
 const getLatestUpdate = (noAudio: boolean): Promise<OptionContent> => {
-  return getSaturdayBriefing(noAudio);
   const currentTime = moment().utc();
   if (isWeekdayAM(currentTime)) {
     const amBriefing = getWeekdayAMBriefing(noAudio);
@@ -17,10 +16,16 @@ const getLatestUpdate = (noAudio: boolean): Promise<OptionContent> => {
       : amBriefing;
   }
   if (isSaturday(currentTime)) {
-    const saturdayBriefing = getSaturdayBriefing(noAudio);
+    const saturdayBriefing = getWeekendBriefing(noAudio, true);
     return saturdayBriefing instanceof ContentError
       ? getFallbackBriefing(noAudio)
       : saturdayBriefing;
+  }
+  if (isSunday(currentTime)) {
+    const sundayBriefing = getWeekendBriefing(noAudio, false);
+    return sundayBriefing instanceof ContentError
+      ? getFallbackBriefing(noAudio)
+      : sundayBriefing;
   } else {
     return getFallbackBriefing(noAudio);
   }
