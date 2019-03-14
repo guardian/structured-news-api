@@ -12,7 +12,6 @@ const getAudioLongReads = (
   capiKey: string
 ): Promise<AudioLongReads | ContentError> => {
   const audioLongReads = `https://content.guardianapis.com/news/series/the-audio-long-read?api-key=${capiKey}&show-fields=headline,standfirst,body,trailText&order-by=newest&show-blocks=all`;
-  console.log(audioLongReads);
   return fetch(audioLongReads)
     .then<CapiResults>(res => {
       return res.json();
