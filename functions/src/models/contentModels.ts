@@ -10,6 +10,12 @@ class Article extends OptionContent {
   }
 }
 
+class AudioLongReads extends OptionContent {
+  constructor(public latestLongRead: Article, public olderLongRead: Article) {
+    super();
+  }
+}
+
 class TopStories extends OptionContent {
   constructor(
     public story1: Article,
@@ -67,4 +73,5 @@ export {
   Index,
   OutOfBounds,
   FallbackTopStories,
+  AudioLongReads,
 };
