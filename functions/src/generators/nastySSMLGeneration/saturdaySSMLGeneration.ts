@@ -139,11 +139,11 @@ const generateOutro = (previous: string) => {
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fbird_1l.ogg'/>
     </media>
 
-    <media xml:id='musicLongRead' begin='music2.end-1.0s' end='wordsLongRead.end+3.0s' soundLevel='-23.0dB' fadeOutDur='3.0s' repeatCount='20'>
+    <media xml:id='musicLongRead' begin='music2.end-1.0s' end='wordsLongRead.end+2.0s' soundLevel='-23.0dB' fadeOutDur='2.0s' repeatCount='20'>
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Chop_up_first_Magnified_loop_4_hook_long.ogg'/>
     </media>
 
-    <media xml:id='music3' begin='musicLongRead.end-2.0s' end='outro.end-5.0s' soundLevel='-10.0dB' fadeInDur='2.5s' fadeOutDur='2.5s' repeatCount='10'>
+    <media xml:id='music3' begin='musicLongRead.end-1.0s' end='outro.end-5.0s' soundLevel='-10.0dB' fadeInDur='1.5s' fadeOutDur='2.5s' repeatCount='10'>
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fbird_2l.ogg'/>
     </media>
 
