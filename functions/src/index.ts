@@ -8,7 +8,6 @@ import { APIResponse } from './models/responseModels';
 import { getSaturdayBriefing } from './contentResponseBuilders/saturdayBriefing';
 
 const getLatestUpdate = (noAudio: boolean): Promise<OptionContent> => {
-  return getSaturdayBriefing(noAudio);
   const currentTime = moment().utc();
   if (isWeekdayAM(currentTime)) {
     const amBriefing = getWeekdayAMBriefing(noAudio);
