@@ -16,7 +16,7 @@ import {
 Current rules for uk Top Stories:
 Top stories from CAPI based on showing only editors picks
 First sentence each story
-Story must have the pillarId pillar/news and not be a live blog or have the morning briefing tag.
+Story must have the pillarId pillar/news and have the article type 'article' or have the morning briefing tag.
 */
 
 const numberOfStoriesNeeded = 4;
@@ -43,7 +43,7 @@ const processUKTopStories = (capiResponse: CapiEditorsPicks): OptionContent => {
   while (i < articles.length && topStories.length < numberOfStoriesNeeded) {
     const article = articles[i];
     if (
-      article.type !== 'liveblog' &&
+      article.type === 'article' &&
       article.pillarId === 'pillar/news' &&
       !isMorningBriefing(article) &&
       hasBodyText(article)

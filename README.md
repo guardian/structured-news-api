@@ -8,7 +8,7 @@ Voice Lab Project. This takes the Morning Briefing and extracts structured data 
 
 - Three Top Stories - These are the first three stories in the morning briefing. For each story take the first sentence about it in the morning briefing
 - Today in Focus - For the Today in Focus article for the day get the headline and first 2 sentences of the standfirst
-- Trending Article - The first article when querying `http://content.guardianapis.com/uk` by most-viewed. The article must have the pillar id 'pillar/news'. The article must not be a live blog or have the morning briefing tag on it.
+- Trending Article - The first article when querying `http://content.guardianapis.com/uk` by most-viewed. The article must have the pillar id 'pillar/news'. The article must of of type 'article' and not have the morning briefing tag on it.
 
 ### Fallback
 
@@ -16,7 +16,7 @@ For when none of the other conditions are true or the generation fails
 
 - Three Top Stories - These are from the UK editor's picks. Sourced from CAPI. The articles must have the pillar id 'pillar/news'. The article must not be a live blog or have the morning briefing tag on it.
 - Trending Article - The first article when querying `http://content.guardianapis.com/uk` by most-viewed. The article must have the pillar id 'pillar/news'. The article must not be a live blog or have the morning briefing tag on it.
-- Forth Top Story - Forth story from the UK editor's picks. Sourced from CAPI. The article must have the pillar id 'pillar/news'. The article must not be a live blog or have the morning briefing tag on it.
+- Forth Top Story - Forth story from the UK editor's picks. Sourced from CAPI. The article must have the pillar id 'pillar/news'. he article must of of type 'article' and not have the morning briefing tag on it.
 
 # Set Up
 

@@ -11,7 +11,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'First Article',
@@ -29,7 +29,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'First Article',
@@ -47,7 +47,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'First Article',
@@ -65,7 +65,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'First Article',
@@ -104,7 +104,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/opinion',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'First Article',
@@ -122,7 +122,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'Second Article',
@@ -140,7 +140,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'Second Article',
@@ -158,7 +158,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'Second Article',
@@ -176,7 +176,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'Second Article',
@@ -233,7 +233,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'Second Article',
@@ -251,7 +251,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'Second Article',
@@ -269,7 +269,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'Second Article',
@@ -287,7 +287,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'Second Article',
@@ -327,7 +327,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'First Article',
@@ -349,7 +349,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'Second Article',
@@ -367,7 +367,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'Second Article',
@@ -385,7 +385,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'Second Article',
@@ -403,7 +403,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'Second Article',
@@ -443,7 +443,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'First Article',
@@ -461,7 +461,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'Second Article',
@@ -479,7 +479,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'Second Article',
@@ -497,7 +497,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'Second Article',
@@ -515,7 +515,7 @@ describe('processUKTopStories', () => {
             webPublicationDate: '2019-02-11T03:00:06Z',
             sectionId: '',
             pillarId: 'pillar/news',
-            type: '',
+            type: 'article',
             webUrl: 'www.theguardian.com',
             fields: {
               headline: 'Second Article',
