@@ -48,7 +48,10 @@ const writeStreamToFileAndUploadToGoogleCloudStorage = (
     writeStream.on('finish', () => {
       googleCloudStorage
         .bucket(bucketName)
-        .upload(fileLocation, { public: true })
+        .upload(fileLocation, {
+          public: true,
+          metadata: { cacheControl: 'no-cache' },
+        })
         .then(_ => {
           fs.unlinkSync(fileLocation);
           resolve(getAudioAssetUrl(filename));
