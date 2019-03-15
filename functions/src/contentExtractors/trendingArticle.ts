@@ -12,7 +12,7 @@ import {
 Current rules for trendingArticles:
 The top story from /UK most viewed according to CAPI
 First sentence of top story
-Story must have the pillarId pillar/news and not be a live blog or have the morning briefing tag.
+Story must have the pillarId pillar/news and have the article type 'article' or have the morning briefing tag.
 */
 
 const getTrendingArticle = (
@@ -46,7 +46,7 @@ const processTrendingArticles = (
     while (!foundArticle && i < articles.length) {
       const currentArticle = articles[i];
       if (
-        currentArticle.type !== 'liveblog' &&
+        currentArticle.type === 'article' &&
         currentArticle.pillarId === 'pillar/news' &&
         !isMorningBriefing(currentArticle) &&
         hasBodyText(currentArticle)
