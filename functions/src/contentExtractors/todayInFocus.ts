@@ -1,4 +1,4 @@
-import { Article, ContentError } from '../models/contentModels';
+import { Article, ContentError, Podcast } from '../models/contentModels';
 
 import { CapiResults } from '../models/capiModels';
 import fetch from 'node-fetch';
@@ -38,7 +38,8 @@ const processTodayInFocus = (results: CapiResults): Article | ContentError => {
     return new Article(
       article.fields.headline,
       getTodayInFocusStandfirst(stripHTMLTags(article.fields.standfirst)),
-      article.webUrl
+      article.webUrl,
+      Podcast.TODAYINFOCUS
     );
   }
 };

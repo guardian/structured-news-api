@@ -1,4 +1,9 @@
-import { Article, ContentError, AudioLongReads } from '../models/contentModels';
+import {
+  Article,
+  ContentError,
+  AudioLongReads,
+  Podcast,
+} from '../models/contentModels';
 
 import { CapiResults, Result } from '../models/capiModels';
 import fetch from 'node-fetch';
@@ -45,7 +50,8 @@ const processAudioLongRead = (result: Result) => {
   return new Article(
     result.fields.headline,
     result.fields.trailText,
-    result.webUrl
+    result.webUrl,
+    Podcast.LONGREAD
   );
 };
 

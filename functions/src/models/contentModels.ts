@@ -4,10 +4,17 @@ class Article extends OptionContent {
   constructor(
     public headline: string,
     public standfirst: string,
-    public source: string
+    public source: string,
+    public podcast: Podcast = Podcast.NONE
   ) {
     super();
   }
+}
+
+enum Podcast {
+  TODAYINFOCUS = 'todayinfocus',
+  LONGREAD = 'longread',
+  NONE = 'none',
 }
 
 class AudioLongReads extends OptionContent {
@@ -100,4 +107,5 @@ export {
   FallbackBriefing,
   WeekendBriefing,
   WeekdayAMBriefing,
+  Podcast,
 };
