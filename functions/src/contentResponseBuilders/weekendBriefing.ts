@@ -8,19 +8,26 @@ import {
   ContentError,
   AudioLongReads,
 } from '../models/contentModels';
-import { FallbackResponse, SaturdayBriefing } from '../models/responseModels';
+import { FallbackResponse, WeekendBriefing } from '../models/responseModels';
 import { generateAudioFile } from '../generators/audioFileGeneration';
 import { getAudioLongReads } from '../contentExtractors/audioLongReads';
 import { generateSaturdaySSML } from '../generators/nastySSMLGeneration/saturdaySSMLGeneration';
+import { generateSundaySSML } from '../generators/nastySSMLGeneration/sundaySSMLGeneration';
 
 const capiKey = config().guardian.capikey;
 const googleTextToSpeechKey = config().googletexttospeech.key;
 
-const getSaturdayBriefing = (noAudio: boolean) => {
+const getWeekendBriefing = (noAudio: boolean, isSaturday: boolean) => {
   return getUkTopStories(capiKey).then(topStories => {
     return getAudioLongReads(capiKey).then(longReads => {
       return getTrendingArticle(capiKey).then(trendingArticle => {
-        return buildResponse(noAudio, topStories, longReads, trendingArticle);
+        return buildResponse(
+          noAudio,
+          isSaturday,
+          topStories,
+          longReads,
+          trendingArticle
+        );
       });
     });
   });
@@ -28,6 +35,7 @@ const getSaturdayBriefing = (noAudio: boolean) => {
 
 const buildResponse = (
   noAudio: boolean,
+  isSaturday: boolean,
   topStories: OptionContent,
   audioLongReads: OptionContent,
   trendingArticle: OptionContent
@@ -37,17 +45,23 @@ const buildResponse = (
     audioLongReads instanceof AudioLongReads &&
     trendingArticle instanceof Article
   ) {
-    const saturdayBriefing = new SaturdayBriefing(
+    const longRead = isSaturday
+      ? audioLongReads.olderLongRead
+      : audioLongReads.latestLongRead;
+
+    const weekendBriefing = new WeekendBriefing(
       topStories,
-      audioLongReads.olderLongRead,
+      longRead,
       trendingArticle
     );
-    const ssml = generateSaturdaySSML(saturdayBriefing);
+    const ssml = isSaturday
+      ? generateSaturdaySSML(weekendBriefing)
+      : generateSundaySSML(weekendBriefing);
     if (noAudio) {
-      return Promise.resolve(new FallbackResponse(saturdayBriefing, ssml, ''));
+      return Promise.resolve(new FallbackResponse(weekendBriefing, ssml, ''));
     } else {
       return generateAudioFile(ssml, googleTextToSpeechKey).then(url => {
-        return new FallbackResponse(saturdayBriefing, ssml, url);
+        return new FallbackResponse(weekendBriefing, ssml, url);
       });
     }
   } else {
@@ -57,4 +71,4 @@ const buildResponse = (
   }
 };
 
-export { getSaturdayBriefing };
+export { getWeekendBriefing };

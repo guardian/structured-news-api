@@ -1,4 +1,4 @@
-import { isWeekdayAM, isSaturday } from '../briefingSlotCheckers';
+import { isWeekdayAM, isSaturday, isSunday } from '../briefingSlotCheckers';
 import moment = require('moment');
 
 describe('isWeekdayAM', () => {
@@ -84,5 +84,23 @@ describe('isSaturday', () => {
     const time = moment().day('sunday');
 
     expect(isSaturday(time)).toEqual(false);
+  });
+});
+
+describe('isSunday', () => {
+  test('should return true on Sunday', () => {
+    const time = moment().day('sunday');
+
+    expect(isSunday(time)).toEqual(true);
+  });
+  test('should return false on Saturday', () => {
+    const time = moment().day('saturday');
+
+    expect(isSunday(time)).toEqual(false);
+  });
+  test('should return false on Monday', () => {
+    const time = moment().day('monday');
+
+    expect(isSunday(time)).toEqual(false);
   });
 });

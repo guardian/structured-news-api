@@ -29,7 +29,7 @@ class FallbackBriefing {
   ) {}
 }
 
-class SaturdayBriefing {
+class WeekendBriefing {
   constructor(
     public topStories: FallbackTopStories,
     public audioLongRead: Article,
@@ -53,5 +53,5 @@ export {
   WeekdayAMBriefing,
   APIResponse,
   FallbackBriefing,
-  SaturdayBriefing,
+  WeekendBriefing,
 };
