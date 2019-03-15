@@ -2,17 +2,14 @@ import * as fs from 'fs-extra';
 import fetch from 'node-fetch';
 import { GoogleTextToSpeechResponse } from '../models/googleModels';
 import { Storage } from '@google-cloud/storage';
+import * as moment from 'moment';
 
 const googleCloudStorage = new Storage();
 const bucketName = 'gu-briefing-audio';
-const defaultFilename = 'briefing.ogg';
 const writeDirectory = `/tmp/`;
 
-const generateAudioFile = (
-  ssml: string,
-  apiKey: string,
-  filename: string = defaultFilename
-): Promise<string> => {
+const generateAudioFile = (ssml: string, apiKey: string): Promise<string> => {
+  const filename = timestampFilename();
   return fetch(getGoogleTextToSpeechUrl(apiKey), {
     headers: { 'Content-Type': 'application/json' },
     method: 'POST',
@@ -71,6 +68,13 @@ const getAudioAssetUrl = (filename: string) => {
 
 const getGoogleTextToSpeechUrl = (apiKey: string) => {
   return `https://texttospeech.googleapis.com/v1/text:synthesize?key=${apiKey}`;
+};
+
+const timestampFilename = (): string => {
+  const currentUnixTime = moment()
+    .utc()
+    .unix();
+  return `briefing${currentUnixTime}.ogg`;
 };
 
 const getTextToSpeechBodyRequest = (ssml: string) => {
