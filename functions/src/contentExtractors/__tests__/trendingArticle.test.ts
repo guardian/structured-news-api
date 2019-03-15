@@ -18,6 +18,7 @@ describe('processTrendingArticles', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -51,6 +52,7 @@ describe('processTrendingArticles', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -68,6 +70,7 @@ describe('processTrendingArticles', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -100,6 +103,7 @@ describe('processTrendingArticles', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -117,6 +121,7 @@ describe('processTrendingArticles', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -150,6 +155,7 @@ describe('processTrendingArticles', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [
               {
@@ -171,6 +177,7 @@ describe('processTrendingArticles', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -204,6 +211,7 @@ describe('processTrendingArticles', () => {
               standfirst: '',
               body: '',
               bodyText: '',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -221,6 +229,7 @@ describe('processTrendingArticles', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {

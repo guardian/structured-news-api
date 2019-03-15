@@ -18,6 +18,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -35,6 +36,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -52,6 +54,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -69,6 +72,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -107,6 +111,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -124,6 +129,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -141,6 +147,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -158,6 +165,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -175,6 +183,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -213,6 +222,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -230,6 +240,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -247,6 +258,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -264,6 +276,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -281,6 +294,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -320,6 +334,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [
               {
@@ -341,6 +356,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -358,6 +374,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -375,6 +392,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -392,6 +410,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -431,6 +450,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: '',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -448,6 +468,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -465,6 +486,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -482,6 +504,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {
@@ -499,6 +522,7 @@ describe('processUKTopStories', () => {
               standfirst: '',
               body: '',
               bodyText: 'Article',
+              trailText: '',
             },
             tags: [],
             blocks: {

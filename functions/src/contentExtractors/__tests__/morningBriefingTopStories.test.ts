@@ -16,6 +16,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         standfirst: '',
         body: '',
         bodyText: '',
+        trailText: '',
       },
       tags: [],
       blocks: {
@@ -46,6 +47,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         standfirst: '',
         body: '',
         bodyText: '',
+        trailText: '',
       },
       tags: [],
       blocks: {
@@ -71,12 +73,14 @@ describe('Extract top stories from the Morning Briefing', () => {
         standfirst:
           'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50.',
         source: '',
+        podcast: 'none',
       },
       {
         headline: '‘It was hell’.',
         standfirst:
           'Thursday will mark one year since 17 people were shot and killed at the Marjory Stoneman Douglas high school in Parkland, Florida.',
         source: '',
+        podcast: 'none',
       },
     ];
 
@@ -99,6 +103,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         standfirst: '',
         body: '',
         bodyText: '',
+        trailText: '',
       },
       tags: [],
       blocks: {
@@ -124,6 +129,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         standfirst:
           'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50.',
         source: '',
+        podcast: 'none',
       },
     ];
 
@@ -146,6 +152,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         standfirst: '',
         body: '',
         bodyText: '',
+        trailText: '',
       },
       tags: [],
       blocks: {
@@ -203,6 +210,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         standfirst: '',
         body: '',
         bodyText: '',
+        trailText: '',
       },
       tags: [],
       blocks: {

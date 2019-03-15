@@ -1,29 +1,32 @@
-import { OptionContent, ContentError } from './models/contentModels';
 import { region } from 'firebase-functions';
 import { getWeekdayAMBriefing } from './contentResponseBuilders/weekdayAMBriefing';
 import { isWeekdayAM, isSaturday, isSunday } from './briefingSlotCheckers';
 import * as moment from 'moment';
 import { getFallbackBriefing } from './contentResponseBuilders/fallbackBriefing';
-import { APIResponse } from './models/responseModels';
 import { getWeekendBriefing } from './contentResponseBuilders/weekendBriefing';
+import {
+  APIResponse,
+  FailAPIResponse,
+  SuccessAPIResponse,
+} from './models/responseModels';
 
-const getLatestUpdate = (noAudio: boolean): Promise<OptionContent> => {
+const getLatestUpdate = (noAudio: boolean): Promise<APIResponse> => {
   const currentTime = moment().utc();
   if (isWeekdayAM(currentTime)) {
     const amBriefing = getWeekdayAMBriefing(noAudio);
-    return amBriefing instanceof ContentError
+    return amBriefing instanceof FailAPIResponse
       ? getFallbackBriefing(noAudio)
       : amBriefing;
   }
   if (isSaturday(currentTime)) {
     const saturdayBriefing = getWeekendBriefing(noAudio, true);
-    return saturdayBriefing instanceof ContentError
+    return saturdayBriefing instanceof FailAPIResponse
       ? getFallbackBriefing(noAudio)
       : saturdayBriefing;
   }
   if (isSunday(currentTime)) {
     const sundayBriefing = getWeekendBriefing(noAudio, false);
-    return sundayBriefing instanceof ContentError
+    return sundayBriefing instanceof FailAPIResponse
       ? getFallbackBriefing(noAudio)
       : sundayBriefing;
   } else {
@@ -44,7 +47,7 @@ exports.structuredNewsApi = region('europe-west1').https.onRequest(
     const noAudio: boolean = getBooleanParam(request.query.noAudio);
     getLatestUpdate(noAudio)
       .then(latestUpdate => {
-        if (latestUpdate instanceof APIResponse) {
+        if (latestUpdate instanceof SuccessAPIResponse) {
           response.send(latestUpdate);
         } else {
           console.error(
@@ -52,7 +55,7 @@ exports.structuredNewsApi = region('europe-west1').https.onRequest(
           );
           response
             .status(500)
-            .send('500: Could not get data. No content available');
+            .send(`500: Could not get data. No content available`);
         }
       })
       .catch(e => {

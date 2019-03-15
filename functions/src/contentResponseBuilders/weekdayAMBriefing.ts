@@ -1,9 +1,9 @@
 import fetch from 'node-fetch';
 import {
   OptionContent,
-  ContentError,
   TopStories,
   Article,
+  WeekdayAMBriefing,
 } from '../models/contentModels';
 import { CapiResults, Result } from '../models/capiModels';
 import { getDateFromString } from './builderUtils';
@@ -13,25 +13,30 @@ import { getTopStoriesFromMorningBriefing } from '../contentExtractors/morningBr
 import { generateWeekdayAMSSML } from '../generators/nastySSMLGeneration/weekdayAMSSMLGeneration';
 import { generateAudioFile } from '../generators/audioFileGeneration';
 import { config } from 'firebase-functions';
-import { WeekdayAMBriefing, WeekdayAMResponse } from '../models/responseModels';
 import * as moment from 'moment';
+import {
+  BriefingContent,
+  APIResponse,
+  SuccessAPIResponse,
+  FailAPIResponse,
+} from '../models/responseModels';
 
 const capiKey = config().guardian.capikey;
 const googleTextToSpeechKey = config().googletexttospeech.key;
 
-const getWeekdayAMBriefing = (noAudio: boolean) => {
+const getWeekdayAMBriefing = (noAudio: boolean): Promise<APIResponse> => {
   const dateToday = moment.utc().format('YYYY-MM-DD');
   const morningBriefingURL = `https://content.guardianapis.com/world/series/guardian-morning-briefing?api-key=${capiKey}&from-date=${dateToday}&to-date=${dateToday}&page-size=1&show-fields=headline,standfirst,body&order-by=newest&show-blocks=all`;
   return fetch(morningBriefingURL)
     .then<CapiResults>(res => {
       return res.json();
     })
-    .then<OptionContent>(capiResponse => {
+    .then<APIResponse>(capiResponse => {
       const results = capiResponse.response.results;
       if (results.length > 0) {
         return processResult(results[0], noAudio);
       } else {
-        return new ContentError('Could not get weekday AM update');
+        return new FailAPIResponse('Could not get weekday AM update');
       }
     });
 };
@@ -39,7 +44,7 @@ const getWeekdayAMBriefing = (noAudio: boolean) => {
 const processResult = (
   result: Result,
   noAudio: boolean
-): Promise<OptionContent> => {
+): Promise<APIResponse> => {
   const articleDate = getDateFromString(result.webPublicationDate);
   return getTodayInFocus(articleDate, capiKey).then(todayInFocus => {
     return getTrendingArticle(capiKey).then(trendingArticle => {
@@ -58,7 +63,7 @@ const buildResponse = (
   topStories: OptionContent,
   todayInFocus: OptionContent,
   trendingArticle: OptionContent
-): Promise<OptionContent> => {
+): Promise<APIResponse> => {
   if (
     topStories instanceof TopStories &&
     todayInFocus instanceof Article &&
@@ -70,18 +75,23 @@ const buildResponse = (
       trendingArticle
     );
     const ssml = generateWeekdayAMSSML(weekdayAMBriefing);
+    const briefingContent = new BriefingContent(
+      weekdayAMBriefing.topStories.story1,
+      weekdayAMBriefing.topStories.story2,
+      weekdayAMBriefing.topStories.story3,
+      weekdayAMBriefing.todayInFocus,
+      weekdayAMBriefing.trendingArticle
+    );
     if (noAudio) {
-      return Promise.resolve(
-        new WeekdayAMResponse(weekdayAMBriefing, ssml, '')
-      );
+      return Promise.resolve(new SuccessAPIResponse(briefingContent, ssml, ''));
     } else {
       return generateAudioFile(ssml, googleTextToSpeechKey).then(url => {
-        return new WeekdayAMResponse(weekdayAMBriefing, ssml, url);
+        return new SuccessAPIResponse(briefingContent, ssml, url);
       });
     }
   } else {
     return Promise.resolve(
-      new ContentError('Could not get Weekday AM briefing')
+      new FailAPIResponse('Could not get Weekday AM briefing')
     );
   }
 };

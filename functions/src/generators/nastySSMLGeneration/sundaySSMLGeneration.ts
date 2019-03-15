@@ -1,5 +1,4 @@
-import { Article } from '../../models/contentModels';
-import { WeekendBriefing } from '../../models/responseModels';
+import { Article, WeekendBriefing } from '../../models/contentModels';
 import { stripExcessWhitespace, encodeStringForSSML } from './SSMLUtils';
 
 /*

@@ -15,6 +15,7 @@ describe('Extract text elements from article', () => {
         standfirst: '',
         body: '',
         bodyText: '',
+        trailText: '',
       },
       tags: [],
       blocks: {
@@ -62,6 +63,7 @@ describe('isMorningBriefing', () => {
         standfirst: '',
         body: '',
         bodyText: '',
+        trailText: '',
       },
       tags: [
         {
@@ -90,6 +92,7 @@ describe('isMorningBriefing', () => {
         standfirst: '',
         body: '',
         bodyText: '',
+        trailText: '',
       },
       tags: [
         {
@@ -115,6 +118,7 @@ describe('isMorningBriefing', () => {
         standfirst: '',
         body: '',
         bodyText: '',
+        trailText: '',
       },
       tags: [],
       blocks: {
