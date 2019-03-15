@@ -16,6 +16,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         standfirst: '',
         body: '',
         bodyText: '',
+        trailText: '',
       },
       tags: [],
       blocks: {
@@ -46,6 +47,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         standfirst: '',
         body: '',
         bodyText: '',
+        trailText: '',
       },
       tags: [],
       blocks: {
@@ -99,6 +101,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         standfirst: '',
         body: '',
         bodyText: '',
+        trailText: '',
       },
       tags: [],
       blocks: {
@@ -146,6 +149,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         standfirst: '',
         body: '',
         bodyText: '',
+        trailText: '',
       },
       tags: [],
       blocks: {
@@ -203,6 +207,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         standfirst: '',
         body: '',
         bodyText: '',
+        trailText: '',
       },
       tags: [],
       blocks: {

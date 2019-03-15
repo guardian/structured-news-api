@@ -21,6 +21,7 @@ describe('Process the results of Today in Focus query', () => {
                 '<p>After a spike in deaths among homeless people in the affluent city of Oxford, Robert Booth went to investigate.In a growing community of rough sleepers, there is little support for people with mental health problems and addiction.Plus: Nosheen Iqbal on the ‘white fragility’ preventing a frank national discussion about racism</p>',
               body: '',
               bodyText: '',
+              trailText: '',
             },
             tags: [],
             blocks: {

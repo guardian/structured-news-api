@@ -44,6 +44,7 @@ describe('Extract reading material URL from the Morning Briefing', () => {
         standfirst: '',
         body: '',
         bodyText: '',
+        trailText: '',
       },
       tags: [],
       blocks: {
@@ -71,6 +72,7 @@ describe('Extract reading material URL from the Morning Briefing', () => {
         standfirst: '',
         body: '',
         bodyText: '',
+        trailText: '',
       },
       tags: [],
       blocks: {
@@ -106,6 +108,7 @@ describe('Extract reading material URL from the Morning Briefing', () => {
         standfirst: '',
         body: '',
         bodyText: '',
+        trailText: '',
       },
       tags: [],
       blocks: {
