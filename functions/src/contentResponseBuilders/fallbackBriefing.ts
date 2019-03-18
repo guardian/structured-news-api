@@ -8,7 +8,6 @@ import {
   FallbackBriefing,
 } from '../models/contentModels';
 import {
-  BriefingContent,
   SuccessAPIResponse,
   FailAPIResponse,
   APIResponse,
@@ -38,13 +37,13 @@ const buildResponse = (
   ) {
     const fallbackBriefing = new FallbackBriefing(topStories, trendingArticle);
     const ssml = generateFallbackSSML(fallbackBriefing);
-    const briefingContent = new BriefingContent(
+    const briefingContent = [
       fallbackBriefing.topStories.story1,
       fallbackBriefing.topStories.story2,
       fallbackBriefing.topStories.story3,
       fallbackBriefing.trendingArticle,
-      fallbackBriefing.topStories.story4
-    );
+      fallbackBriefing.topStories.story4,
+    ];
     if (noAudio) {
       return Promise.resolve(new SuccessAPIResponse(briefingContent, ssml, ''));
     } else {
