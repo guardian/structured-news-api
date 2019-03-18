@@ -12,7 +12,6 @@ import {
   SuccessAPIResponse,
   FailAPIResponse,
   APIResponse,
-  BriefingContent,
 } from '../models/responseModels';
 import { generateAudioFile } from '../generators/audioFileGeneration';
 import { getAudioLongReads } from '../contentExtractors/audioLongReads';
@@ -65,13 +64,13 @@ const buildResponse = (
     const ssml = isSaturday
       ? generateSaturdaySSML(weekendBriefing)
       : generateSundaySSML(weekendBriefing);
-    const briefingContent = new BriefingContent(
+    const briefingContent = [
       weekendBriefing.topStories.story1,
       weekendBriefing.topStories.story2,
       weekendBriefing.topStories.story3,
       weekendBriefing.audioLongRead,
-      weekendBriefing.trendingArticle
-    );
+      weekendBriefing.trendingArticle,
+    ];
     if (noAudio) {
       return Promise.resolve(new SuccessAPIResponse(briefingContent, ssml, ''));
     } else {

@@ -15,7 +15,6 @@ import { generateAudioFile } from '../generators/audioFileGeneration';
 import { config } from 'firebase-functions';
 import * as moment from 'moment';
 import {
-  BriefingContent,
   APIResponse,
   SuccessAPIResponse,
   FailAPIResponse,
@@ -75,13 +74,13 @@ const buildResponse = (
       trendingArticle
     );
     const ssml = generateWeekdayAMSSML(weekdayAMBriefing);
-    const briefingContent = new BriefingContent(
+    const briefingContent = [
       weekdayAMBriefing.topStories.story1,
       weekdayAMBriefing.topStories.story2,
       weekdayAMBriefing.topStories.story3,
       weekdayAMBriefing.todayInFocus,
-      weekdayAMBriefing.trendingArticle
-    );
+      weekdayAMBriefing.trendingArticle,
+    ];
     if (noAudio) {
       return Promise.resolve(new SuccessAPIResponse(briefingContent, ssml, ''));
     } else {
