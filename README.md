@@ -23,7 +23,7 @@ For when none of the other conditions are true or the generation fails
 - You need permission to access the google cloud project
 - You need the [firebase cli](https://github.com/firebase/firebase-tools) installed
 - You need to log in to firebase using `firebase login`
-- You need to run `yarn install`
+- You need to run `yarn install` from inside the `functions` directory
 - You need to set up environnement variables
 - You need to have service account credentials locally
 
