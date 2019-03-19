@@ -41,10 +41,10 @@ The app also requires a service account ID.
 4. Select the file-upload account and select 'create key'. This will download a key onto your machine.
 5. In terminal type `export GOOGLE_APPLICATION_CREDENTIALS=path_to_json_file_containing_key`
 
-# Running Locally
+## Run locally
 
-Use `yarn serve` to run locally
+1. From inside the `functions` directory run `yarn serve`
 
-# Deploying
+## Deploy:
 
-Use `yarn deploy` to deploy.
+From inside the `functions` directory run `yarn deploy`
