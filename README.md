@@ -23,11 +23,23 @@ For when none of the other conditions are true or the generation fails
 - You need permission to access the google cloud project
 - You need the [firebase cli](https://github.com/firebase/firebase-tools) installed
 - You need to log in to firebase using `firebase login`
+- You need to run `yarn install`
 - You need to set up environnement variables
+- You need to have service account credentials locally
 
 ## Environment Variables
 
 This project requires environment variables. Run `firebase functions:config:get > .runtimeconfig.json` in the `functions` directory to run the function locally.
+
+# Service Account Credentials
+
+The app also requires a service account ID.
+
+1. Go to the Google Cloud Console for the project
+2. Go to IAM & Admin
+3. Go to Service Accounts
+4. Select the file-upload account and select 'create key'. This will download a key onto your machine.
+5. In terminal type `export GOOGLE_APPLICATION_CREDENTIALS=path_to_json_file_containing_key`
 
 # Running Locally
 
