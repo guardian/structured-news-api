@@ -1,4 +1,8 @@
-import { isMorningBriefing, isValidResult } from '../resultValidator';
+import {
+  isMorningBriefing,
+  isValidResult,
+  hasGuardianReadersProfile,
+} from '../resultValidator';
 
 describe('isValidResult', () => {
   test('should return true if result is valid', () => {
@@ -18,6 +22,7 @@ describe('isValidResult', () => {
       tags: [
         {
           id: 'tag',
+          type: 'keyword',
         },
       ],
       blocks: {
@@ -43,6 +48,7 @@ describe('isValidResult', () => {
       tags: [
         {
           id: 'tag',
+          type: 'series',
         },
       ],
       blocks: {
@@ -68,6 +74,7 @@ describe('isValidResult', () => {
       tags: [
         {
           id: 'tag',
+          type: 'series',
         },
       ],
       blocks: {
@@ -93,6 +100,7 @@ describe('isValidResult', () => {
       tags: [
         {
           id: 'tag',
+          type: 'keyword',
         },
       ],
       blocks: {
@@ -118,9 +126,11 @@ describe('isValidResult', () => {
       tags: [
         {
           id: 'world/series/guardian-morning-briefing',
+          type: 'series',
         },
         {
           id: 'tag',
+          type: 'keyword',
         },
       ],
       blocks: {
@@ -149,9 +159,11 @@ describe('isMorningBriefing', () => {
       tags: [
         {
           id: 'world/series/guardian-morning-briefing',
+          type: 'series',
         },
         {
           id: 'other tag',
+          type: 'tracking',
         },
       ],
       blocks: {
@@ -178,6 +190,7 @@ describe('isMorningBriefing', () => {
       tags: [
         {
           id: 'other tag',
+          type: 'contributor',
         },
       ],
       blocks: {
@@ -207,5 +220,95 @@ describe('isMorningBriefing', () => {
       },
     };
     expect(isMorningBriefing(input)).toEqual(false);
+  });
+});
+
+describe('hasGuardianReaderProfile', () => {
+  test('should return true on content which has the guardian reader tag on it', () => {
+    const input = {
+      webPublicationDate: '2019-02-11T03:00:06Z',
+      sectionId: '',
+      pillarId: 'pillar/opinion',
+      type: '',
+      webUrl: 'www.theguardian.com',
+      fields: {
+        headline: 'First Article',
+        standfirst: '',
+        body: '',
+        bodyText: '',
+        trailText: '',
+      },
+      tags: [
+        {
+          id: 'profile/guardian-readers',
+          type: 'contributor',
+        },
+        {
+          id: 'other tag',
+          type: 'keyword',
+        },
+      ],
+      blocks: {
+        body: [],
+      },
+    };
+
+    expect(hasGuardianReadersProfile(input)).toEqual(true);
+  });
+
+  test('should return false on content which does not have the guardian reader tag on it', () => {
+    const input = {
+      webPublicationDate: '2019-02-11T03:00:06Z',
+      sectionId: '',
+      pillarId: 'pillar/opinion',
+      type: '',
+      webUrl: 'www.theguardian.com',
+      fields: {
+        headline: 'First Article',
+        standfirst: '',
+        body: '',
+        bodyText: '',
+        trailText: '',
+      },
+      tags: [
+        {
+          id: 'other tag',
+          type: 'keyword',
+        },
+      ],
+      blocks: {
+        body: [],
+      },
+    };
+
+    expect(hasGuardianReadersProfile(input)).toEqual(true);
+  });
+
+  test('should return false on content which does not have the guardian reader tag on it and has a tag of type "contributor" on it', () => {
+    const input = {
+      webPublicationDate: '2019-02-11T03:00:06Z',
+      sectionId: '',
+      pillarId: 'pillar/opinion',
+      type: '',
+      webUrl: 'www.theguardian.com',
+      fields: {
+        headline: 'First Article',
+        standfirst: '',
+        body: '',
+        bodyText: '',
+        trailText: '',
+      },
+      tags: [
+        {
+          id: 'other tag',
+          type: 'contributor',
+        },
+      ],
+      blocks: {
+        body: [],
+      },
+    };
+
+    expect(hasGuardianReadersProfile(input)).toEqual(true);
   });
 });

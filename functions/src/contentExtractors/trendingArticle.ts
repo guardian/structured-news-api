@@ -15,7 +15,7 @@ Uses resultValidator to check if an article should be included in the top storie
 const getTrendingArticle = (
   capiKey: string
 ): Promise<Article | ContentError> => {
-  const trendingArticles = `http://content.guardianapis.com/uk?api-key=${capiKey}&page-size=10&show-most-viewed=true&show-fields=headline,standfirst,body,bodyText&show-tags=series`;
+  const trendingArticles = `http://content.guardianapis.com/uk?api-key=${capiKey}&page-size=10&show-most-viewed=true&show-fields=headline,standfirst,body,bodyText&show-tags=series,contributor`;
   return fetch(trendingArticles)
     .then<CapiTrending>(res => {
       return res.json();

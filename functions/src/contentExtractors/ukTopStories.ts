@@ -19,7 +19,7 @@ Uses resultValidator to check if an article should be included in the top storie
 const numberOfStoriesNeeded = 4;
 
 const getUkTopStories = (capiKey: string): Promise<OptionContent> => {
-  const topStories = `http://content.guardianapis.com/uk?api-key=${capiKey}&page-size=10&show-editors-picks=true&only-editors-picks=true&show-most-viewed=false&edition=uk&show-fields=headline,standfirst,body,bodyText&show-tags=series`;
+  const topStories = `http://content.guardianapis.com/uk?api-key=${capiKey}&page-size=10&show-editors-picks=true&only-editors-picks=true&show-most-viewed=false&edition=uk&show-fields=headline,standfirst,body,bodyText&show-tags=series,contributor`;
   return fetch(topStories)
     .then<CapiEditorsPicks>(res => {
       return res.json();

@@ -51,6 +51,7 @@ interface Fields {
 
 interface Tag {
   id: string;
+  type: string;
 }
 
 interface Blocks {

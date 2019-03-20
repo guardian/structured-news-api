@@ -6,13 +6,15 @@ import { Result } from '../models/capiModels';
 - body text
 A result must not have
 - the morning briefing tag.
+- the Guardian Readers contributor tag on it.
  */
 const isValidResult = (result: Result): boolean => {
   return (
     result.type === 'article' &&
     result.pillarId === 'pillar/news' &&
+    hasBodyText(result) &&
     !isMorningBriefing(result) &&
-    hasBodyText(result)
+    !hasGuardianReadersProfile(result)
   );
 };
 
@@ -25,8 +27,15 @@ const isMorningBriefing = (result: Result) => {
   );
 };
 
+const hasGuardianReadersProfile = (result: Result) => {
+  const guardianReaderProfile = result.tags.filter(tag => {
+    tag.id === 'profile/guardian-readers' && tag.type === 'contributor';
+  });
+  return guardianReaderProfile.length > 1;
+};
+
 const hasBodyText = (result: Result): boolean => {
   return result.fields.bodyText.length > 0;
 };
 
-export { isValidResult, isMorningBriefing };
+export { isValidResult, isMorningBriefing, hasGuardianReadersProfile };

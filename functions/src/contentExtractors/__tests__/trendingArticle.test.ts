@@ -160,6 +160,7 @@ describe('processTrendingArticles', () => {
             tags: [
               {
                 id: 'world/series/guardian-morning-briefing',
+                type: 'series',
               },
             ],
             blocks: {
