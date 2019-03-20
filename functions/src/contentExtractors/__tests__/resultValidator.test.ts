@@ -281,7 +281,7 @@ describe('hasGuardianReaderProfile', () => {
       },
     };
 
-    expect(hasGuardianReadersProfile(input)).toEqual(true);
+    expect(hasGuardianReadersProfile(input)).toEqual(false);
   });
 
   test('should return false on content which does not have the guardian reader tag on it and has a tag of type "contributor" on it', () => {
@@ -309,6 +309,6 @@ describe('hasGuardianReaderProfile', () => {
       },
     };
 
-    expect(hasGuardianReadersProfile(input)).toEqual(true);
+    expect(hasGuardianReadersProfile(input)).toEqual(false);
   });
 });
