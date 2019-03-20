@@ -1,4 +1,4 @@
-import { getTextBlocksFromArticle, isMorningBriefing } from '../extractorUtils';
+import { getTextBlocksFromArticle } from '../extractorUtils';
 
 import { Result } from '../../models/capiModels';
 
@@ -47,84 +47,5 @@ describe('Extract text elements from article', () => {
       '<p>Fun html</p><p>More fun html</p>',
     ];
     expect(getTextBlocksFromArticle(input)).toEqual(expectedOutput);
-  });
-});
-
-describe('isMorningBriefing', () => {
-  test('should return true if Result has a morning briefing tag', () => {
-    const input = {
-      webPublicationDate: '2019-02-11T03:00:06Z',
-      sectionId: '',
-      pillarId: 'pillar/opinion',
-      type: '',
-      webUrl: 'www.theguardian.com',
-      fields: {
-        headline: 'First Article',
-        standfirst: '',
-        body: '',
-        bodyText: '',
-        trailText: '',
-      },
-      tags: [
-        {
-          id: 'world/series/guardian-morning-briefing',
-        },
-        {
-          id: 'other tag',
-        },
-      ],
-      blocks: {
-        body: [],
-      },
-    };
-    expect(isMorningBriefing(input)).toEqual(true);
-  });
-
-  test('should return false if Result has no morning briefing tag', () => {
-    const input = {
-      webPublicationDate: '2019-02-11T03:00:06Z',
-      sectionId: '',
-      pillarId: 'pillar/opinion',
-      type: '',
-      webUrl: 'www.theguardian.com',
-      fields: {
-        headline: 'First Article',
-        standfirst: '',
-        body: '',
-        bodyText: '',
-        trailText: '',
-      },
-      tags: [
-        {
-          id: 'other tag',
-        },
-      ],
-      blocks: {
-        body: [],
-      },
-    };
-    expect(isMorningBriefing(input)).toEqual(false);
-  });
-
-  test('should return false if Result has no tags', () => {
-    const input = {
-      webPublicationDate: '2019-02-11T03:00:06Z',
-      sectionId: '',
-      pillarId: 'pillar/opinion',
-      type: '',
-      webUrl: 'www.theguardian.com',
-      fields: {
-        headline: 'First Article',
-        standfirst: '',
-        body: '',
-        bodyText: '',
-        trailText: '',
-      },
-      tags: [],
-      blocks: {
-        body: [],
-      },
-    };
-    expect(isMorningBriefing(input)).toEqual(false);
   });
 });

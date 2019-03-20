@@ -339,6 +339,7 @@ describe('processUKTopStories', () => {
             tags: [
               {
                 id: 'world/series/guardian-morning-briefing',
+                type: 'series',
               },
             ],
             blocks: {

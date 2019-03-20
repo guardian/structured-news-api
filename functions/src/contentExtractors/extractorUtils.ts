@@ -64,24 +64,9 @@ const getFirstSentence = (text: string): string => {
   return `${text.split('. ')[0]}.`;
 };
 
-const isMorningBriefing = (result: Result) => {
-  // Check if result has the morning briefing tag
-  return (
-    result.tags.filter(
-      tag => tag.id === 'world/series/guardian-morning-briefing'
-    ).length > 0
-  );
-};
-
-const hasBodyText = (result: Result): boolean => {
-  return result.fields.bodyText.length > 0;
-};
-
 export {
   stripHTMLTags,
   getTextBlocksFromArticle,
   getCapiArticle,
   getFirstSentence,
-  isMorningBriefing,
-  hasBodyText,
 };
