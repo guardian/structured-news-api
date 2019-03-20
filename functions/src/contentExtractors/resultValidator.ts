@@ -31,7 +31,7 @@ const hasGuardianReadersProfile = (result: Result) => {
   const guardianReaderProfile = result.tags.filter(tag => {
     tag.id === 'profile/guardian-readers' && tag.type === 'contributor';
   });
-  return guardianReaderProfile.length > 1;
+  return guardianReaderProfile.length > 0;
 };
 
 const hasBodyText = (result: Result): boolean => {
