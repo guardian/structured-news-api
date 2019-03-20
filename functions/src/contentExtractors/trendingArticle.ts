@@ -2,17 +2,14 @@ import { Article, ContentError } from '../models/contentModels';
 
 import { CapiTrending } from '../models/capiModels';
 import fetch from 'node-fetch';
-import {
-  getFirstSentence,
-  isMorningBriefing,
-  hasBodyText,
-} from './extractorUtils';
+import { getFirstSentence } from './extractorUtils';
+import { isValidResult } from './resultValidator';
 
 /*
 Current rules for trendingArticles:
 The top story from /UK most viewed according to CAPI
 First sentence of top story
-Story must have the pillarId pillar/news and have the article type 'article' or have the morning briefing tag.
+Uses resultValidator to check if an article should be included in the top stories
 */
 
 const getTrendingArticle = (
@@ -45,12 +42,7 @@ const processTrendingArticles = (
     let article = new Article('', '', '');
     while (!foundArticle && i < articles.length) {
       const currentArticle = articles[i];
-      if (
-        currentArticle.type === 'article' &&
-        currentArticle.pillarId === 'pillar/news' &&
-        !isMorningBriefing(currentArticle) &&
-        hasBodyText(currentArticle)
-      ) {
+      if (isValidResult(currentArticle)) {
         const fields = articles[i].fields;
         article = new Article(
           fields.headline,
