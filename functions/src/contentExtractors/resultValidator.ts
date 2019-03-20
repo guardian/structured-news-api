@@ -28,9 +28,9 @@ const isMorningBriefing = (result: Result) => {
 };
 
 const hasGuardianReadersProfile = (result: Result) => {
-  const guardianReaderProfile = result.tags.filter(tag => {
-    tag.id === 'profile/guardian-readers' && tag.type === 'contributor';
-  });
+  const guardianReaderProfile = result.tags.filter(
+    tag => tag.id === 'profile/guardian-readers' && tag.type === 'contributor'
+  );
   return guardianReaderProfile.length > 0;
 };
 
