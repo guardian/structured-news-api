@@ -27,7 +27,10 @@ const getWeekendBriefing = (
 ): Promise<APIResponse> => {
   return getUkTopArticles(capiKey).then(topArticles => {
     return getAudioLongReads(capiKey).then(longReads => {
-      return getTrendingArticle(capiKey).then(trendingArticle => {
+      return getTrendingArticle(
+        capiKey,
+        transformTopArticlesForDuplicationTest(topArticles)
+      ).then(trendingArticle => {
         return buildResponse(
           noAudio,
           isSaturday,
@@ -38,6 +41,19 @@ const getWeekendBriefing = (
       });
     });
   });
+};
+
+const transformTopArticlesForDuplicationTest = (topArticles: OptionContent) => {
+  if (topArticles instanceof CapiTopArticles) {
+    return [
+      topArticles.article1,
+      topArticles.article2,
+      topArticles.article3,
+      topArticles.article4,
+    ];
+  } else {
+    return [];
+  }
 };
 
 const buildResponse = (
