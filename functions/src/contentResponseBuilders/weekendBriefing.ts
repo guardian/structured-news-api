@@ -1,10 +1,10 @@
-import { getUkTopStories } from '../contentExtractors/ukTopStories';
+import { getUkTopArticles } from '../contentExtractors/ukTopArticles';
 import { config } from 'firebase-functions';
 import { getTrendingArticle } from '../contentExtractors/trendingArticle';
 import {
   Article,
   OptionContent,
-  FallbackTopStories,
+  CapiTopArticles,
   AudioLongReads,
   WeekendBriefing,
 } from '../models/contentModels';
@@ -25,13 +25,13 @@ const getWeekendBriefing = (
   noAudio: boolean,
   isSaturday: boolean
 ): Promise<APIResponse> => {
-  return getUkTopStories(capiKey).then(topStories => {
+  return getUkTopArticles(capiKey).then(topArticles => {
     return getAudioLongReads(capiKey).then(longReads => {
       return getTrendingArticle(capiKey).then(trendingArticle => {
         return buildResponse(
           noAudio,
           isSaturday,
-          topStories,
+          topArticles,
           longReads,
           trendingArticle
         );
@@ -43,12 +43,12 @@ const getWeekendBriefing = (
 const buildResponse = (
   noAudio: boolean,
   isSaturday: boolean,
-  topStories: OptionContent,
+  topArticles: OptionContent,
   audioLongReads: OptionContent,
   trendingArticle: OptionContent
 ): Promise<APIResponse> => {
   if (
-    topStories instanceof FallbackTopStories &&
+    topArticles instanceof CapiTopArticles &&
     audioLongReads instanceof AudioLongReads &&
     trendingArticle instanceof Article
   ) {
@@ -57,7 +57,7 @@ const buildResponse = (
       : audioLongReads.latestLongRead;
 
     const weekendBriefing = new WeekendBriefing(
-      topStories,
+      topArticles,
       longRead,
       trendingArticle
     );
@@ -65,9 +65,9 @@ const buildResponse = (
       ? generateSaturdaySSML(weekendBriefing)
       : generateSundaySSML(weekendBriefing);
     const briefingContent = [
-      weekendBriefing.topStories.story1,
-      weekendBriefing.topStories.story2,
-      weekendBriefing.topStories.story3,
+      weekendBriefing.topArticles.article1,
+      weekendBriefing.topArticles.article2,
+      weekendBriefing.topArticles.article3,
       weekendBriefing.audioLongRead,
       weekendBriefing.trendingArticle,
     ];

@@ -6,11 +6,11 @@ Very hacky generation of SSML.
 */
 
 const generateSaturdaySSML = (saturdayBriefing: WeekendBriefing) => {
-  const topStories = saturdayBriefing.topStories;
-  const topStoriesSSML = generateTopStories(
-    topStories.story1,
-    topStories.story2,
-    topStories.story3
+  const topArticles = saturdayBriefing.topArticles;
+  const topArticlesSSML = generateTopArticles(
+    topArticles.article1,
+    topArticles.article2,
+    topArticles.article3
   );
   const audioLongReadSSML = generateAudioLongRead(
     saturdayBriefing.audioLongRead,
@@ -23,7 +23,7 @@ const generateSaturdaySSML = (saturdayBriefing: WeekendBriefing) => {
 
   const outro = generateOutro('wordsTrending');
   return saturdayBriefingSSML(
-    topStoriesSSML,
+    topArticlesSSML,
     audioLongReadSSML,
     trendingArticleSSML,
     outro
@@ -31,7 +31,7 @@ const generateSaturdaySSML = (saturdayBriefing: WeekendBriefing) => {
 };
 
 const saturdayBriefingSSML = (
-  topStoriesSSML: string,
+  topArticlesSSML: string,
   audioLongReadSSML: string,
   trendingArticleSSML: string,
   outro: string
@@ -49,7 +49,7 @@ const saturdayBriefingSSML = (
         <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Saturday_Intro%2B6.ogg'/>
       </media>
 
-      ${topStoriesSSML}
+      ${topArticlesSSML}
       ${audioLongReadSSML}
       ${trendingArticleSSML}
       ${outro}
@@ -58,10 +58,10 @@ const saturdayBriefingSSML = (
   return stripExcessWhitespace(ssml);
 };
 
-const generateTopStories = (
-  story1: Article,
-  story2: Article,
-  story3: Article
+const generateTopArticles = (
+  article1: Article,
+  article2: Article,
+  article3: Article
 ) => {
   const ssml = `
     <media xml:id='HL1' begin='intro.end-0.0s'>
@@ -70,7 +70,7 @@ const generateTopStories = (
 
     <media xml:id='wordsHL1' begin='HL1.end-0.0s' soundLevel='-1dB'>
       <speak>
-        ${encodeStringForSSML(story1.standfirst)}
+        ${encodeStringForSSML(article1.standfirst)}
       </speak>
     </media>
 
@@ -80,7 +80,7 @@ const generateTopStories = (
 
     <media xml:id='wordsHL2' begin='HL2.end-0.0s' soundLevel='-1dB'>
       <speak>
-        ${encodeStringForSSML(story2.standfirst)}
+        ${encodeStringForSSML(article2.standfirst)}
       </speak>
     </media>
 
@@ -90,7 +90,7 @@ const generateTopStories = (
 
     <media xml:id='wordsHD3' begin='HL3.end-0.0s' soundLevel='-1dB'>
       <speak>
-        ${encodeStringForSSML(story3.standfirst)}
+        ${encodeStringForSSML(article3.standfirst)}
       </speak>
     </media>`;
   return ssml;

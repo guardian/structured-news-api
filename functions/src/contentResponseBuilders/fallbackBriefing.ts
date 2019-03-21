@@ -1,10 +1,10 @@
-import { getUkTopStories } from '../contentExtractors/ukTopStories';
+import { getUkTopArticles } from '../contentExtractors/ukTopArticles';
 import { config } from 'firebase-functions';
 import { getTrendingArticle } from '../contentExtractors/trendingArticle';
 import {
   Article,
   OptionContent,
-  FallbackTopStories,
+  CapiTopArticles,
   FallbackBriefing,
 } from '../models/contentModels';
 import {
@@ -19,30 +19,30 @@ const capiKey = config().guardian.capikey;
 const googleTextToSpeechKey = config().googletexttospeech.key;
 
 const getFallbackBriefing = (noAudio: boolean): Promise<APIResponse> => {
-  return getUkTopStories(capiKey).then(topStories => {
+  return getUkTopArticles(capiKey).then(topArticles => {
     return getTrendingArticle(capiKey).then(trendingArticle => {
-      return buildResponse(noAudio, topStories, trendingArticle);
+      return buildResponse(noAudio, topArticles, trendingArticle);
     });
   });
 };
 
 const buildResponse = (
   noAudio: boolean,
-  topStories: OptionContent,
+  topArticles: OptionContent,
   trendingArticle: OptionContent
 ): Promise<APIResponse> => {
   if (
-    topStories instanceof FallbackTopStories &&
+    topArticles instanceof CapiTopArticles &&
     trendingArticle instanceof Article
   ) {
-    const fallbackBriefing = new FallbackBriefing(topStories, trendingArticle);
+    const fallbackBriefing = new FallbackBriefing(topArticles, trendingArticle);
     const ssml = generateFallbackSSML(fallbackBriefing);
     const briefingContent = [
-      fallbackBriefing.topStories.story1,
-      fallbackBriefing.topStories.story2,
-      fallbackBriefing.topStories.story3,
+      fallbackBriefing.topArticles.article1,
+      fallbackBriefing.topArticles.article2,
+      fallbackBriefing.topArticles.article3,
       fallbackBriefing.trendingArticle,
-      fallbackBriefing.topStories.story4,
+      fallbackBriefing.topArticles.article4,
     ];
     if (noAudio) {
       return Promise.resolve(new SuccessAPIResponse(briefingContent, ssml, ''));

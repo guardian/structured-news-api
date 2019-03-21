@@ -6,30 +6,33 @@ Very hacky generation of SSML.
 */
 
 const generateFallbackSSML = (fallbackBriefing: FallbackBriefing) => {
-  const topStories = fallbackBriefing.topStories;
-  const topStoriesSSML = generateTopStories(
-    topStories.story1,
-    topStories.story2,
-    topStories.story3
+  const topArticles = fallbackBriefing.topArticles;
+  const topArticlesSSML = generateTopArticles(
+    topArticles.article1,
+    topArticles.article2,
+    topArticles.article3
   );
   const trendingArticleSSML = generateTrendingArticle(
     fallbackBriefing.trendingArticle,
     'wordsHD3'
   );
-  const finalStorySSML = generateFinalStory(topStories.story4, 'wordsTrending');
-  const outro = generateOutro('wordsFinalStory');
+  const finalArticleSSML = generateFinalArticle(
+    topArticles.article4,
+    'wordsTrending'
+  );
+  const outro = generateOutro('wordsFinalArticle');
   return fallbackBriefingSSML(
-    topStoriesSSML,
+    topArticlesSSML,
     trendingArticleSSML,
-    finalStorySSML,
+    finalArticleSSML,
     outro
   );
 };
 
 const fallbackBriefingSSML = (
-  topStoriesSSML: string,
+  topArticlesSSML: string,
   trendingArticleSSML: string,
-  finalStorySSML: string,
+  finalArticleSSML: string,
   outro: string
 ) => {
   const ssml = `
@@ -45,19 +48,19 @@ const fallbackBriefingSSML = (
         <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback%2B6_Intro.ogg'/>
       </media>
 
-      ${topStoriesSSML}
+      ${topArticlesSSML}
       ${trendingArticleSSML}
-      ${finalStorySSML}
+      ${finalArticleSSML}
       ${outro}
     </par> 
   </speak>`;
   return stripExcessWhitespace(ssml);
 };
 
-const generateTopStories = (
-  story1: Article,
-  story2: Article,
-  story3: Article
+const generateTopArticles = (
+  article1: Article,
+  article2: Article,
+  article3: Article
 ) => {
   const ssml = `
     <media xml:id='HL1' begin='intro.end-0.0s'>
@@ -66,7 +69,7 @@ const generateTopStories = (
 
     <media xml:id='wordsHL1' begin='HL1.end-0.0s' soundLevel='-1dB'>
       <speak>
-        ${encodeStringForSSML(story1.standfirst)}
+        ${encodeStringForSSML(article1.standfirst)}
       </speak>
     </media>
 
@@ -76,7 +79,7 @@ const generateTopStories = (
 
     <media xml:id='wordsHL2' begin='HL2.end-0.0s' soundLevel='-1dB'>
       <speak>
-        ${encodeStringForSSML(story2.standfirst)}
+        ${encodeStringForSSML(article2.standfirst)}
       </speak>
     </media>
 
@@ -86,7 +89,7 @@ const generateTopStories = (
 
     <media xml:id='wordsHD3' begin='HL3.end-0.0s' soundLevel='-1dB'>
       <speak>
-        ${encodeStringForSSML(story3.standfirst)}
+        ${encodeStringForSSML(article3.standfirst)}
       </speak>
     </media>`;
   return ssml;
@@ -106,13 +109,13 @@ const generateTrendingArticle = (article: Article, previous: string) => {
   return ssml;
 };
 
-const generateFinalStory = (article: Article, previous: string) => {
+const generateFinalArticle = (article: Article, previous: string) => {
   const ssml = `
-    <media xml:id='FinalStory' begin='${previous}.end+0.4s'>
+    <media xml:id='FinalArticle' begin='${previous}.end+0.4s'>
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback%2B6_HL4.ogg'/>
     </media>
 
-    <media xml:id='wordsFinalStory' begin='FinalStory.end+0.0s' soundLevel='-1dB'>
+    <media xml:id='wordsFinalArticle' begin='FinalArticle.end+0.0s' soundLevel='-1dB'>
       <speak>
       ${encodeStringForSSML(article.standfirst)}
       </speak>
