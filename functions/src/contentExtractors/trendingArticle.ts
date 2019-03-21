@@ -1,6 +1,6 @@
 import { Article, ContentError } from '../models/contentModels';
 
-import { CapiTrending } from '../models/capiModels';
+import { CapiTrending, Result } from '../models/capiModels';
 import fetch from 'node-fetch';
 import { getFirstSentence } from './extractorUtils';
 import { isValidResult } from './resultValidator';
@@ -13,15 +13,16 @@ Uses resultValidator to check if an article should be included in the top storie
 */
 
 const getTrendingArticle = (
-  capiKey: string
+  capiKey: string,
+  existingArticles: Article[] = []
 ): Promise<Article | ContentError> => {
-  const trendingArticles = `http://content.guardianapis.com/uk?api-key=${capiKey}&page-size=10&show-most-viewed=true&show-fields=headline,standfirst,body,bodyText&show-tags=all`;
+  const trendingArticles = `http://content.guardianapis.com/uk?api-key=${capiKey}&page-size=30&show-most-viewed=true&show-fields=headline,standfirst,body,bodyText&show-tags=all`;
   return fetch(trendingArticles)
     .then<CapiTrending>(res => {
       return res.json();
     })
     .then(capiResponse => {
-      return processTrendingArticles(capiResponse);
+      return processTrendingArticles(capiResponse, existingArticles);
     })
     .catch(e => {
       console.error(`Unable to get Trending Articles. Error: ${e}`);
@@ -30,7 +31,8 @@ const getTrendingArticle = (
 };
 
 const processTrendingArticles = (
-  results: CapiTrending
+  results: CapiTrending,
+  existingArticles: Article[]
 ): Article | ContentError => {
   if (results.response.mostViewed.length < 1) {
     console.error('No matches for Trending Articles query');
@@ -42,7 +44,10 @@ const processTrendingArticles = (
     let article = new Article('', '', '');
     while (!foundArticle && i < articles.length) {
       const currentArticle = articles[i];
-      if (isValidResult(currentArticle)) {
+      if (
+        isValidResult(currentArticle) &&
+        !matchingURLInArticles(currentArticle, existingArticles)
+      ) {
         const fields = articles[i].fields;
         article = new Article(
           fields.headline,
@@ -62,4 +67,14 @@ const processTrendingArticles = (
   }
 };
 
-export { getTrendingArticle, processTrendingArticles };
+const matchingURLInArticles = (result: Result, articles: Article[]) => {
+  if (articles.length <= 0) {
+    return false;
+  } else {
+    return (
+      articles.filter(article => article.source === result.webUrl).length > 0
+    );
+  }
+};
+
+export { getTrendingArticle, processTrendingArticles, matchingURLInArticles };

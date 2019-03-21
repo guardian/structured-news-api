@@ -1,9 +1,9 @@
 import { CapiEditorsPicks } from '../../models/capiModels';
-import { Article, FallbackTopStories } from '../../models/contentModels';
-import { processUKTopStories } from '../ukTopStories';
+import { Article, CapiTopArticles } from '../../models/contentModels';
+import { processUKTopArticles } from '../ukTopArticles';
 
-describe('processUKTopStories', () => {
-  test('should transform a CapiEditorsPicks object into a FallbackTopStories', () => {
+describe('processUKTopArticles', () => {
+  test('should transform a CapiEditorsPicks object into a CapiTopArticles', () => {
     const input: CapiEditorsPicks = {
       response: {
         editorsPicks: [
@@ -87,13 +87,13 @@ describe('processUKTopStories', () => {
       'Article.',
       'www.theguardian.com'
     );
-    const expectedResult = new FallbackTopStories(
+    const expectedResult = new CapiTopArticles(
       article,
       article,
       article,
       article
     );
-    expect(processUKTopStories(input)).toEqual(expectedResult);
+    expect(processUKTopArticles(input)).toEqual(expectedResult);
   });
 
   test('should ignore articles without the news pillar ID', () => {
@@ -199,13 +199,13 @@ describe('processUKTopStories', () => {
       'Article.',
       'www.theguardian.com'
     );
-    const expectedResult = new FallbackTopStories(
+    const expectedResult = new CapiTopArticles(
       article,
       article,
       article,
       article
     );
-    expect(processUKTopStories(input)).toEqual(expectedResult);
+    expect(processUKTopArticles(input)).toEqual(expectedResult);
   });
   test('should ignore liveblogs', () => {
     const input: CapiEditorsPicks = {
@@ -310,13 +310,13 @@ describe('processUKTopStories', () => {
       'Article.',
       'www.theguardian.com'
     );
-    const expectedResult = new FallbackTopStories(
+    const expectedResult = new CapiTopArticles(
       article,
       article,
       article,
       article
     );
-    expect(processUKTopStories(input)).toEqual(expectedResult);
+    expect(processUKTopArticles(input)).toEqual(expectedResult);
   });
 
   test('should ignore the morning briefing', () => {
@@ -427,13 +427,13 @@ describe('processUKTopStories', () => {
       'Article.',
       'www.theguardian.com'
     );
-    const expectedResult = new FallbackTopStories(
+    const expectedResult = new CapiTopArticles(
       article,
       article,
       article,
       article
     );
-    expect(processUKTopStories(input)).toEqual(expectedResult);
+    expect(processUKTopArticles(input)).toEqual(expectedResult);
   });
 
   test('should ignore articles with no bodyText', () => {
@@ -539,12 +539,12 @@ describe('processUKTopStories', () => {
       'Article.',
       'www.theguardian.com'
     );
-    const expectedResult = new FallbackTopStories(
+    const expectedResult = new CapiTopArticles(
       article,
       article,
       article,
       article
     );
-    expect(processUKTopStories(input)).toEqual(expectedResult);
+    expect(processUKTopArticles(input)).toEqual(expectedResult);
   });
 });

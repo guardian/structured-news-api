@@ -45,12 +45,12 @@ class ContentError extends OptionContent {
   }
 }
 
-class FallbackTopStories extends OptionContent {
+class CapiTopArticles extends OptionContent {
   constructor(
-    public story1: Article,
-    public story2: Article,
-    public story3: Article,
-    public story4: Article
+    public article1: Article,
+    public article2: Article,
+    public article3: Article,
+    public article4: Article
   ) {
     super();
   }
@@ -66,14 +66,14 @@ class WeekdayAMBriefing {
 
 class FallbackBriefing {
   constructor(
-    public topStories: FallbackTopStories,
+    public topArticles: CapiTopArticles,
     public trendingArticle: Article
   ) {}
 }
 
 class WeekendBriefing {
   constructor(
-    public topStories: FallbackTopStories,
+    public topArticles: CapiTopArticles,
     public audioLongRead: Article,
     public trendingArticle: Article
   ) {}
@@ -102,7 +102,7 @@ export {
   OptionIndex,
   Index,
   OutOfBounds,
-  FallbackTopStories,
+  CapiTopArticles,
   AudioLongReads,
   FallbackBriefing,
   WeekendBriefing,

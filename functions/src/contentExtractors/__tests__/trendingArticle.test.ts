@@ -1,6 +1,9 @@
 import { CapiTrending } from '../../models/capiModels';
-import { Article } from '../../models/contentModels';
-import { processTrendingArticles } from '../trendingArticle';
+import { Article, Podcast } from '../../models/contentModels';
+import {
+  processTrendingArticles,
+  matchingURLInArticles,
+} from '../trendingArticle';
 
 describe('processTrendingArticles', () => {
   test('should transform a CapiTrending object into an Article', () => {
@@ -34,7 +37,7 @@ describe('processTrendingArticles', () => {
       'Article.',
       'www.theguardian.com'
     );
-    expect(processTrendingArticles(input)).toEqual(expectedResult);
+    expect(processTrendingArticles(input, [])).toEqual(expectedResult);
   });
 
   test('should ignore articles without the news pillar ID', () => {
@@ -86,7 +89,7 @@ describe('processTrendingArticles', () => {
       'Article.',
       'www.theguardian.com'
     );
-    expect(processTrendingArticles(input)).toEqual(expectedResult);
+    expect(processTrendingArticles(input, [])).toEqual(expectedResult);
   });
   test('should ignore liveblogs', () => {
     const input: CapiTrending = {
@@ -137,7 +140,7 @@ describe('processTrendingArticles', () => {
       'Article.',
       'www.theguardian.com'
     );
-    expect(processTrendingArticles(input)).toEqual(expectedResult);
+    expect(processTrendingArticles(input, [])).toEqual(expectedResult);
   });
 
   test('should ignore the morning briefing', () => {
@@ -194,7 +197,7 @@ describe('processTrendingArticles', () => {
       'Article.',
       'www.theguardian.com'
     );
-    expect(processTrendingArticles(input)).toEqual(expectedResult);
+    expect(processTrendingArticles(input, [])).toEqual(expectedResult);
   });
 
   test('should ignore articles with no bodyText', () => {
@@ -246,6 +249,103 @@ describe('processTrendingArticles', () => {
       'Article.',
       'www.theguardian.com'
     );
-    expect(processTrendingArticles(input)).toEqual(expectedResult);
+    expect(processTrendingArticles(input, [])).toEqual(expectedResult);
+  });
+});
+
+describe('matchingURLInArticles', () => {
+  test('should return false when the result URL does not match the URL of any articles included in the list of articles', () => {
+    const article = {
+      webPublicationDate: '2019-02-11T03:00:06Z',
+      sectionId: '',
+      pillarId: 'pillar/opinion',
+      type: 'article',
+      webUrl: 'www.theguardian.com',
+      fields: {
+        headline: 'First Article',
+        standfirst: '',
+        body: '',
+        bodyText: '',
+        trailText: '',
+      },
+      tags: [],
+      blocks: {
+        body: [],
+      },
+    };
+    const article1 = new Article(
+      'headline',
+      'standfirst',
+      'www.guardian.com/a2',
+      Podcast.LONGREAD
+    );
+    const article2 = new Article(
+      'headline',
+      'standfirst',
+      'www.guardian.com/a3',
+      Podcast.LONGREAD
+    );
+    const articles = [article1, article2];
+
+    expect(matchingURLInArticles(article, articles)).toEqual(false);
+  });
+
+  test('should return true when the result URL matches the URL of any articles included in the list of articles', () => {
+    const article = {
+      webPublicationDate: '2019-02-11T03:00:06Z',
+      sectionId: '',
+      pillarId: 'pillar/opinion',
+      type: 'article',
+      webUrl: 'www.theguardian.com/a1',
+      fields: {
+        headline: 'First Article',
+        standfirst: '',
+        body: '',
+        bodyText: '',
+        trailText: '',
+      },
+      tags: [],
+      blocks: {
+        body: [],
+      },
+    };
+    const article1 = new Article(
+      'headline',
+      'standfirst',
+      'www.theguardian.com/a1',
+      Podcast.LONGREAD
+    );
+    const article2 = new Article(
+      'headline',
+      'standfirst',
+      'www.guardian.com/a3',
+      Podcast.LONGREAD
+    );
+    const articles = [article1, article2];
+
+    expect(matchingURLInArticles(article, articles)).toEqual(true);
+  });
+
+  test('should return false if list of Articles is empty', () => {
+    const article = {
+      webPublicationDate: '2019-02-11T03:00:06Z',
+      sectionId: '',
+      pillarId: 'pillar/opinion',
+      type: 'article',
+      webUrl: 'www.theguardian.com/a1',
+      fields: {
+        headline: 'First Article',
+        standfirst: '',
+        body: '',
+        bodyText: '',
+        trailText: '',
+      },
+      tags: [],
+      blocks: {
+        body: [],
+      },
+    };
+
+    expect(matchingURLInArticles(article, [])).toEqual(false);
   });
 });
