@@ -7,6 +7,7 @@ import { Result } from '../models/capiModels';
 A result must not have
 - the morning briefing tag.
 - the Guardian Readers contributor tag on it.
+- the analysis tone tag on it.
  */
 const isValidResult = (result: Result): boolean => {
   return (
@@ -14,7 +15,8 @@ const isValidResult = (result: Result): boolean => {
     result.pillarId === 'pillar/news' &&
     hasBodyText(result) &&
     !isMorningBriefing(result) &&
-    !hasGuardianReadersProfile(result)
+    !hasGuardianReadersProfile(result) &&
+    !hasToneTagAnalysis(result)
   );
 };
 
@@ -34,8 +36,20 @@ const hasGuardianReadersProfile = (result: Result) => {
   return guardianReaderProfile.length > 0;
 };
 
+const hasToneTagAnalysis = (result: Result): boolean => {
+  return (
+    result.tags.filter(tag => tag.id === 'tone/analysis' && tag.type === 'tone')
+      .length > 0
+  );
+};
+
 const hasBodyText = (result: Result): boolean => {
   return result.fields.bodyText.length > 0;
 };
 
-export { isValidResult, isMorningBriefing, hasGuardianReadersProfile };
+export {
+  isValidResult,
+  isMorningBriefing,
+  hasGuardianReadersProfile,
+  hasToneTagAnalysis,
+};

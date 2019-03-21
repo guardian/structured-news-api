@@ -2,6 +2,7 @@ import {
   isMorningBriefing,
   isValidResult,
   hasGuardianReadersProfile,
+  hasToneTagAnalysis,
 } from '../resultValidator';
 
 describe('isValidResult', () => {
@@ -15,8 +16,8 @@ describe('isValidResult', () => {
       fields: {
         headline: 'First Article',
         standfirst: '',
-        body: 'body',
-        bodyText: '',
+        body: '',
+        bodyText: 'text',
         trailText: '',
       },
       tags: [
@@ -29,7 +30,7 @@ describe('isValidResult', () => {
         body: [],
       },
     };
-    expect(isValidResult(input)).toEqual(false);
+    expect(isValidResult(input)).toEqual(true);
   });
   test('should return false if result is not of type article', () => {
     const input = {
@@ -41,8 +42,8 @@ describe('isValidResult', () => {
       fields: {
         headline: 'First Article',
         standfirst: '',
-        body: 'body',
-        bodyText: '',
+        body: '',
+        bodyText: 'text',
         trailText: '',
       },
       tags: [
@@ -119,14 +120,45 @@ describe('isValidResult', () => {
       fields: {
         headline: 'First Article',
         standfirst: '',
-        body: 'body',
-        bodyText: '',
+        body: '',
+        bodyText: 'text',
         trailText: '',
       },
       tags: [
         {
           id: 'world/series/guardian-morning-briefing',
           type: 'series',
+        },
+        {
+          id: 'tag',
+          type: 'keyword',
+        },
+      ],
+      blocks: {
+        body: [],
+      },
+    };
+    expect(isValidResult(input)).toEqual(false);
+  });
+
+  test('should return false if result has the analysis tone tag on it', () => {
+    const input = {
+      webPublicationDate: '2019-02-11T03:00:06Z',
+      sectionId: '',
+      pillarId: 'pillar/news',
+      type: 'article',
+      webUrl: 'www.theguardian.com',
+      fields: {
+        headline: 'First Article',
+        standfirst: '',
+        body: '',
+        bodyText: 'text',
+        trailText: '',
+      },
+      tags: [
+        {
+          id: 'tone/analysis',
+          type: 'tone',
         },
         {
           id: 'tag',
@@ -153,7 +185,7 @@ describe('isMorningBriefing', () => {
         headline: 'First Article',
         standfirst: '',
         body: '',
-        bodyText: '',
+        bodyText: 'text',
         trailText: '',
       },
       tags: [
@@ -184,7 +216,7 @@ describe('isMorningBriefing', () => {
         headline: 'First Article',
         standfirst: '',
         body: '',
-        bodyText: '',
+        bodyText: 'text',
         trailText: '',
       },
       tags: [
@@ -211,7 +243,7 @@ describe('isMorningBriefing', () => {
         headline: 'First Article',
         standfirst: '',
         body: '',
-        bodyText: '',
+        bodyText: 'text',
         trailText: '',
       },
       tags: [],
@@ -235,7 +267,7 @@ describe('hasGuardianReaderProfile', () => {
         headline: 'First Article',
         standfirst: '',
         body: '',
-        bodyText: '',
+        bodyText: 'text',
         trailText: '',
       },
       tags: [
@@ -267,7 +299,7 @@ describe('hasGuardianReaderProfile', () => {
         headline: 'First Article',
         standfirst: '',
         body: '',
-        bodyText: '',
+        bodyText: 'text',
         trailText: '',
       },
       tags: [
@@ -294,8 +326,8 @@ describe('hasGuardianReaderProfile', () => {
       fields: {
         headline: 'First Article',
         standfirst: '',
-        body: '',
-        bodyText: '',
+        body: 'body',
+        bodyText: 'text',
         trailText: '',
       },
       tags: [
@@ -310,5 +342,95 @@ describe('hasGuardianReaderProfile', () => {
     };
 
     expect(hasGuardianReadersProfile(input)).toEqual(false);
+  });
+});
+
+describe('hasToneTagAnalysis', () => {
+  test('should return true on content which has an analysis tag on it', () => {
+    const input = {
+      webPublicationDate: '2019-02-11T03:00:06Z',
+      sectionId: '',
+      pillarId: 'pillar/opinion',
+      type: '',
+      webUrl: 'www.theguardian.com',
+      fields: {
+        headline: 'First Article',
+        standfirst: '',
+        body: 'body',
+        bodyText: 'text',
+        trailText: '',
+      },
+      tags: [
+        {
+          id: 'tone/analysis',
+          type: 'tone',
+        },
+        {
+          id: 'other tag',
+          type: 'keyword',
+        },
+      ],
+      blocks: {
+        body: [],
+      },
+    };
+
+    expect(hasToneTagAnalysis(input)).toEqual(true);
+  });
+
+  test('should return false on content which does not have an analysis tag on it', () => {
+    const input = {
+      webPublicationDate: '2019-02-11T03:00:06Z',
+      sectionId: '',
+      pillarId: 'pillar/opinion',
+      type: '',
+      webUrl: 'www.theguardian.com',
+      fields: {
+        headline: 'First Article',
+        standfirst: '',
+        body: '',
+        bodyText: 'text',
+        trailText: '',
+      },
+      tags: [
+        {
+          id: 'other tag',
+          type: 'keyword',
+        },
+      ],
+      blocks: {
+        body: [],
+      },
+    };
+
+    expect(hasToneTagAnalysis(input)).toEqual(false);
+  });
+
+  test('should return false on content which does not have an analysis tag on it and has a tag of type "tone" on it', () => {
+    const input = {
+      webPublicationDate: '2019-02-11T03:00:06Z',
+      sectionId: '',
+      pillarId: 'pillar/opinion',
+      type: '',
+      webUrl: 'www.theguardian.com',
+      fields: {
+        headline: 'First Article',
+        standfirst: '',
+        body: '',
+        bodyText: 'text',
+        trailText: '',
+      },
+      tags: [
+        {
+          id: 'other tag',
+          type: 'tone',
+        },
+      ],
+      blocks: {
+        body: [],
+      },
+    };
+
+    expect(hasToneTagAnalysis(input)).toEqual(false);
   });
 });
