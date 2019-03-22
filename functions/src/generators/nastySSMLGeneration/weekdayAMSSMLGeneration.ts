@@ -106,12 +106,28 @@ const generateTodayInFocus = (article: Article, previous: string) => {
     </media>
 
     <media xml:id='wordsTIF' begin='TIF.end+0.0s' soundLevel='-1dB'>
-      <speak>${encodeStringForSSML(article.headline)}.
+      <speak>
+        ${encodeStringForSSML(article.headline)}.
         <break strength='strong'/>
-        ${encodeStringForSSML(article.standfirst)}
+        ${generateTodayInFocusStandfirst(article.standfirst)}
       </speak>
     </media>`;
   return ssml;
+};
+
+const generateTodayInFocusStandfirst = (standfirst: string) => {
+  const sentences = standfirst.split('.');
+  return sentences
+    .map(sentence => {
+      if (sentence.length > 0) {
+        return `${sentence}. <break strength='strong'/>`;
+      } else {
+        return '';
+      }
+    })
+    .reduce((acc, item) => {
+      return acc + item;
+    }, '');
 };
 
 const generateTrendingArticle = (article: Article, previous: string) => {
@@ -156,4 +172,4 @@ const generateOutro = (previous: string) => {
   return ssml;
 };
 
-export { generateWeekdayAMSSML };
+export { generateWeekdayAMSSML, generateTodayInFocusStandfirst };
