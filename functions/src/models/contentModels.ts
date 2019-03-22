@@ -27,7 +27,8 @@ class TopStories extends OptionContent {
   constructor(
     public story1: Article,
     public story2: Article,
-    public story3: Article
+    public story3: Article,
+    public story4: Article
   ) {
     super();
   }
@@ -57,11 +58,7 @@ class CapiTopArticles extends OptionContent {
 }
 
 class WeekdayAMBriefing {
-  constructor(
-    public topStories: TopStories,
-    public todayInFocus: Article,
-    public trendingArticle: Article
-  ) {}
+  constructor(public topStories: TopStories, public todayInFocus: Article) {}
 }
 
 class FallbackBriefing {

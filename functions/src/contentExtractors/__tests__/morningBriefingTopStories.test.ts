@@ -35,7 +35,7 @@ describe('Extract top stories from the Morning Briefing', () => {
     expect(getTopStoriesFromMorningBriefing(input)).toEqual(expectedOutput);
   });
 
-  test('If three stories cannot be extracted from the Morning Briefing return a ContentError object', () => {
+  test('If four stories cannot be extracted from the Morning Briefing return a ContentError object', () => {
     const input: Result = {
       webPublicationDate: '',
       webUrl: '',
@@ -193,6 +193,11 @@ describe('Extract top stories from the Morning Briefing', () => {
         'Trouble for Trudeau.',
         'A minister in Justin Trudeau’s Canadian government has resigned amid allegations the prime minister’s office pressured her to avoid prosecuting a major engineering firm.',
         ''
+      ),
+      new Article(
+        'Frackers knocked back.',
+        'The shale gas firm Cuadrilla has lost its bid for approval to frack at a second site in Lancashire.',
+        ''
       )
     );
     expect(getTopStoriesFromMorningBriefing(input)).toEqual(expectedOutput);
@@ -264,6 +269,11 @@ describe('Extract top stories from the Morning Briefing', () => {
       new Article(
         'Trouble for Trudeau.',
         'A minister in Justin Trudeau’s Canadian government has resigned amid allegations the prime minister’s office pressured her to avoid prosecuting a major engineering firm.',
+        ''
+      ),
+      new Article(
+        'Frackers knocked back.',
+        'The shale gas firm Cuadrilla has lost its bid for approval to frack at a second site in Lancashire.',
         ''
       )
     );

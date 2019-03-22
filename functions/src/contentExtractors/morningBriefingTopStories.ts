@@ -15,7 +15,7 @@ This data is extracted from the HTML of the morning briefing article.
 Ignore the midweek catchup
 */
 
-const numberOfStoriesNeeded = 3;
+const numberOfStoriesNeeded = 4;
 
 const extractArticles = (
   articleParagraphs: string[],
@@ -125,7 +125,7 @@ const getTopStoriesFromMorningBriefing = (
   const articleParagraphs = getTextBlocksFromArticle(result);
   const articles = extractArticles(articleParagraphs, articleSource);
   if (articles.length === numberOfStoriesNeeded) {
-    return new TopStories(articles[0], articles[1], articles[2]);
+    return new TopStories(articles[0], articles[1], articles[2], articles[3]);
   } else {
     console.error(
       `Could not build TopStories object for ${JSON.stringify(articles)}`
