@@ -147,7 +147,7 @@ const generateFinalArticle = (article: Article, previous: string) => {
 const generateOutro = (previous: string) => {
   const ssml = `
     <media xml:id='outro' begin='${previous}.end+0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Outro.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/MorningBriefingOutro.ogg'/>
     </media>
 
     <media xml:id='music1' begin='advert.end-0.3s' soundLevel='-1.0dB'>
