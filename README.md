@@ -6,9 +6,9 @@ Voice Lab Project. This takes the Morning Briefing and extracts structured data 
 
 ### If it's between 6:30am and 10:30am on a week day
 
-- Three Top Stories - These are the first three stories in the morning briefing. For each story take the first sentence about it in the morning briefing
+- Three Top Stories - These are the first three stories in the morning briefing. For each story take the first sentence about it in the [morning briefing](https://www.theguardian.com/world/series/guardian-morning-briefing)
 - Today in Focus - For the Today in Focus article for the day get the headline and first 2 sentences of the standfirst
-- Trending Article - The first article when querying `http://content.guardianapis.com/uk` by most-viewed. The article must have the pillar id 'pillar/news'. The article must of of type 'article' and not have the morning briefing tag on it.
+- Forth Top Story - Forth story in the [Morning Briefing](https://www.theguardian.com/world/series/guardian-morning-briefing).
 
 ### Fallback
 
@@ -38,7 +38,7 @@ The app also requires a service account ID.
 1. Go to the Google Cloud Console for the project
 2. Go to IAM & Admin
 3. Go to Service Accounts
-4. Select the file-upload account and select 'create key'. This will download a key onto your machine.
+4. Select the account called `UploadBriefing` and select 'create key'. This will download a key onto your machine.
 5. In terminal type `export GOOGLE_APPLICATION_CREDENTIALS=path_to_json_file_containing_key`
 
 ## Run locally

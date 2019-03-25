@@ -15,15 +15,15 @@ const generateWeekdayAMSSML = (weekdayAMBriefing: WeekdayAMBriefing) => {
     weekdayAMBriefing.todayInFocus,
     'wordsHD3'
   );
-  const trendingArticleSSML = generateTrendingArticle(
-    weekdayAMBriefing.trendingArticle,
+  const finalArticle = generateFinalArticle(
+    weekdayAMBriefing.topStories.story4,
     'wordsTIF'
   );
-  const outro = generateOutro('wordsTrending');
+  const outro = generateOutro('wordsFinalArticle');
   return weekdayAMBriefingSSML(
     topStoriesSSML,
     todayInFocusSSML,
-    trendingArticleSSML,
+    finalArticle,
     outro
   );
 };
@@ -31,7 +31,7 @@ const generateWeekdayAMSSML = (weekdayAMBriefing: WeekdayAMBriefing) => {
 const weekdayAMBriefingSSML = (
   topStoriesSSML: string,
   todayInFocusSSML: string,
-  trendingArticleSSML: string,
+  finalArticle: string,
   outro: string
 ) => {
   const ssml = `
@@ -49,7 +49,7 @@ const weekdayAMBriefingSSML = (
 
       ${topStoriesSSML}
       ${todayInFocusSSML}
-      ${trendingArticleSSML}
+      ${finalArticle}
       ${outro}
     </par> 
   </speak>`;
@@ -85,7 +85,7 @@ const generateTopStories = (stories: TopStories) => {
     </media>
 
     <media xml:id='HL3' begin='wordsHL2.end-0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/HL3.ogg'/>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Morning_Briefing_UK_HL3.ogg'/>
     </media>
 
     <media xml:id='wordsHD3' begin='HL3.end-0.0s' soundLevel='-1dB'>
@@ -130,13 +130,13 @@ const generateTodayInFocusStandfirst = (standfirst: string) => {
     }, '');
 };
 
-const generateTrendingArticle = (article: Article, previous: string) => {
+const generateFinalArticle = (article: Article, previous: string) => {
   const ssml = `
-    <media xml:id='trending' begin='${previous}.end+0.4s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Trend.ogg'/>
+    <media xml:id='FinalArticle' begin='${previous}.end+0.4s'>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Morning_Briefing_HL4.ogg'/>
     </media>
 
-    <media xml:id='wordsTrending' begin='trending.end+0.0s' soundLevel='-1dB'>
+    <media xml:id='wordsFinalArticle' begin='FinalArticle.end+0.0s' soundLevel='-1dB'>
       <speak>
       ${encodeStringForSSML(article.standfirst)}
       </speak>

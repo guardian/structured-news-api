@@ -8,7 +8,6 @@ import {
 import { CapiResults, Result } from '../models/capiModels';
 import { getDateFromString } from './builderUtils';
 import { getTodayInFocus } from '../contentExtractors/todayInFocus';
-import { getTrendingArticle } from '../contentExtractors/trendingArticle';
 import { getTopStoriesFromMorningBriefing } from '../contentExtractors/morningBriefingTopStories';
 import { generateWeekdayAMSSML } from '../generators/nastySSMLGeneration/weekdayAMSSMLGeneration';
 import { generateAudioFile } from '../generators/audioFileGeneration';
@@ -46,40 +45,28 @@ const processResult = (
 ): Promise<APIResponse> => {
   const articleDate = getDateFromString(result.webPublicationDate);
   return getTodayInFocus(articleDate, capiKey).then(todayInFocus => {
-    return getTrendingArticle(capiKey).then(trendingArticle => {
-      return buildResponse(
-        noAudio,
-        getTopStoriesFromMorningBriefing(result),
-        todayInFocus,
-        trendingArticle
-      );
-    });
+    return buildResponse(
+      noAudio,
+      getTopStoriesFromMorningBriefing(result),
+      todayInFocus
+    );
   });
 };
 
 const buildResponse = (
   noAudio: boolean,
   topStories: OptionContent,
-  todayInFocus: OptionContent,
-  trendingArticle: OptionContent
+  todayInFocus: OptionContent
 ): Promise<APIResponse> => {
-  if (
-    topStories instanceof TopStories &&
-    todayInFocus instanceof Article &&
-    trendingArticle instanceof Article
-  ) {
-    const weekdayAMBriefing = new WeekdayAMBriefing(
-      topStories,
-      todayInFocus,
-      trendingArticle
-    );
+  if (topStories instanceof TopStories && todayInFocus instanceof Article) {
+    const weekdayAMBriefing = new WeekdayAMBriefing(topStories, todayInFocus);
     const ssml = generateWeekdayAMSSML(weekdayAMBriefing);
     const briefingContent = [
       weekdayAMBriefing.topStories.story1,
       weekdayAMBriefing.topStories.story2,
       weekdayAMBriefing.topStories.story3,
       weekdayAMBriefing.todayInFocus,
-      weekdayAMBriefing.trendingArticle,
+      weekdayAMBriefing.topStories.story4,
     ];
     if (noAudio) {
       return Promise.resolve(new SuccessAPIResponse(briefingContent, ssml, ''));
