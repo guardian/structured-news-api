@@ -44,7 +44,7 @@ const fallbackBriefingSSML = (
       <media xml:id='advert' begin='earcon.end-0.8s' soundLevel='-2dB'>
         <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Advert.ogg'/>
       </media>
-      <media xml:id='intro' begin='advert.end+1.4s'>
+      <media xml:id='intro' begin='advert.end+1.4s' soundLevel='-2.5dB'>
         <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_Briefing_US_Intro.ogg'/>
       </media>
 
@@ -63,7 +63,7 @@ const generateTopArticles = (
   article3: Article
 ) => {
   const ssml = `
-    <media xml:id='HL1' begin='intro.end-0.0s'>
+    <media xml:id='HL1' begin='intro.end-0.0s' soundLevel='-2.5dB'>
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_Briefing_US_HL1.ogg'/>
     </media>
 
@@ -73,7 +73,7 @@ const generateTopArticles = (
       </speak>
     </media>
 
-    <media xml:id='HL2' begin='wordsHL1.end-0.5s'>
+    <media xml:id='HL2' begin='wordsHL1.end-0.5s' soundLevel='-2.5dB'>
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_Briefing_US_HL2.ogg'/>
     </media>
 
@@ -83,7 +83,7 @@ const generateTopArticles = (
       </speak>
     </media>
 
-    <media xml:id='HL3' begin='wordsHL2.end-0.0s'>
+    <media xml:id='HL3' begin='wordsHL2.end-0.0s' soundLevel='-2.5dB'>
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_Briefing_US_HL3.ogg'/>
     </media>
 
@@ -97,7 +97,7 @@ const generateTopArticles = (
 
 const generateTrendingArticle = (article: Article, previous: string) => {
   const ssml = `
-    <media xml:id='Trending' begin='${previous}.end+0.8s'>
+    <media xml:id='Trending' begin='${previous}.end+0.8s' soundLevel='-2.5dB'>
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_Briefing_US_Trending.ogg'/>
     </media>
 
@@ -111,7 +111,7 @@ const generateTrendingArticle = (article: Article, previous: string) => {
 
 const generateFinalArticle = (article: Article, previous: string) => {
   const ssml = `
-    <media xml:id='FinalArticle' begin='${previous}.end+0.4s'>
+    <media xml:id='FinalArticle' begin='${previous}.end+0.4s' soundLevel='-2.5dB'> 
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_Briefing_US_HL4.ogg'/>
     </media>
 
@@ -125,7 +125,7 @@ const generateFinalArticle = (article: Article, previous: string) => {
 
 const generateOutro = (previous: string) => {
   const ssml = `
-    <media xml:id='outro' begin='${previous}.end+0.0s'>
+    <media xml:id='outro' begin='${previous}.end+0.0s' soundLevel='-2.5dB'>
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_Briefing_US_Outro.ogg'/>
     </media>
 
