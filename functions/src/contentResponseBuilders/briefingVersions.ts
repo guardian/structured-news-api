@@ -37,7 +37,7 @@ const isSunday = (time: moment.Moment): boolean => {
 const getBriefingVersion = (locale: Locale): BriefingTemplate => {
   switch (locale) {
     case Locale.AU:
-      return BriefingTemplate.GBFALLBACK;
+      return BriefingTemplate.AUFALLBACK;
     case Locale.US:
       return BriefingTemplate.GBFALLBACK;
     case Locale.GB:

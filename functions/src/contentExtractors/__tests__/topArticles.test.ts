@@ -1,8 +1,9 @@
 import { CapiEditorsPicks } from '../../models/capiModels';
 import { Article, CapiTopArticles } from '../../models/contentModels';
-import { processUKTopArticles } from '../ukTopArticles';
+import { processTopArticles, getAPIURL } from '../topArticles';
+import { Locale } from '../../models/paramModels';
 
-describe('processUKTopArticles', () => {
+describe('processTopArticles', () => {
   test('should transform a CapiEditorsPicks object into a CapiTopArticles', () => {
     const input: CapiEditorsPicks = {
       response: {
@@ -93,7 +94,7 @@ describe('processUKTopArticles', () => {
       article,
       article
     );
-    expect(processUKTopArticles(input)).toEqual(expectedResult);
+    expect(processTopArticles(input)).toEqual(expectedResult);
   });
 
   test('should ignore articles without the news pillar ID', () => {
@@ -205,7 +206,7 @@ describe('processUKTopArticles', () => {
       article,
       article
     );
-    expect(processUKTopArticles(input)).toEqual(expectedResult);
+    expect(processTopArticles(input)).toEqual(expectedResult);
   });
   test('should ignore liveblogs', () => {
     const input: CapiEditorsPicks = {
@@ -316,7 +317,7 @@ describe('processUKTopArticles', () => {
       article,
       article
     );
-    expect(processUKTopArticles(input)).toEqual(expectedResult);
+    expect(processTopArticles(input)).toEqual(expectedResult);
   });
 
   test('should ignore the morning briefing', () => {
@@ -433,7 +434,7 @@ describe('processUKTopArticles', () => {
       article,
       article
     );
-    expect(processUKTopArticles(input)).toEqual(expectedResult);
+    expect(processTopArticles(input)).toEqual(expectedResult);
   });
 
   test('should ignore articles with no bodyText', () => {
@@ -545,6 +546,26 @@ describe('processUKTopArticles', () => {
       article,
       article
     );
-    expect(processUKTopArticles(input)).toEqual(expectedResult);
+    expect(processTopArticles(input)).toEqual(expectedResult);
+  });
+});
+
+describe('getAPIURL', () => {
+  test('should use the UK edition with the GB locale', () => {
+    expect(getAPIURL('123', Locale.GB)).toEqual(
+      'http://content.guardianapis.com/uk?api-key=123&page-size=10&show-editors-picks=true&only-editors-picks=true&show-most-viewed=false&edition=uk&show-fields=headline,standfirst,body,bodyText&show-tags=all'
+    );
+  });
+
+  test('should use the US edition with the US locale', () => {
+    expect(getAPIURL('123', Locale.US)).toEqual(
+      'http://content.guardianapis.com/us?api-key=123&page-size=10&show-editors-picks=true&only-editors-picks=true&show-most-viewed=false&edition=us&show-fields=headline,standfirst,body,bodyText&show-tags=all'
+    );
+  });
+
+  test('should use the AU edition with the AU locale', () => {
+    expect(getAPIURL('123', Locale.AU)).toEqual(
+      'http://content.guardianapis.com/au?api-key=123&page-size=10&show-editors-picks=true&only-editors-picks=true&show-most-viewed=false&edition=au&show-fields=headline,standfirst,body,bodyText&show-tags=all'
+    );
   });
 });

@@ -27,13 +27,15 @@ const getLatestUpdate = (
       case BriefingTemplate.GBSUNDAY:
         return getWeekendBriefing(noAudio, false);
       case BriefingTemplate.GBFALLBACK:
-        return getFallbackBriefing(noAudio);
+        return getFallbackBriefing(noAudio, Locale.GB);
+      case BriefingTemplate.AUFALLBACK:
+        return getFallbackBriefing(noAudio, Locale.AU);
     }
   };
 
   const briefing = getBriefing();
   return briefing instanceof FailAPIResponse
-    ? getFallbackBriefing(noAudio)
+    ? getFallbackBriefing(noAudio, Locale.GB)
     : briefing;
 };
 

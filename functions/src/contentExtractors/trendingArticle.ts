@@ -4,20 +4,21 @@ import { CapiTrending, Result } from '../models/capiModels';
 import fetch from 'node-fetch';
 import { getFirstSentence } from './extractorUtils';
 import { isValidResult } from './resultValidator';
+import { Locale } from '../models/paramModels';
 
 /*
 Current rules for trendingArticles:
-The top story from /UK most viewed according to CAPI
+The top story from most viewed according to CAPI. Uses either /UK or /US or /AU depending on locale provided
 First sentence of top story
 Uses resultValidator to check if an article should be included in the top stories
 */
 
 const getTrendingArticle = (
   capiKey: string,
-  existingArticles: Article[] = []
+  existingArticles: Article[] = [],
+  locale: Locale
 ): Promise<Article | ContentError> => {
-  const trendingArticles = `http://content.guardianapis.com/uk?api-key=${capiKey}&page-size=30&show-most-viewed=true&show-fields=headline,standfirst,body,bodyText&show-tags=all`;
-  return fetch(trendingArticles)
+  return fetch(getAPIURL(capiKey, locale))
     .then<CapiTrending>(res => {
       return res.json();
     })
@@ -28,6 +29,21 @@ const getTrendingArticle = (
       console.error(`Unable to get Trending Articles. Error: ${e}`);
       return new ContentError('Could not get Trending Articles');
     });
+};
+
+const getAPIURL = (capiKey: string, locale: Locale) => {
+  const url = (edition: string) => {
+    return `http://content.guardianapis.com/${edition}?api-key=${capiKey}&page-size=30&show-most-viewed=true&show-fields=headline,standfirst,body,bodyText&show-tags=all`;
+  };
+
+  switch (locale) {
+    case Locale.GB:
+      return url('uk');
+    case Locale.US:
+      return url('us');
+    case Locale.AU:
+      return url('au');
+  }
 };
 
 const processTrendingArticles = (
@@ -77,4 +93,9 @@ const matchingURLInArticles = (result: Result, articles: Article[]) => {
   }
 };
 
-export { getTrendingArticle, processTrendingArticles, matchingURLInArticles };
+export {
+  getTrendingArticle,
+  processTrendingArticles,
+  matchingURLInArticles,
+  getAPIURL,
+};

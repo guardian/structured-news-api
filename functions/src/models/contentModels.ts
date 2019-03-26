@@ -3,7 +3,7 @@ enum BriefingTemplate {
   GBSATURDAY = 'gbsaturday',
   GBSUNDAY = 'gbsunday',
   GBFALLBACK = 'gbfallback',
-  // AUFALLBACK = 'aufallback',
+  AUFALLBACK = 'aufallback',
   // USFALLBACK = 'usfallback',
 }
 

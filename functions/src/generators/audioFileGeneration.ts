@@ -3,17 +3,22 @@ import fetch from 'node-fetch';
 import { GoogleTextToSpeechResponse } from '../models/googleModels';
 import { Storage } from '@google-cloud/storage';
 import * as moment from 'moment';
+import { Locale } from '../models/paramModels';
 
 const googleCloudStorage = new Storage();
 const bucketName = 'gu-briefing-audio';
 const writeDirectory = `/tmp/`;
 
-const generateAudioFile = (ssml: string, apiKey: string): Promise<string> => {
-  const filename = timestampFilename();
+const generateAudioFile = (
+  ssml: string,
+  apiKey: string,
+  locale: Locale = Locale.GB
+): Promise<string> => {
+  const filename = timestampFilename(locale);
   return fetch(getGoogleTextToSpeechUrl(apiKey), {
     headers: { 'Content-Type': 'application/json' },
     method: 'POST',
-    body: JSON.stringify(getTextToSpeechBodyRequest(ssml)),
+    body: JSON.stringify(getTextToSpeechBodyRequest(ssml, locale)),
   })
     .then<GoogleTextToSpeechResponse>(res => {
       if (res.status >= 400) {
@@ -73,28 +78,61 @@ const getGoogleTextToSpeechUrl = (apiKey: string) => {
   return `https://texttospeech.googleapis.com/v1/text:synthesize?key=${apiKey}`;
 };
 
-const timestampFilename = (): string => {
+const timestampFilename = (locale: Locale): string => {
   const currentUnixTime = moment()
     .utc()
     .unix();
-  return `briefing${currentUnixTime}.ogg`;
+  return `${locale}-briefing${currentUnixTime}.ogg`;
 };
 
-const getTextToSpeechBodyRequest = (ssml: string) => {
-  return {
-    audioConfig: {
-      audioEncoding: 'OGG_OPUS',
-      pitch: '0.00',
-      speakingRate: '0.92',
-    },
-    input: {
-      ssml,
-    },
-    voice: {
-      languageCode: 'en-GB',
-      name: 'en-GB-Wavenet-B',
-    },
-  };
+const getTextToSpeechBodyRequest = (ssml: string, locale: Locale) => {
+  switch (locale) {
+    case Locale.GB:
+      return {
+        audioConfig: {
+          audioEncoding: 'OGG_OPUS',
+          pitch: '0.00',
+          speakingRate: '0.92',
+        },
+        input: {
+          ssml,
+        },
+        voice: {
+          languageCode: 'en-GB',
+          name: 'en-GB-Wavenet-B',
+        },
+      };
+    case Locale.AU:
+      return {
+        audioConfig: {
+          audioEncoding: 'OGG_OPUS',
+          pitch: '0.00',
+          speakingRate: '0.92',
+        },
+        input: {
+          ssml,
+        },
+        voice: {
+          languageCode: 'en-AU',
+          name: 'en-AU-Wavenet-B',
+        },
+      };
+    case Locale.US:
+      return {
+        audioConfig: {
+          audioEncoding: 'OGG_OPUS',
+          pitch: '0.00',
+          speakingRate: '0.92',
+        },
+        input: {
+          ssml,
+        },
+        voice: {
+          languageCode: 'en-GB',
+          name: 'en-GB-Wavenet-B',
+        },
+      };
+  }
 };
 
 export { generateAudioFile };

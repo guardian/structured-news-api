@@ -5,7 +5,7 @@ import { stripExcessWhitespace, encodeStringForSSML } from './SSMLUtils';
 Very hacky generation of SSML.
 */
 
-const generateFallbackSSML = (fallbackBriefing: FallbackBriefing) => {
+const generateUKFallbackSSML = (fallbackBriefing: FallbackBriefing) => {
   const topArticles = fallbackBriefing.topArticles;
   const topArticlesSSML = generateTopArticles(
     topArticles.article1,
@@ -151,4 +151,4 @@ const generateOutro = (previous: string) => {
   return ssml;
 };
 
-export { generateFallbackSSML };
+export { generateUKFallbackSSML };
