@@ -1,3 +1,12 @@
+enum BriefingTemplate {
+  GBWEEKDAYAM = 'gbweekdayam',
+  GBSATURDAY = 'gbsaturday',
+  GBSUNDAY = 'gbsunday',
+  GBFALLBACK = 'gbfallback',
+  // AUFALLBACK = 'aufallback',
+  // USFALLBACK = 'usfallback',
+}
+
 class OptionContent {}
 
 class Article extends OptionContent {
@@ -91,6 +100,7 @@ class OutOfBounds extends OptionIndex {
 }
 
 export {
+  BriefingTemplate,
   OptionContent,
   ContentError,
   TopStories,

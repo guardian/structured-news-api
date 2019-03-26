@@ -1,7 +1,5 @@
 import { region } from 'firebase-functions';
 import { getWeekdayAMBriefing } from './contentResponseBuilders/weekdayAMBriefing';
-import { isWeekdayAM, isSaturday, isSunday } from './briefingSlotCheckers';
-import * as moment from 'moment';
 import { getFallbackBriefing } from './contentResponseBuilders/fallbackBriefing';
 import { getWeekendBriefing } from './contentResponseBuilders/weekendBriefing';
 import {
@@ -9,43 +7,41 @@ import {
   FailAPIResponse,
   SuccessAPIResponse,
 } from './models/responseModels';
+import { getBooleanParam, getLocaleParam } from './paramsHelpers';
+import { Locale } from './models/paramModels';
+import { BriefingTemplate } from './models/contentModels';
+import { getBriefingVersion } from './contentResponseBuilders/briefingVersions';
 
-const getLatestUpdate = (noAudio: boolean): Promise<APIResponse> => {
-  const currentTime = moment().utc();
-  if (isWeekdayAM(currentTime)) {
-    const amBriefing = getWeekdayAMBriefing(noAudio);
-    return amBriefing instanceof FailAPIResponse
-      ? getFallbackBriefing(noAudio)
-      : amBriefing;
-  }
-  if (isSaturday(currentTime)) {
-    const saturdayBriefing = getWeekendBriefing(noAudio, true);
-    return saturdayBriefing instanceof FailAPIResponse
-      ? getFallbackBriefing(noAudio)
-      : saturdayBriefing;
-  }
-  if (isSunday(currentTime)) {
-    const sundayBriefing = getWeekendBriefing(noAudio, false);
-    return sundayBriefing instanceof FailAPIResponse
-      ? getFallbackBriefing(noAudio)
-      : sundayBriefing;
-  } else {
-    return getFallbackBriefing(noAudio);
-  }
-};
+const getLatestUpdate = (
+  noAudio: boolean,
+  locale: Locale
+): Promise<APIResponse> => {
+  const version = getBriefingVersion(locale);
 
-const getBooleanParam = (param: any): boolean => {
-  if (typeof param === 'string') {
-    return param.toLowerCase() === 'true' ? true : false;
-  } else {
-    return false;
-  }
+  const getBriefing = () => {
+    switch (version) {
+      case BriefingTemplate.GBWEEKDAYAM:
+        return getWeekdayAMBriefing(noAudio);
+      case BriefingTemplate.GBSATURDAY:
+        return getWeekendBriefing(noAudio, true);
+      case BriefingTemplate.GBSUNDAY:
+        return getWeekendBriefing(noAudio, false);
+      case BriefingTemplate.GBFALLBACK:
+        return getFallbackBriefing(noAudio);
+    }
+  };
+
+  const briefing = getBriefing();
+  return briefing instanceof FailAPIResponse
+    ? getFallbackBriefing(noAudio)
+    : briefing;
 };
 
 exports.structuredNewsApi = region('europe-west1').https.onRequest(
   (request, response) => {
     const noAudio: boolean = getBooleanParam(request.query.noAudio);
-    getLatestUpdate(noAudio)
+    const locale: Locale = getLocaleParam(request.query.locale);
+    getLatestUpdate(noAudio, locale)
       .then(latestUpdate => {
         if (latestUpdate instanceof SuccessAPIResponse) {
           response.send(latestUpdate);
