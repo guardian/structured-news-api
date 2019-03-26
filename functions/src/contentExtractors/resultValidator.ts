@@ -8,6 +8,7 @@ A result must not have
 - the morning briefing tag.
 - the Guardian Readers contributor tag on it.
 - the analysis tone tag on it.
+- the features tone tag on it.
  */
 const isValidResult = (result: Result): boolean => {
   return (
@@ -16,7 +17,8 @@ const isValidResult = (result: Result): boolean => {
     hasBodyText(result) &&
     !isMorningBriefing(result) &&
     !hasGuardianReadersProfile(result) &&
-    !hasToneTagAnalysis(result)
+    !hasToneTagAnalysis(result) &&
+    !hasToneTagFeatures(result)
   );
 };
 
@@ -39,6 +41,13 @@ const hasGuardianReadersProfile = (result: Result) => {
 const hasToneTagAnalysis = (result: Result): boolean => {
   return (
     result.tags.filter(tag => tag.id === 'tone/analysis' && tag.type === 'tone')
+      .length > 0
+  );
+};
+
+const hasToneTagFeatures = (result: Result): boolean => {
+  return (
+    result.tags.filter(tag => tag.id === 'tone/features' && tag.type === 'tone')
       .length > 0
   );
 };
