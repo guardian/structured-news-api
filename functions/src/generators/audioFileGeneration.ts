@@ -128,8 +128,8 @@ const getTextToSpeechBodyRequest = (ssml: string, locale: Locale) => {
           ssml,
         },
         voice: {
-          languageCode: 'en-GB',
-          name: 'en-GB-Wavenet-B',
+          languageCode: 'en-US',
+          name: 'en-US-Wavenet-D',
         },
       };
   }

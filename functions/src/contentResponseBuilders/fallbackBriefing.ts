@@ -16,6 +16,7 @@ import { generateUKFallbackSSML } from '../generators/nastySSMLGeneration/ukFall
 import { generateAudioFile } from '../generators/audioFileGeneration';
 import { Locale } from '../models/paramModels';
 import { generateAUFallbackSSML } from '../generators/nastySSMLGeneration/auFallbackSSMLGeneration';
+import { generateUSFallbackSSML } from '../generators/nastySSMLGeneration/usFallbackSSMLGeneration.1';
 
 const capiKey = config().guardian.capikey;
 const googleTextToSpeechKey = config().googletexttospeech.key;
@@ -90,7 +91,7 @@ const buildSSML = (briefing: FallbackBriefing, locale: Locale) => {
     case Locale.AU:
       return generateAUFallbackSSML(briefing);
     case Locale.US:
-      return generateUKFallbackSSML(briefing);
+      return generateUSFallbackSSML(briefing);
   }
 };
 

@@ -4,7 +4,7 @@ enum BriefingTemplate {
   GBSUNDAY = 'gbsunday',
   GBFALLBACK = 'gbfallback',
   AUFALLBACK = 'aufallback',
-  // USFALLBACK = 'usfallback',
+  USFALLBACK = 'usfallback',
 }
 
 class OptionContent {}
