@@ -8,9 +8,10 @@ import {
 import fetch from 'node-fetch';
 import { getFirstSentence } from './extractorUtils';
 import { isValidResult } from './resultValidator';
+import { Locale } from '../models/paramModels';
 
 /*
-Current rules for uk Top Articles:
+Current rules for Top Articles:
 Top articles from CAPI based on showing only editors picks
 First sentence each story
 Uses resultValidator to check if an article should be included in the top articles
@@ -18,24 +19,39 @@ Uses resultValidator to check if an article should be included in the top articl
 
 const numberOfArticlesNeeded = 4;
 
-const getUkTopArticles = (capiKey: string): Promise<OptionContent> => {
-  const topArticles = `http://content.guardianapis.com/uk?api-key=${capiKey}&page-size=10&show-editors-picks=true&only-editors-picks=true&show-most-viewed=false&edition=uk&show-fields=headline,standfirst,body,bodyText&show-tags=all`;
-  return fetch(topArticles)
+const getTopArticles = (
+  capiKey: string,
+  locale: Locale
+): Promise<OptionContent> => {
+  return fetch(getAPIURL(capiKey, locale))
     .then<CapiEditorsPicks>(res => {
       return res.json();
     })
     .then(capiResponse => {
-      return processUKTopArticles(capiResponse);
+      return processTopArticles(capiResponse);
     })
     .catch(e => {
-      console.error(`Unable to get UK Top Articles. Error: ${e}`);
-      return new ContentError('Could not get UK Top Articles');
+      console.error(`Unable to get Top Articles. Error: ${e}`);
+      return new ContentError('Could not get Top Articles');
     });
 };
 
-const processUKTopArticles = (
-  capiResponse: CapiEditorsPicks
-): OptionContent => {
+const getAPIURL = (capiKey: string, locale: Locale) => {
+  const url = (edition: string) => {
+    return `http://content.guardianapis.com/${edition}?api-key=${capiKey}&page-size=10&show-editors-picks=true&only-editors-picks=true&show-most-viewed=false&edition=${edition}&show-fields=headline,standfirst,body,bodyText&show-tags=all`;
+  };
+
+  switch (locale) {
+    case Locale.GB:
+      return url('uk');
+    case Locale.US:
+      return url('us');
+    case Locale.AU:
+      return url('au');
+  }
+};
+
+const processTopArticles = (capiResponse: CapiEditorsPicks): OptionContent => {
   const articles = capiResponse.response.editorsPicks;
   const topArticles: Article[] = [];
   let i = 0;
@@ -60,8 +76,8 @@ const processUKTopArticles = (
       topArticles[3]
     );
   } else {
-    return new ContentError('Could not get UK top Articles');
+    return new ContentError('Could not get Top Articles');
   }
 };
 
-export { getUkTopArticles, processUKTopArticles };
+export { getTopArticles, processTopArticles, getAPIURL };

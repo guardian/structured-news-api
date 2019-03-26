@@ -3,7 +3,9 @@ import { Article, Podcast } from '../../models/contentModels';
 import {
   processTrendingArticles,
   matchingURLInArticles,
+  getAPIURL,
 } from '../trendingArticle';
+import { Locale } from '../../models/paramModels';
 
 describe('processTrendingArticles', () => {
   test('should transform a CapiTrending object into an Article', () => {
@@ -347,5 +349,25 @@ describe('matchingURLInArticles', () => {
     };
 
     expect(matchingURLInArticles(article, [])).toEqual(false);
+  });
+});
+
+describe('getAPIURL', () => {
+  test('should use the UK edition with the GB locale', () => {
+    expect(getAPIURL('123', Locale.GB)).toEqual(
+      'http://content.guardianapis.com/uk?api-key=123&page-size=30&show-most-viewed=true&show-fields=headline,standfirst,body,bodyText&show-tags=all'
+    );
+  });
+
+  test('should use the US edition with the US locale', () => {
+    expect(getAPIURL('123', Locale.US)).toEqual(
+      'http://content.guardianapis.com/us?api-key=123&page-size=30&show-most-viewed=true&show-fields=headline,standfirst,body,bodyText&show-tags=all'
+    );
+  });
+
+  test('should use the AU edition with the AU locale', () => {
+    expect(getAPIURL('123', Locale.AU)).toEqual(
+      'http://content.guardianapis.com/au?api-key=123&page-size=30&show-most-viewed=true&show-fields=headline,standfirst,body,bodyText&show-tags=all'
+    );
   });
 });

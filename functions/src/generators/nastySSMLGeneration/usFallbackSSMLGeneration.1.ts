@@ -5,7 +5,7 @@ import { stripExcessWhitespace, encodeStringForSSML } from './SSMLUtils';
 Very hacky generation of SSML.
 */
 
-const generateFallbackSSML = (fallbackBriefing: FallbackBriefing) => {
+const generateUSFallbackSSML = (fallbackBriefing: FallbackBriefing) => {
   const topArticles = fallbackBriefing.topArticles;
   const topArticlesSSML = generateTopArticles(
     topArticles.article1,
@@ -44,8 +44,8 @@ const fallbackBriefingSSML = (
       <media xml:id='advert' begin='earcon.end-0.8s' soundLevel='-2dB'>
         <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Advert.ogg'/>
       </media>
-      <media xml:id='intro' begin='advert.end+1.4s'>
-        <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback%2B6_Intro.ogg'/>
+      <media xml:id='intro' begin='advert.end+1.4s' soundLevel='-2.5dB'>
+        <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_Briefing_US_Intro.ogg'/>
       </media>
 
       ${topArticlesSSML}
@@ -63,8 +63,8 @@ const generateTopArticles = (
   article3: Article
 ) => {
   const ssml = `
-    <media xml:id='HL1' begin='intro.end-0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback%2B6_HL1.ogg'/>
+    <media xml:id='HL1' begin='intro.end-0.0s' soundLevel='-2.5dB'>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_Briefing_US_HL1.ogg'/>
     </media>
 
     <media xml:id='wordsHL1' begin='HL1.end-0.0s' soundLevel='-1dB'>
@@ -73,8 +73,8 @@ const generateTopArticles = (
       </speak>
     </media>
 
-    <media xml:id='HL2' begin='wordsHL1.end-0.5s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback%2B6_HL2.ogg'/>
+    <media xml:id='HL2' begin='wordsHL1.end-0.5s' soundLevel='-2.5dB'>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_Briefing_US_HL2.ogg'/>
     </media>
 
     <media xml:id='wordsHL2' begin='HL2.end-0.0s' soundLevel='-1dB'>
@@ -83,8 +83,8 @@ const generateTopArticles = (
       </speak>
     </media>
 
-    <media xml:id='HL3' begin='wordsHL2.end-0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback%2B6_HL3.ogg'/>
+    <media xml:id='HL3' begin='wordsHL2.end-0.0s' soundLevel='-2.5dB'>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_Briefing_US_HL3.ogg'/>
     </media>
 
     <media xml:id='wordsHD3' begin='HL3.end-0.0s' soundLevel='-1dB'>
@@ -97,8 +97,8 @@ const generateTopArticles = (
 
 const generateTrendingArticle = (article: Article, previous: string) => {
   const ssml = `
-    <media xml:id='Trending' begin='${previous}.end+0.8s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback%2B6_Trending.ogg'/>
+    <media xml:id='Trending' begin='${previous}.end+0.8s' soundLevel='-2.5dB'>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_Briefing_US_Trending.ogg'/>
     </media>
 
     <media xml:id='wordsTrending' begin='Trending.end+0.0s' soundLevel='-1dB'>
@@ -111,8 +111,8 @@ const generateTrendingArticle = (article: Article, previous: string) => {
 
 const generateFinalArticle = (article: Article, previous: string) => {
   const ssml = `
-    <media xml:id='FinalArticle' begin='${previous}.end+0.4s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback%2B6_HL4.ogg'/>
+    <media xml:id='FinalArticle' begin='${previous}.end+0.4s' soundLevel='-2.5dB'> 
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_Briefing_US_HL4.ogg'/>
     </media>
 
     <media xml:id='wordsFinalArticle' begin='FinalArticle.end+0.0s' soundLevel='-1dB'>
@@ -125,8 +125,8 @@ const generateFinalArticle = (article: Article, previous: string) => {
 
 const generateOutro = (previous: string) => {
   const ssml = `
-    <media xml:id='outro' begin='${previous}.end+0.0s'>
-      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback%2B6_Outro.ogg'/>
+    <media xml:id='outro' begin='${previous}.end+0.0s' soundLevel='-2.5dB'>
+      <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_Briefing_US_Outro.ogg'/>
     </media>
 
     <media xml:id='music1' begin='advert.end-0.3s' soundLevel='-1.0dB'>
@@ -151,4 +151,4 @@ const generateOutro = (previous: string) => {
   return ssml;
 };
 
-export { generateFallbackSSML };
+export { generateUSFallbackSSML };

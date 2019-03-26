@@ -1,4 +1,4 @@
-import { getUkTopArticles } from '../contentExtractors/ukTopArticles';
+import { getTopArticles } from '../contentExtractors/topArticles';
 import { config } from 'firebase-functions';
 import { getTrendingArticle } from '../contentExtractors/trendingArticle';
 import {
@@ -17,6 +17,7 @@ import { generateAudioFile } from '../generators/audioFileGeneration';
 import { getAudioLongReads } from '../contentExtractors/audioLongReads';
 import { generateSaturdaySSML } from '../generators/nastySSMLGeneration/saturdaySSMLGeneration';
 import { generateSundaySSML } from '../generators/nastySSMLGeneration/sundaySSMLGeneration';
+import { Locale } from '../models/paramModels';
 
 const capiKey = config().guardian.capikey;
 const googleTextToSpeechKey = config().googletexttospeech.key;
@@ -25,11 +26,12 @@ const getWeekendBriefing = (
   noAudio: boolean,
   isSaturday: boolean
 ): Promise<APIResponse> => {
-  return getUkTopArticles(capiKey).then(topArticles => {
+  return getTopArticles(capiKey, Locale.GB).then(topArticles => {
     return getAudioLongReads(capiKey).then(longReads => {
       return getTrendingArticle(
         capiKey,
-        transformTopArticlesForDuplicationTest(topArticles)
+        transformTopArticlesForDuplicationTest(topArticles),
+        Locale.GB
       ).then(trendingArticle => {
         return buildResponse(
           noAudio,

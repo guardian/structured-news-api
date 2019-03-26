@@ -1,4 +1,4 @@
-import { isWeekdayAM, isSaturday, isSunday } from '../briefingSlotCheckers';
+import { isWeekdayAM, isSaturday, isSunday } from '../briefingVersions';
 import moment = require('moment');
 
 describe('isWeekdayAM', () => {
