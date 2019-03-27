@@ -67,7 +67,7 @@ const generateTopArticles = (
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_AU_Comp_HL1.ogg'/>
     </media>
 
-    <media xml:id='wordsHL1' begin='HL1.end-0.0s' soundLevel='-1dB'>
+    <media xml:id='wordsHL1' begin='HL1.end-0.0s'>
       <speak>
         ${encodeStringForSSML(article1.standfirst)}
       </speak>
@@ -77,7 +77,7 @@ const generateTopArticles = (
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_AU_Comp_HL2.ogg'/>
     </media>
 
-    <media xml:id='wordsHL2' begin='HL2.end-0.0s' soundLevel='-1dB'>
+    <media xml:id='wordsHL2' begin='HL2.end-0.0s'>
       <speak>
         ${encodeStringForSSML(article2.standfirst)}
       </speak>
@@ -87,7 +87,7 @@ const generateTopArticles = (
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_AU_Comp_HL3.ogg'/>
     </media>
 
-    <media xml:id='wordsHD3' begin='HL3.end-0.0s' soundLevel='-1dB'>
+    <media xml:id='wordsHD3' begin='HL3.end-0.0s'>
       <speak>
         ${encodeStringForSSML(article3.standfirst)}
       </speak>
@@ -101,7 +101,7 @@ const generateTrendingArticle = (article: Article, previous: string) => {
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_AU_Comp_Trending.ogg'/>
     </media>
 
-    <media xml:id='wordsTrending' begin='Trending.end+0.0s' soundLevel='-1dB'>
+    <media xml:id='wordsTrending' begin='Trending.end+0.0s'>
       <speak>
         ${encodeStringForSSML(article.standfirst)}
       </speak>
@@ -115,7 +115,7 @@ const generateFinalArticle = (article: Article, previous: string) => {
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fallback_AU_Comp_HL4.ogg'/>
     </media>
 
-    <media xml:id='wordsFinalArticle' begin='FinalArticle.end+0.0s' soundLevel='-1dB'>
+    <media xml:id='wordsFinalArticle' begin='FinalArticle.end+0.0s'>
       <speak>
       ${encodeStringForSSML(article.standfirst)}
       </speak>
