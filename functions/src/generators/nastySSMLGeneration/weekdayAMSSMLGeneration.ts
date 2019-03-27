@@ -138,7 +138,9 @@ const generateFinalArticle = (article: Article, previous: string) => {
 
     <media xml:id='wordsFinalArticle' begin='FinalArticle.end+0.0s' soundLevel='-1dB'>
       <speak>
-      ${encodeStringForSSML(article.standfirst)}
+        ${encodeStringForSSML(article.headline)}
+        <break strength='strong'/>
+        ${encodeStringForSSML(article.standfirst)}
       </speak>
     </media>`;
   return ssml;
