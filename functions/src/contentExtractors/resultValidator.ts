@@ -1,4 +1,26 @@
 import { Result } from '../models/capiModels';
+import { Article } from '../models/contentModels';
+
+const isNewTopic = (result: Result, articles: Article[]) => {
+  const scores: number[] = articles.map(article => {
+    return sharedTagPercentage(result, article);
+  });
+
+  return scores.filter(score => score > 0.35).length < 1;
+};
+
+const sharedTagPercentage = (result: Result, article: Article): number => {
+  const sharedTags = result.tags.filter(resultTag => {
+    return article.tags.some(articleTag => {
+      return (
+        articleTag.id === resultTag.id &&
+        resultTag.type === 'keyword' &&
+        articleTag.type === 'keyword'
+      );
+    });
+  });
+  return sharedTags.length > 0 ? sharedTags.length / result.tags.length : 0;
+};
 
 /* A result must have:
 - the pillarId pillar/news 
@@ -57,6 +79,7 @@ const hasBodyText = (result: Result): boolean => {
 };
 
 export {
+  isNewTopic,
   isValidResult,
   isMorningBriefing,
   hasGuardianReadersProfile,

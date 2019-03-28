@@ -48,7 +48,7 @@ const getTopStory = (
     // Skip over the paragraph that introduces the morning briefing writer
     const openingParagraph = stripHTMLTags(articleParagraphs[2]);
     const openingSentence = getFirstSentence(openingParagraph);
-    return new Article(`${headline}.`, openingSentence, articleSource);
+    return new Article(`${headline}.`, openingSentence, articleSource, []);
   } else {
     console.error(
       `Could not get Top story from article paragraphs. Input: ${JSON.stringify(
@@ -106,7 +106,8 @@ const convertFirstSentenceToArticle = (
     return new Article(
       `${sentenceComponents[0]}.`,
       sentenceComponents[1],
-      articleSource
+      articleSource,
+      []
     );
   } else {
     console.error(

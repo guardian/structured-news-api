@@ -39,6 +39,7 @@ const processTodayInFocus = (results: CapiResults): Article | ContentError => {
       article.fields.headline,
       getTodayInFocusStandfirst(stripHTMLTags(article.fields.standfirst)),
       article.webUrl,
+      article.tags,
       Podcast.TODAYINFOCUS
     );
   }

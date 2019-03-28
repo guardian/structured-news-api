@@ -35,6 +35,7 @@ describe('Process the results of Today in Focus query', () => {
       "Why are homeless people still dying in one of Britain's richest cities?",
       'After a spike in deaths among homeless people in the affluent city of Oxford, Robert Booth went to investigate. In a growing community of rough sleepers, there is little support for people with mental health problems and addiction.',
       'www.theguardian.com',
+      [],
       Podcast.TODAYINFOCUS
     );
     expect(processTodayInFocus(input)).toEqual(expectedOutput);

@@ -51,6 +51,7 @@ const processAudioLongRead = (result: Result) => {
     result.fields.headline,
     result.fields.trailText,
     result.webUrl,
+    result.tags,
     Podcast.LONGREAD
   );
 };

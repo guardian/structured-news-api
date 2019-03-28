@@ -20,7 +20,8 @@
     "fs-extra": "^7.0.1",
     "moment": "^2.24.0",
     "node-fetch": "^2.3.0",
-    "sanitize-html": "^1.20.0"
+    "sanitize-html": "^1.20.0",
+    "string-similarity": "^3.0.0"
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.10",
@@ -28,6 +29,7 @@
     "@types/jest": "^23.3.12",
     "@types/node-fetch": "^2.1.4",
     "@types/sanitize-html": "^1.18.2",
+    "@types/string-similarity": "^3.0.0",
     "jest": "^23.6.0",
     "prettier": "^1.15.3",
     "ts-jest": "^23.10.5",

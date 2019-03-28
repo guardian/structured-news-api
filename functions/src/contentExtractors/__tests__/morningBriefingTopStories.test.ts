@@ -73,6 +73,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         standfirst:
           'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50.',
         source: '',
+        tags: [],
         podcast: 'none',
       },
       {
@@ -80,6 +81,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         standfirst:
           'Thursday will mark one year since 17 people were shot and killed at the Marjory Stoneman Douglas high school in Parkland, Florida.',
         source: '',
+        tags: [],
         podcast: 'none',
       },
     ];
@@ -129,6 +131,7 @@ describe('Extract top stories from the Morning Briefing', () => {
         standfirst:
           'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50.',
         source: '',
+        tags: [],
         podcast: 'none',
       },
     ];
@@ -182,22 +185,26 @@ describe('Extract top stories from the Morning Briefing', () => {
       new Article(
         '‘Long extension if they don’t vote for deal’.',
         'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50.',
-        ''
+        '',
+        []
       ),
       new Article(
         '‘It was hell’.',
         'Thursday will mark one year since 17 people were shot and killed at the Marjory Stoneman Douglas high school in Parkland, Florida.',
-        ''
+        '',
+        []
       ),
       new Article(
         'Trouble for Trudeau.',
         'A minister in Justin Trudeau’s Canadian government has resigned amid allegations the prime minister’s office pressured her to avoid prosecuting a major engineering firm.',
-        ''
+        '',
+        []
       ),
       new Article(
         'Frackers knocked back.',
         'The shale gas firm Cuadrilla has lost its bid for approval to frack at a second site in Lancashire.',
-        ''
+        '',
+        []
       )
     );
     expect(getTopStoriesFromMorningBriefing(input)).toEqual(expectedOutput);
@@ -259,22 +266,26 @@ describe('Extract top stories from the Morning Briefing', () => {
       new Article(
         '‘Long extension if they don’t vote for deal’.',
         'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50.',
-        ''
+        '',
+        []
       ),
       new Article(
         '‘It was hell’.',
         'Thursday will mark one year since 17 people were shot and killed at the Marjory Stoneman Douglas high school in Parkland, Florida.',
-        ''
+        '',
+        []
       ),
       new Article(
         'Trouble for Trudeau.',
         'A minister in Justin Trudeau’s Canadian government has resigned amid allegations the prime minister’s office pressured her to avoid prosecuting a major engineering firm.',
-        ''
+        '',
+        []
       ),
       new Article(
         'Frackers knocked back.',
         'The shale gas firm Cuadrilla has lost its bid for approval to frack at a second site in Lancashire.',
-        ''
+        '',
+        []
       )
     );
     expect(getTopStoriesFromMorningBriefing(input)).toEqual(expectedOutput);

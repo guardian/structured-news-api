@@ -37,7 +37,8 @@ describe('processTrendingArticles', () => {
     const expectedResult = new Article(
       'First Article',
       'Article.',
-      'www.theguardian.com'
+      'www.theguardian.com',
+      []
     );
     expect(processTrendingArticles(input, [])).toEqual(expectedResult);
   });
@@ -89,7 +90,8 @@ describe('processTrendingArticles', () => {
     const expectedResult = new Article(
       'Second Article',
       'Article.',
-      'www.theguardian.com'
+      'www.theguardian.com',
+      []
     );
     expect(processTrendingArticles(input, [])).toEqual(expectedResult);
   });
@@ -140,7 +142,8 @@ describe('processTrendingArticles', () => {
     const expectedResult = new Article(
       'Second Article',
       'Article.',
-      'www.theguardian.com'
+      'www.theguardian.com',
+      []
     );
     expect(processTrendingArticles(input, [])).toEqual(expectedResult);
   });
@@ -197,7 +200,8 @@ describe('processTrendingArticles', () => {
     const expectedResult = new Article(
       'Second Article',
       'Article.',
-      'www.theguardian.com'
+      'www.theguardian.com',
+      []
     );
     expect(processTrendingArticles(input, [])).toEqual(expectedResult);
   });
@@ -249,7 +253,8 @@ describe('processTrendingArticles', () => {
     const expectedResult = new Article(
       'Second Article',
       'Article.',
-      'www.theguardian.com'
+      'www.theguardian.com',
+      []
     );
     expect(processTrendingArticles(input, [])).toEqual(expectedResult);
   });
@@ -279,12 +284,14 @@ describe('matchingURLInArticles', () => {
       'headline',
       'standfirst',
       'www.guardian.com/a2',
+      [],
       Podcast.LONGREAD
     );
     const article2 = new Article(
       'headline',
       'standfirst',
       'www.guardian.com/a3',
+      [],
       Podcast.LONGREAD
     );
     const articles = [article1, article2];
@@ -315,12 +322,14 @@ describe('matchingURLInArticles', () => {
       'headline',
       'standfirst',
       'www.theguardian.com/a1',
+      [],
       Podcast.LONGREAD
     );
     const article2 = new Article(
       'headline',
       'standfirst',
       'www.guardian.com/a3',
+      [],
       Podcast.LONGREAD
     );
     const articles = [article1, article2];

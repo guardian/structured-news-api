@@ -1,3 +1,5 @@
+import { Tag } from './capiModels';
+
 enum BriefingTemplate {
   GBWEEKDAYAM = 'gbweekdayam',
   GBSATURDAY = 'gbsaturday',
@@ -14,6 +16,7 @@ class Article extends OptionContent {
     public headline: string,
     public standfirst: string,
     public source: string,
+    public tags: Tag[],
     public podcast: Podcast = Podcast.NONE
   ) {
     super();

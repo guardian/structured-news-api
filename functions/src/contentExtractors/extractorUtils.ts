@@ -47,7 +47,8 @@ const getCapiArticle = (
       return new Article(
         article.fields.headline,
         stripHTMLTags(article.fields.standfirst),
-        article.webUrl
+        article.webUrl,
+        article.tags
       );
     })
     .catch(e => {

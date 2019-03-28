@@ -58,13 +58,13 @@ const processTopArticles = (capiResponse: CapiEditorsPicks): OptionContent => {
   while (i < articles.length && topArticles.length < numberOfArticlesNeeded) {
     const article = articles[i];
     if (isValidResult(article)) {
-      topArticles.push(
-        new Article(
-          article.fields.headline,
-          getFirstSentence(article.fields.bodyText),
-          article.webUrl
-        )
+      const a = new Article(
+        article.fields.headline,
+        getFirstSentence(article.fields.bodyText),
+        article.webUrl,
+        article.tags
       );
+      topArticles.push(a);
     }
     i++;
   }

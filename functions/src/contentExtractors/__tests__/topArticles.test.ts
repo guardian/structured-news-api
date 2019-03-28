@@ -86,7 +86,8 @@ describe('processTopArticles', () => {
     const article = new Article(
       'First Article',
       'Article.',
-      'www.theguardian.com'
+      'www.theguardian.com',
+      []
     );
     const expectedResult = new CapiTopArticles(
       article,
@@ -198,7 +199,8 @@ describe('processTopArticles', () => {
     const article = new Article(
       'Second Article',
       'Article.',
-      'www.theguardian.com'
+      'www.theguardian.com',
+      []
     );
     const expectedResult = new CapiTopArticles(
       article,
@@ -309,7 +311,8 @@ describe('processTopArticles', () => {
     const article = new Article(
       'Second Article',
       'Article.',
-      'www.theguardian.com'
+      'www.theguardian.com',
+      []
     );
     const expectedResult = new CapiTopArticles(
       article,
@@ -426,7 +429,8 @@ describe('processTopArticles', () => {
     const article = new Article(
       'Second Article',
       'Article.',
-      'www.theguardian.com'
+      'www.theguardian.com',
+      []
     );
     const expectedResult = new CapiTopArticles(
       article,
@@ -538,7 +542,8 @@ describe('processTopArticles', () => {
     const article = new Article(
       'Second Article',
       'Article.',
-      'www.theguardian.com'
+      'www.theguardian.com',
+      []
     );
     const expectedResult = new CapiTopArticles(
       article,
