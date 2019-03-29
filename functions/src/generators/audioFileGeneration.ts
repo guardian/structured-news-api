@@ -12,9 +12,10 @@ const writeDirectory = `/tmp/`;
 const generateAudioFile = (
   ssml: string,
   apiKey: string,
-  locale: Locale = Locale.GB
+  locale: Locale = Locale.GB,
+  identifier: string = ''
 ): Promise<string> => {
-  const filename = timestampFilename(locale);
+  const filename = timestampFilename(locale, identifier);
   return fetch(getGoogleTextToSpeechUrl(apiKey), {
     headers: { 'Content-Type': 'application/json' },
     method: 'POST',
@@ -78,11 +79,11 @@ const getGoogleTextToSpeechUrl = (apiKey: string) => {
   return `https://texttospeech.googleapis.com/v1/text:synthesize?key=${apiKey}`;
 };
 
-const timestampFilename = (locale: Locale): string => {
+const timestampFilename = (locale: Locale, identifier: string): string => {
   const currentUnixTime = moment()
     .utc()
     .unix();
-  return `${locale}-briefing${currentUnixTime}.ogg`;
+  return `${locale}-briefing${currentUnixTime}-${identifier}.ogg`;
 };
 
 const getTextToSpeechBodyRequest = (ssml: string, locale: Locale) => {

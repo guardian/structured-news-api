@@ -1,4 +1,7 @@
-import { getTextBlocksFromArticle } from '../extractorUtils';
+import {
+  getTextBlocksFromArticle,
+  getSentencesFromText,
+} from '../extractorUtils';
 
 import { Result } from '../../models/capiModels';
 
@@ -47,5 +50,19 @@ describe('Extract text elements from article', () => {
       '<p>Fun html</p><p>More fun html</p>',
     ];
     expect(getTextBlocksFromArticle(input)).toEqual(expectedOutput);
+  });
+});
+
+describe('getSentencesFromText', () => {
+  test('should get the first sentence', () => {
+    const input = 'A. B. C.';
+    const expectedResponse = 'A.';
+    expect(getSentencesFromText(input, 1)).toEqual(expectedResponse);
+  });
+
+  test('should get the first 2 sentences', () => {
+    const input = 'A. B. C.';
+    const expectedResponse = 'A. B.';
+    expect(getSentencesFromText(input, 2)).toEqual(expectedResponse);
   });
 });

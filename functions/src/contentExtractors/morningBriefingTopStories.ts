@@ -2,7 +2,7 @@ import { Article, ContentError, TopStories } from '../models/contentModels';
 import {
   getTextBlocksFromArticle,
   stripHTMLTags,
-  getFirstSentence,
+  getSentencesFromText,
 } from './extractorUtils';
 
 import { Result } from '../models/capiModels';
@@ -47,7 +47,7 @@ const getTopStory = (
       .trimRight();
     // Skip over the paragraph that introduces the morning briefing writer
     const openingParagraph = stripHTMLTags(articleParagraphs[2]);
-    const openingSentence = getFirstSentence(openingParagraph);
+    const openingSentence = getSentencesFromText(openingParagraph, 2);
     return new Article(`${headline}.`, openingSentence, articleSource);
   } else {
     console.error(
@@ -79,12 +79,12 @@ const getStoriesFromMorningBriefing = (
 
     if (element.length > 0) {
       const elementText = stripHTMLTags(element);
-      const firstSentence = getFirstSentence(elementText);
+      const firstSentences = getSentencesFromText(elementText, 2);
 
       // Mid week catch up does not count as a news story
-      if (!firstSentence.toLowerCase().includes('midweek catch-up')) {
-        const optionArticle = convertFirstSentenceToArticle(
-          firstSentence,
+      if (!firstSentences.toLowerCase().includes('midweek catch-up')) {
+        const optionArticle = convertFirstSentencesToArticle(
+          firstSentences,
           articleSource
         );
         if (optionArticle instanceof Article) {
@@ -97,7 +97,7 @@ const getStoriesFromMorningBriefing = (
   return stories;
 };
 
-const convertFirstSentenceToArticle = (
+const convertFirstSentencesToArticle = (
   sentence: string,
   articleSource: string
 ): Article | ContentError => {

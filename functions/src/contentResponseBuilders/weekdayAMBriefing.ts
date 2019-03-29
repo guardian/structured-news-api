@@ -18,6 +18,7 @@ import {
   SuccessAPIResponse,
   FailAPIResponse,
 } from '../models/responseModels';
+import { Locale } from '../models/paramModels';
 
 const capiKey = config().guardian.capikey;
 const googleTextToSpeechKey = config().googletexttospeech.key;
@@ -60,7 +61,9 @@ const buildResponse = (
 ): Promise<APIResponse> => {
   if (topStories instanceof TopStories && todayInFocus instanceof Article) {
     const weekdayAMBriefing = new WeekdayAMBriefing(topStories, todayInFocus);
-    const ssml = generateWeekdayAMSSML(weekdayAMBriefing);
+    const ssmlBlocks: [string, string] = generateWeekdayAMSSML(
+      weekdayAMBriefing
+    );
     const briefingContent = [
       weekdayAMBriefing.topStories.story1,
       weekdayAMBriefing.topStories.story2,
@@ -69,10 +72,23 @@ const buildResponse = (
       weekdayAMBriefing.topStories.story4,
     ];
     if (noAudio) {
-      return Promise.resolve(new SuccessAPIResponse(briefingContent, ssml, ''));
+      return Promise.resolve(
+        new SuccessAPIResponse(briefingContent, ssmlBlocks, [''])
+      );
     } else {
-      return generateAudioFile(ssml, googleTextToSpeechKey).then(url => {
-        return new SuccessAPIResponse(briefingContent, ssml, url);
+      const urls = ssmlBlocks.map((ssml, i) => {
+        return generateAudioFile(
+          ssml,
+          googleTextToSpeechKey,
+          Locale.GB,
+          i.toString()
+        );
+      });
+      return Promise.all(urls).then(s => {
+        return new SuccessAPIResponse(briefingContent, ssmlBlocks, [
+          s[0],
+          s[1],
+        ]);
       });
     }
   } else {

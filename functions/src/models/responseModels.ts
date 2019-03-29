@@ -5,8 +5,8 @@ class APIResponse {}
 class SuccessAPIResponse implements APIResponse {
   constructor(
     public content: Article[],
-    public ssml: string,
-    public audioFileLocation: string
+    public ssml: [string] | [string, string],
+    public audioFileLocation: [string] | [string, string]
   ) {}
 }
 

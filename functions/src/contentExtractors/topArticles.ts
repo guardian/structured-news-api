@@ -6,7 +6,7 @@ import {
   OptionContent,
 } from '../models/contentModels';
 import fetch from 'node-fetch';
-import { getFirstSentence } from './extractorUtils';
+import { getSentencesFromText } from './extractorUtils';
 import { isValidResult } from './resultValidator';
 import { Locale } from '../models/paramModels';
 
@@ -61,7 +61,7 @@ const processTopArticles = (capiResponse: CapiEditorsPicks): OptionContent => {
       topArticles.push(
         new Article(
           article.fields.headline,
-          getFirstSentence(article.fields.bodyText),
+          getSentencesFromText(article.fields.bodyText, 1),
           article.webUrl
         )
       );

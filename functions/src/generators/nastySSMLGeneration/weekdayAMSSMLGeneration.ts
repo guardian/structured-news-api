@@ -9,22 +9,25 @@ import { stripExcessWhitespace, encodeStringForSSML } from './SSMLUtils';
 Very hacky generation of SSML.
 */
 
-const generateWeekdayAMSSML = (weekdayAMBriefing: WeekdayAMBriefing) => {
+const generateWeekdayAMSSML = (
+  weekdayAMBriefing: WeekdayAMBriefing
+): [string, string] => {
   const topStoriesSSML = generateTopStories(weekdayAMBriefing.topStories);
-  const todayInFocusSSML = generateTodayInFocus(
-    weekdayAMBriefing.todayInFocus,
-    'wordsHD3'
-  );
+  const todayInFocusSSML = generateTodayInFocus(weekdayAMBriefing.todayInFocus);
   const finalArticle = generateFinalArticle(
     weekdayAMBriefing.topStories.story4,
     'wordsTIF'
   );
   const outro = generateOutro('wordsFinalArticle');
+  const musicPart1 = getMusicPart1();
+  const musicPart2 = getMusicPart2();
   return weekdayAMBriefingSSML(
     topStoriesSSML,
     todayInFocusSSML,
     finalArticle,
-    outro
+    outro,
+    musicPart1,
+    musicPart2
   );
 };
 
@@ -32,9 +35,11 @@ const weekdayAMBriefingSSML = (
   topStoriesSSML: string,
   todayInFocusSSML: string,
   finalArticle: string,
-  outro: string
-) => {
-  const ssml = `
+  outro: string,
+  musicPart1: string,
+  musicPart2: string
+): [string, string] => {
+  const ssml1 = `
   <speak>
     <par>
       <media xml:id='earcon' soundLevel='-3dB'>
@@ -48,12 +53,19 @@ const weekdayAMBriefingSSML = (
       </media>
 
       ${topStoriesSSML}
+      ${musicPart1}
+    </par> 
+  </speak>`;
+  const ssml2 = `
+  <speak>
+    <par>
       ${todayInFocusSSML}
       ${finalArticle}
       ${outro}
+      ${musicPart2}
     </par> 
   </speak>`;
-  return stripExcessWhitespace(ssml);
+  return [stripExcessWhitespace(ssml1), stripExcessWhitespace(ssml2)];
 };
 
 const generateTopStories = (stories: TopStories) => {
@@ -99,9 +111,9 @@ const generateTopStories = (stories: TopStories) => {
   return ssml;
 };
 
-const generateTodayInFocus = (article: Article, previous: string) => {
+const generateTodayInFocus = (article: Article) => {
   const ssml = `
-    <media xml:id='TIF' begin='${previous}.end+0.8s'>
+    <media xml:id='TIF'>
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/TIF.ogg'/>
     </media>
 
@@ -150,17 +162,25 @@ const generateOutro = (previous: string) => {
   const ssml = `
     <media xml:id='outro' begin='${previous}.end+0.0s'>
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/MorningBriefingOutro.ogg'/>
-    </media>
+    </media>`;
+  return ssml;
+};
 
+const getMusicPart1 = () => {
+  const ssml = `
     <media xml:id='music1' begin='advert.end-0.3s' soundLevel='-1.0dB'>
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fbird_Intro_s.ogg'/>
     </media>
 
     <media xml:id='music2' begin='music1.end+0.0s' end='wordsHD3.end+1.0s' soundLevel='-10.0dB' fadeOutDur='3.0s' repeatCount='20'>
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/Fbird_1l.ogg'/>
-    </media>
+    </media>`;
+  return ssml;
+};
 
-    <media xml:id='musicTIF' begin='music2.end-1.0s' end='wordsTIF.end+3.0s' soundLevel='-23.0dB' fadeOutDur='3.0s' repeatCount='20'>
+const getMusicPart2 = () => {
+  const ssml = `
+    <media xml:id='musicTIF' end='wordsTIF.end+3.0s' soundLevel='-23.0dB' fadeInDur='1.0s' fadeOutDur='3.0s' repeatCount='20'>
       <audio src='https://storage.googleapis.com/gu-briefing-audio-assets/TIF_m.ogg'/>
     </media>
 

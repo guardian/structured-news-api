@@ -71,14 +71,14 @@ describe('Extract top stories from the Morning Briefing', () => {
       {
         headline: '‘Long extension if they don’t vote for deal’.',
         standfirst:
-          'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50.',
+          'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50. According to ITV, Robbins said the government had “got to make them believe that the week beginning end of March … extension is possible, but if they don’t vote for the deal then the extension is a long one”.',
         source: '',
         podcast: 'none',
       },
       {
         headline: '‘It was hell’.',
         standfirst:
-          'Thursday will mark one year since 17 people were shot and killed at the Marjory Stoneman Douglas high school in Parkland, Florida.',
+          'Thursday will mark one year since 17 people were shot and killed at the Marjory Stoneman Douglas high school in Parkland, Florida. Vigils, moments of silence and an interfaith service are among events planned to commemorate the victims of America’s deadliest ever high school shooting.',
         source: '',
         podcast: 'none',
       },
@@ -127,7 +127,7 @@ describe('Extract top stories from the Morning Briefing', () => {
       {
         headline: '‘Long extension if they don’t vote for deal’.',
         standfirst:
-          'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50.',
+          'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50. According to ITV, Robbins said the government had “got to make them believe that the week beginning end of March … extension is possible, but if they don’t vote for the deal then the extension is a long one”.',
         source: '',
         podcast: 'none',
       },
@@ -181,12 +181,12 @@ describe('Extract top stories from the Morning Briefing', () => {
     const expectedOutput = new TopStories(
       new Article(
         '‘Long extension if they don’t vote for deal’.',
-        'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50.',
+        'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50. According to ITV, Robbins said the government had “got to make them believe that the week beginning end of March … extension is possible, but if they don’t vote for the deal then the extension is a long one”.',
         ''
       ),
       new Article(
         '‘It was hell’.',
-        'Thursday will mark one year since 17 people were shot and killed at the Marjory Stoneman Douglas high school in Parkland, Florida.',
+        'Thursday will mark one year since 17 people were shot and killed at the Marjory Stoneman Douglas high school in Parkland, Florida. Vigils, moments of silence and an interfaith service are among events planned to commemorate the victims of America’s deadliest ever high school shooting.',
         ''
       ),
       new Article(
@@ -196,7 +196,7 @@ describe('Extract top stories from the Morning Briefing', () => {
       ),
       new Article(
         'Frackers knocked back.',
-        'The shale gas firm Cuadrilla has lost its bid for approval to frack at a second site in Lancashire.',
+        'The shale gas firm Cuadrilla has lost its bid for approval to frack at a second site in Lancashire. James Brokenshire, the communities secretary, said he turned down the appeal for planning permission in the Fylde area because of traffic impact around the Roseacre Wood site.',
         ''
       )
     );
@@ -258,12 +258,12 @@ describe('Extract top stories from the Morning Briefing', () => {
     const expectedOutput = new TopStories(
       new Article(
         '‘Long extension if they don’t vote for deal’.',
-        'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50.',
+        'Theresa May’s Brexit strategy may have been accidentally revealed after her chief negotiator, Olly Robbins, was overheard in a Brussels bar suggesting that MPs will be given a last-minute choice between voting for her deal or accepting a long extension to article 50. According to ITV, Robbins said the government had “got to make them believe that the week beginning end of March … extension is possible, but if they don’t vote for the deal then the extension is a long one”.',
         ''
       ),
       new Article(
         '‘It was hell’.',
-        'Thursday will mark one year since 17 people were shot and killed at the Marjory Stoneman Douglas high school in Parkland, Florida.',
+        'Thursday will mark one year since 17 people were shot and killed at the Marjory Stoneman Douglas high school in Parkland, Florida. Vigils, moments of silence and an interfaith service are among events planned to commemorate the victims of America’s deadliest ever high school shooting.',
         ''
       ),
       new Article(
@@ -273,7 +273,7 @@ describe('Extract top stories from the Morning Briefing', () => {
       ),
       new Article(
         'Frackers knocked back.',
-        'The shale gas firm Cuadrilla has lost its bid for approval to frack at a second site in Lancashire.',
+        'The shale gas firm Cuadrilla has lost its bid for approval to frack at a second site in Lancashire. James Brokenshire, the communities secretary, said he turned down the appeal for planning permission in the Fylde area because of traffic impact around the Roseacre Wood site.',
         ''
       )
     );
