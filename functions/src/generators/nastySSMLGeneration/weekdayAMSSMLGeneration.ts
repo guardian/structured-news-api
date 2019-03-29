@@ -9,7 +9,9 @@ import { stripExcessWhitespace, encodeStringForSSML } from './SSMLUtils';
 Very hacky generation of SSML.
 */
 
-const generateWeekdayAMSSML = (weekdayAMBriefing: WeekdayAMBriefing) => {
+const generateWeekdayAMSSML = (
+  weekdayAMBriefing: WeekdayAMBriefing
+): [string, string] => {
   const topStoriesSSML = generateTopStories(weekdayAMBriefing.topStories);
   const todayInFocusSSML = generateTodayInFocus(weekdayAMBriefing.todayInFocus);
   const finalArticle = generateFinalArticle(
@@ -36,7 +38,7 @@ const weekdayAMBriefingSSML = (
   outro: string,
   musicPart1: string,
   musicPart2: string
-) => {
+): [string, string] => {
   const ssml1 = `
   <speak>
     <par>

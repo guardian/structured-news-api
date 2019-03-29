@@ -61,7 +61,9 @@ const buildResponse = (
 ): Promise<APIResponse> => {
   if (topStories instanceof TopStories && todayInFocus instanceof Article) {
     const weekdayAMBriefing = new WeekdayAMBriefing(topStories, todayInFocus);
-    const ssmlBlocks = generateWeekdayAMSSML(weekdayAMBriefing);
+    const ssmlBlocks: [string, string] = generateWeekdayAMSSML(
+      weekdayAMBriefing
+    );
     const briefingContent = [
       weekdayAMBriefing.topStories.story1,
       weekdayAMBriefing.topStories.story2,
@@ -71,7 +73,7 @@ const buildResponse = (
     ];
     if (noAudio) {
       return Promise.resolve(
-        new SuccessAPIResponse(briefingContent, ssmlBlocks, [])
+        new SuccessAPIResponse(briefingContent, ssmlBlocks, [''])
       );
     } else {
       const urls = ssmlBlocks.map((ssml, i) => {
@@ -82,8 +84,11 @@ const buildResponse = (
           i.toString()
         );
       });
-      return Promise.all(urls).then(t => {
-        return new SuccessAPIResponse(briefingContent, ssmlBlocks, t);
+      return Promise.all(urls).then(s => {
+        return new SuccessAPIResponse(briefingContent, ssmlBlocks, [
+          s[0],
+          s[1],
+        ]);
       });
     }
   } else {
