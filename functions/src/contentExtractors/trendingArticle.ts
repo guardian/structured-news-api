@@ -2,7 +2,7 @@ import { Article, ContentError } from '../models/contentModels';
 
 import { CapiTrending, Result } from '../models/capiModels';
 import fetch from 'node-fetch';
-import { getFirstSentence } from './extractorUtils';
+import { getSentencesFromText } from './extractorUtils';
 import { isValidResult } from './resultValidator';
 import { Locale } from '../models/paramModels';
 
@@ -67,7 +67,7 @@ const processTrendingArticles = (
         const fields = articles[i].fields;
         article = new Article(
           fields.headline,
-          getFirstSentence(fields.bodyText),
+          getSentencesFromText(fields.bodyText, 1),
           currentArticle.webUrl
         );
         foundArticle = true;

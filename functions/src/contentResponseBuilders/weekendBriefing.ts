@@ -90,10 +90,12 @@ const buildResponse = (
       weekendBriefing.trendingArticle,
     ];
     if (noAudio) {
-      return Promise.resolve(new SuccessAPIResponse(briefingContent, ssml, ''));
+      return Promise.resolve(
+        new SuccessAPIResponse(briefingContent, [ssml], [''])
+      );
     } else {
       return generateAudioFile(ssml, googleTextToSpeechKey).then(url => {
-        return new SuccessAPIResponse(briefingContent, ssml, url);
+        return new SuccessAPIResponse(briefingContent, [ssml], [url]);
       });
     }
   } else {

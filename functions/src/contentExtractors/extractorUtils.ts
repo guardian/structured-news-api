@@ -60,13 +60,22 @@ const getCapiArticle = (
     });
 };
 
-const getFirstSentence = (text: string): string => {
-  return `${text.split('. ')[0]}.`;
+const getSentencesFromText = (
+  text: string,
+  numberOfSentences: number
+): string => {
+  return text
+    .split('. ')
+    .slice(0, numberOfSentences)
+    .reduce((acc, s) => {
+      return `${acc} ${s}.`;
+    }, '')
+    .trimLeft();
 };
 
 export {
   stripHTMLTags,
   getTextBlocksFromArticle,
   getCapiArticle,
-  getFirstSentence,
+  getSentencesFromText,
 };
