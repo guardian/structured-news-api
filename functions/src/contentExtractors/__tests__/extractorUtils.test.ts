@@ -11,6 +11,7 @@ describe('Extract text elements from article', () => {
       webPublicationDate: '2019-02-13T06:29:06Z',
       type: '',
       pillarId: '',
+      id: '',
       sectionId: '',
       webUrl: '',
       fields: {

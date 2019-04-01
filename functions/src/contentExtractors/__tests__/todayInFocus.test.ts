@@ -10,6 +10,7 @@ describe('Process the results of Today in Focus query', () => {
         results: [
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: '',
             type: '',

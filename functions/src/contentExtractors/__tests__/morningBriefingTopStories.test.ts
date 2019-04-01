@@ -8,6 +8,7 @@ describe('Extract top stories from the Morning Briefing', () => {
     const input: Result = {
       webPublicationDate: '',
       webUrl: '',
+      id: '',
       sectionId: '',
       pillarId: '',
       type: '',
@@ -39,6 +40,7 @@ describe('Extract top stories from the Morning Briefing', () => {
     const input: Result = {
       webPublicationDate: '',
       webUrl: '',
+      id: '',
       sectionId: '',
       pillarId: '',
       type: '',
@@ -95,6 +97,7 @@ describe('Extract top stories from the Morning Briefing', () => {
     const input: Result = {
       webPublicationDate: '',
       webUrl: '',
+      id: '',
       sectionId: '',
       pillarId: '',
       type: '',
@@ -144,6 +147,7 @@ describe('Extract top stories from the Morning Briefing', () => {
     const input: Result = {
       webPublicationDate: '',
       webUrl: '',
+      id: '',
       sectionId: '',
       pillarId: '',
       type: '',
@@ -207,6 +211,7 @@ describe('Extract top stories from the Morning Briefing', () => {
     const input: Result = {
       webPublicationDate: '',
       webUrl: '',
+      id: '',
       sectionId: '',
       pillarId: '',
       type: '',

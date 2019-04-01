@@ -36,6 +36,7 @@ describe('Extract reading material URL from the Morning Briefing', () => {
     const input: Result = {
       webPublicationDate: '',
       type: '',
+      id: '',
       sectionId: '',
       pillarId: '',
       webUrl: '',
@@ -64,6 +65,7 @@ describe('Extract reading material URL from the Morning Briefing', () => {
     const input: Result = {
       webPublicationDate: '',
       type: '',
+      id: '',
       sectionId: '',
       pillarId: '',
       webUrl: '',
@@ -100,6 +102,7 @@ describe('Extract reading material URL from the Morning Briefing', () => {
     const input: Result = {
       webPublicationDate: '',
       type: '',
+      id: '',
       sectionId: '',
       pillarId: '',
       webUrl: '',
