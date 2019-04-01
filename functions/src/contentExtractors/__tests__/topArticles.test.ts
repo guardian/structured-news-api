@@ -10,6 +10,7 @@ describe('processTopArticles', () => {
         editorsPicks: [
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -28,6 +29,7 @@ describe('processTopArticles', () => {
           },
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -46,6 +48,7 @@ describe('processTopArticles', () => {
           },
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -64,6 +67,7 @@ describe('processTopArticles', () => {
           },
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -103,6 +107,7 @@ describe('processTopArticles', () => {
         editorsPicks: [
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/opinion',
             type: 'article',
@@ -121,6 +126,7 @@ describe('processTopArticles', () => {
           },
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -139,6 +145,7 @@ describe('processTopArticles', () => {
           },
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -157,6 +164,7 @@ describe('processTopArticles', () => {
           },
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -175,6 +183,7 @@ describe('processTopArticles', () => {
           },
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -214,6 +223,7 @@ describe('processTopArticles', () => {
         editorsPicks: [
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'liveblog',
@@ -232,6 +242,7 @@ describe('processTopArticles', () => {
           },
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -250,6 +261,7 @@ describe('processTopArticles', () => {
           },
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -268,6 +280,7 @@ describe('processTopArticles', () => {
           },
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -286,6 +299,7 @@ describe('processTopArticles', () => {
           },
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -326,6 +340,7 @@ describe('processTopArticles', () => {
         editorsPicks: [
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -349,6 +364,7 @@ describe('processTopArticles', () => {
           },
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -367,6 +383,7 @@ describe('processTopArticles', () => {
           },
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -385,6 +402,7 @@ describe('processTopArticles', () => {
           },
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -403,6 +421,7 @@ describe('processTopArticles', () => {
           },
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -443,6 +462,7 @@ describe('processTopArticles', () => {
         editorsPicks: [
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -461,6 +481,7 @@ describe('processTopArticles', () => {
           },
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -479,6 +500,7 @@ describe('processTopArticles', () => {
           },
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -497,6 +519,7 @@ describe('processTopArticles', () => {
           },
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',
@@ -515,6 +538,7 @@ describe('processTopArticles', () => {
           },
           {
             webPublicationDate: '2019-02-11T03:00:06Z',
+            id: '',
             sectionId: '',
             pillarId: 'pillar/news',
             type: 'article',

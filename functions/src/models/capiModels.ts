@@ -31,6 +31,7 @@ interface CapiResponse {
 }
 
 interface Result {
+  id: string;
   type: string;
   sectionId: string;
   pillarId: string;

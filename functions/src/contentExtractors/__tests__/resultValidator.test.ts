@@ -9,6 +9,7 @@ describe('isValidResult', () => {
   test('should return true if result is valid', () => {
     const input = {
       webPublicationDate: '2019-02-11T03:00:06Z',
+      id: '',
       sectionId: '',
       pillarId: 'pillar/news',
       type: 'article',
@@ -35,6 +36,7 @@ describe('isValidResult', () => {
   test('should return false if result is not of type article', () => {
     const input = {
       webPublicationDate: '2019-02-11T03:00:06Z',
+      id: '',
       sectionId: '',
       pillarId: 'pillar/news',
       type: 'interactive',
@@ -61,6 +63,7 @@ describe('isValidResult', () => {
   test('should return false if result does not have the news pillar id', () => {
     const input = {
       webPublicationDate: '2019-02-11T03:00:06Z',
+      id: '',
       sectionId: '',
       pillarId: 'pillar/opinion',
       type: 'article',
@@ -87,6 +90,7 @@ describe('isValidResult', () => {
   test('should return false if result does not have any body text', () => {
     const input = {
       webPublicationDate: '2019-02-11T03:00:06Z',
+      id: '',
       sectionId: '',
       pillarId: 'pillar/news',
       type: 'article',
@@ -113,6 +117,7 @@ describe('isValidResult', () => {
   test('should return false if result has the morning briefing tag on it', () => {
     const input = {
       webPublicationDate: '2019-02-11T03:00:06Z',
+      id: '',
       sectionId: '',
       pillarId: 'pillar/news',
       type: 'article',
@@ -144,6 +149,7 @@ describe('isValidResult', () => {
   test('should return false if result has the analysis tone tag on it', () => {
     const input = {
       webPublicationDate: '2019-02-11T03:00:06Z',
+      id: '',
       sectionId: '',
       pillarId: 'pillar/news',
       type: 'article',
@@ -177,6 +183,7 @@ describe('isMorningBriefing', () => {
   test('should return true if Result has a morning briefing tag', () => {
     const input = {
       webPublicationDate: '2019-02-11T03:00:06Z',
+      id: '',
       sectionId: '',
       pillarId: 'pillar/opinion',
       type: '',
@@ -208,6 +215,7 @@ describe('isMorningBriefing', () => {
   test('should return false if Result has no morning briefing tag', () => {
     const input = {
       webPublicationDate: '2019-02-11T03:00:06Z',
+      id: '',
       sectionId: '',
       pillarId: 'pillar/opinion',
       type: '',
@@ -235,6 +243,7 @@ describe('isMorningBriefing', () => {
   test('should return false if Result has no tags', () => {
     const input = {
       webPublicationDate: '2019-02-11T03:00:06Z',
+      id: '',
       sectionId: '',
       pillarId: 'pillar/opinion',
       type: '',
@@ -259,6 +268,7 @@ describe('hasGuardianReaderProfile', () => {
   test('should return true on content which has the guardian reader tag on it', () => {
     const input = {
       webPublicationDate: '2019-02-11T03:00:06Z',
+      id: '',
       sectionId: '',
       pillarId: 'pillar/opinion',
       type: '',
@@ -291,6 +301,7 @@ describe('hasGuardianReaderProfile', () => {
   test('should return false on content which does not have the guardian reader tag on it', () => {
     const input = {
       webPublicationDate: '2019-02-11T03:00:06Z',
+      id: '',
       sectionId: '',
       pillarId: 'pillar/opinion',
       type: '',
@@ -319,6 +330,7 @@ describe('hasGuardianReaderProfile', () => {
   test('should return false on content which does not have the guardian reader tag on it and has a tag of type "contributor" on it', () => {
     const input = {
       webPublicationDate: '2019-02-11T03:00:06Z',
+      id: '',
       sectionId: '',
       pillarId: 'pillar/opinion',
       type: '',
@@ -349,6 +361,7 @@ describe('hasToneTagAnalysis', () => {
   test('should return true on content which has an analysis tag on it', () => {
     const input = {
       webPublicationDate: '2019-02-11T03:00:06Z',
+      id: '',
       sectionId: '',
       pillarId: 'pillar/opinion',
       type: '',
@@ -381,6 +394,7 @@ describe('hasToneTagAnalysis', () => {
   test('should return false on content which does not have an analysis tag on it', () => {
     const input = {
       webPublicationDate: '2019-02-11T03:00:06Z',
+      id: '',
       sectionId: '',
       pillarId: 'pillar/opinion',
       type: '',
@@ -409,6 +423,7 @@ describe('hasToneTagAnalysis', () => {
   test('should return false on content which does not have an analysis tag on it and has a tag of type "tone" on it', () => {
     const input = {
       webPublicationDate: '2019-02-11T03:00:06Z',
+      id: '',
       sectionId: '',
       pillarId: 'pillar/opinion',
       type: '',
