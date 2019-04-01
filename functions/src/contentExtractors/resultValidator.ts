@@ -9,7 +9,8 @@ A result must not have
 - the Guardian Readers contributor tag on it.
 - the analysis tone tag on it.
 - the features tone tag on it.
-- the id of the 2019 April Fools Article
+- the opinion tone tag on it.
+- the id of the 2019 April Fools Article.
  */
 const isValidResult = (result: Result): boolean => {
   return (
@@ -20,6 +21,7 @@ const isValidResult = (result: Result): boolean => {
     !hasGuardianReadersProfile(result) &&
     !hasToneTagAnalysis(result) &&
     !hasToneTagFeatures(result) &&
+    !hasToneTagOpinion(result) &&
     !isAprilFoolsArticle2019(result)
   );
 };
@@ -50,6 +52,13 @@ const hasToneTagAnalysis = (result: Result): boolean => {
 const hasToneTagFeatures = (result: Result): boolean => {
   return (
     result.tags.filter(tag => tag.id === 'tone/features' && tag.type === 'tone')
+      .length > 0
+  );
+};
+
+const hasToneTagOpinion = (result: Result): boolean => {
+  return (
+    result.tags.filter(tag => tag.id === 'tone/comment' && tag.type === 'tone')
       .length > 0
   );
 };
