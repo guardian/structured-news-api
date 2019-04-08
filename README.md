@@ -18,6 +18,8 @@ Params:
 
 ## Current Structured Data Rules
 
+These rules are also documented [here](https://docs.google.com/spreadsheets/d/1rmASsmOjUHWHB4uHtLgjK9iUxzPhYc0Bax6n3FDYyB8/edit#gid=105431519) for editorial.
+
 ### If it's between 6:30am and 10:30am on a week day in the UK locale
 
 - Three Top Stories - These are the first three stories in the morning briefing. For each story take the first two sentences about it in the [morning briefing](https://www.theguardian.com/world/series/guardian-morning-briefing)
