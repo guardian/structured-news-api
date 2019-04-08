@@ -10,6 +10,8 @@ Can be set to true or false. If not set it defaults to false. When set to true A
 
 ### locale: There are news templates for the UK, US and Australia.
 
+Params:
+
 - 'en-AU' : returns a Australian focused briefing
 - 'en-CA' & 'en-US' : returns a US focused briefing
 - all other values including 'en-GB', 'en-IN', 'en-SG' and when no locale is provided: returns a UK focused briefing
