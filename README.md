@@ -77,7 +77,7 @@ This project requires environment variables. Run `firebase functions:config:get 
 
 # Service Account Credentials
 
-The app also requires a service account ID.
+The app also requires a service account ID when you are running it locally. This is so that you have permission to upload files created to the Google Cloud Storage Bucket.
 
 1. Go to the Google Cloud Console for the project
 2. Go to IAM & Admin
